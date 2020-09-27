@@ -1,0 +1,123 @@
+.standerd-direction {
+    direction: rtl;
+}
+body {
+    background-color: #3bbbff;
+}
+.container {
+    margin: 20% 0 10px;
+    text-align: center;
+}
+.login-container {
+    display: inline-block;
+    margin: 5px 2.5%;
+    padding: 0px 55px 45px;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
+    -o-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
+    -ms-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
+    -moz-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
+    box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
+    max-width: 532px;
+}
+.login-container > header {
+    margin: 35px 0px 35px;
+    width: 100%;
+    text-align: right;
+    padding-right: 10px;
+    font-size: 24px;
+    font-weight: 700;
+}
+.login-body {
+    width: 100%;
+    margin: 5px 0;
+}
+.login-body > form > div {
+    margin: 10px 0;
+    padding: 0px 2px;
+}
+.login-body > form > div label {
+    display: none;
+    width: 150px;
+}
+.invalid-feedback {
+    color: red;
+    display: block;
+    font-size: 12px;
+}
+.form-check {
+    margin: 5px 0;
+    text-align: left;
+}
+.form-check label {
+    display: inline !important;
+    color: #9197a7;
+    font-size: 14px;
+}
+.login-footer {
+    direction: ltr;
+    text-align: left;
+    margin: 20px 0px 0px !important;
+}
+.login-button {
+    padding: 10px 0px;
+    margin: 10px 10px 10px 0px;
+    width: 85px;
+    background-color: #3bbbff;
+    color: #fff;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.login-button:hover {
+    cursor: pointer;
+}
+.login-footer a {
+    font-size: 12px;
+    color: #9197a7;
+}
+@media (min-width: 576px) {
+    .login-body > form > div label {
+        display: inline-block;
+    }
+    .container {
+        margin: 15% 10%;
+    }
+}
+@media (min-width: 768px) {
+    .login-container {
+        width: 70%;
+        margin: 20px 15%;
+    }
+    .login-input {
+        width: 60%;
+        max-width: 300px;
+    }
+    .container {
+        margin: 12% 10%;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        margin: 10% 10%;
+    }
+}
+@media (min-width:1200px) {
+    .form-check {
+        padding-left: 85px;
+    }
+    .login-footer {
+        padding-left: 85px;
+    }
+    .container {
+        margin: 8% 10%;
+    }
+}

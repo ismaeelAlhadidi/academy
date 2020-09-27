@@ -1,10 +1,64 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+* {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    outline: none;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
 .small-default-header {
     margin-bottom: 20px;
     padding: 10px 20px 10px 0px !important;
     background-color: #3a78a9 !important;
     color: #ffe59b !important;
     text-align: right !important;
+}
+.default-input {
+    padding: 10px;
+    margin: 10px 0px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-resize: none;
+    -o-resize: none;
+    -moz-resize: none;
+    -ms-resize: none;
+    resize: none;
+    border: 1px solid #cfcfcf;
+    direction: rtl;
+    max-width: 400px;
+}
+.default-input:focus {
+    transition: box-shadow 500ms cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -webkit-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff;
+    -o-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff;
+    -ms-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff;
+    -moz-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff;
+    box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff;
+    outline: none;
+}
+.input-focus {
+    transition: box-shadow 500ms cubic-bezier(0.25, 0.1, 0.36, 0.94) !important;
+    -webkit-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    -o-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    -ms-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    -moz-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+}
+.input-invalid {
+    transition: box-shadow 500ms cubic-bezier(0.25, 0.1, 0.36, 0.94) !important;
+    -webkit-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    -o-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    -ms-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    -moz-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
 }
 .default-progress {
     width: 100%;
