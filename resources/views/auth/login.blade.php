@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
-@section('title')
-@endsection
+@section('title'){{ __('title.adminLogin') }}@endsection
 
 @section('links')
     <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\auth\login.css') }}" />

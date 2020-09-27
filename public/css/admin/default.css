@@ -1,3 +1,6 @@
+* {
+    overflow: hidden;
+}
 .empty {
     width: 90%;
     background-color: inherit;

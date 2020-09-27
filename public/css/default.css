@@ -1,6 +1,5 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
 * {
-    overflow: hidden;
     margin: 0px;
     padding: 0px;
     border: none;
@@ -10,6 +9,9 @@
     -ms-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+body {
+    overflow: unset;
 }
 .small-default-header {
     margin-bottom: 20px;
