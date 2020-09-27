@@ -1,0 +1,318 @@
+* {
+    overflow: hidden;
+    margin:0px;
+    padding:0px;
+    border:none;
+    outline:none;
+    -webkit-box-sizing:border-box;
+    -o-box-sizing:border-box;
+    -ms-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+}
+.empty {
+    width: 90%;
+    background-color: inherit;
+    margin: 45px 5%;
+    padding: 25px 0px;
+    font-size: 20px;
+    font-weight: 600;
+    -webkit-box-shadow: 0.5px 0.5px 5px #e3e5e6, -0.5px -0.5px 5px #e3e5e6;
+    -o-box-shadow: 0.5px 0.5px 5px #e3e5e6, -0.5px -0.5px 5px #e3e5e6;
+    -ms-box-shadow: 0.5px 0.5px 5px #e3e5e6, -0.5px -0.5px 5px #e3e5e6;
+    -moz-box-shadow: 0.5px 0.5px 5px #e3e5e6, -0.5px -0.5px 5px #e3e5e6;
+    box-shadow: 0.5px 0.5px 5px #e3e5e6, -0.5px -0.5px 5px #e3e5e6;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    color: #0a304e;
+}
+html {
+    overflow-y: auto;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+.arabic {
+    direction: rtl;
+    text-align: right;
+}
+body {
+    background-color: #eaeaea;
+}
+.input-focus {
+    transition: box-shadow 500ms cubic-bezier(0.25, 0.1, 0.36, 0.94) !important;
+    -webkit-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    -o-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    -ms-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    -moz-box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+    box-shadow: 0.5px 0.5px 5px #23bcff, -0.5px -0.5px 5px #23bcff !important;
+}
+.input-invalid {
+    transition: box-shadow 500ms cubic-bezier(0.25, 0.1, 0.36, 0.94) !important;
+    -webkit-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    -o-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    -ms-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    -moz-box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+    box-shadow: 0.5px 0.5px 5px #f36464, -0.5px -0.5px 5px #f36464 !important;
+}
+.massege-succes-in-workflow {
+    width: 100%;
+    padding: 15px 0px;
+    text-align: center;
+    margin: 30px 0px 20px;
+    background-color: #29c529bf;
+    color: #ffffff;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0.5px 0.5px 5px #357594, -0.5px -0.5px 5px #357594;
+    -o-box-shadow: 0.5px 0.5px 5px #357594, -0.5px -0.5px 5px #357594;
+    -ms-box-shadow: 0.5px 0.5px 5px #357594, -0.5px -0.5px 5px #357594;
+    -moz-box-shadow: 0.5px 0.5px 5px #357594, -0.5px -0.5px 5px #357594;
+    box-shadow: 0.5px 0.5px 5px #357594, -0.5px -0.5px 5px #357594;
+}
+.new {
+    -webkit-box-shadow: 0.5px 0.5px 5px #d8478a, -0.5px -0.5px 5px #d8478a;
+    -o-box-shadow: 0.5px 0.5px 5px #d8478a, -0.5px -0.5px 5px #d8478a;
+    -ms-box-shadow: 0.5px 0.5px 5px #d8478a, -0.5px -0.5px 5px #d8478a;
+    -moz-box-shadow: 0.5px 0.5px 5px #d8478a, -0.5px -0.5px 5px #d8478a;
+    box-shadow: 0.5px 0.5px 5px #d8478a, -0.5px -0.5px 5px #d8478a;
+    position: relative;
+}
+.new > .new-text {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px;
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #d8478a;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+}
+.fix-header-space-in-workflow {
+    width: 100%;
+    height: 60px;
+    background-color: inherit;
+}
+.header {
+    width: 100%;
+    height: 60px;
+    background-color: #0a304e;
+    color: #FFFFFF;
+    position: fixed;
+    top: 0px;
+    z-index: 10;
+    overflow: visible;
+}
+.header > nav {
+    display: block;
+    height: inherit;
+    width: 85%;
+    overflow: hidden;
+    float: right;
+    position: relative;
+}
+.header > nav > ul {
+    height: inherit;
+    list-style: none;
+    padding-right: 120px;
+    padding-left: 40px;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+}
+.header > nav .list-item:first-of-type {
+    display: none;
+}
+.header > nav .list-item:last-of-type {
+    font-size: 18px;
+}
+.header .list-item {
+    overflow: visible;
+    display: inline-block;
+    margin: 0px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+}
+.header .list-item:hover {
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.5);
+    color: #e6c975;
+    transition: color 1.5s cubic-bezier(0.25, 0.1, 0.36, 0.94),background-color 1.5s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+}
+.header .list-item > li {
+    overflow: inherit;
+    display: inline-block;
+    margin: 20px 10px;
+}
+.header .nav-button {
+    display: inline-block;
+    background-color: inherit;
+    height: inherit;
+    width: 50px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 2;
+}
+.header .nav-button:hover {
+    cursor: pointer;
+}
+.header .nav-button > canvas {
+    margin:5px 0px;
+}
+.header  .list-overflow-button {
+    position: absolute;
+    width: 40px;
+    right: 60px;
+    height: inherit;
+    z-index: 2;
+}
+.header  .list-overflow-button:hover {
+    cursor: pointer;
+}
+.header  .list-overflow-button > canvas {
+    margin: 5px 0px;
+}
+.header > .list-overflow {
+    position: fixed;
+    top: 61px;
+    width: 100%;
+    max-width: 300px;
+    right: 0px;
+    background-color: inherit;
+    transition: height 1s;
+    height: 0px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+}
+.header > .open-list-overflow {
+    height: 300px !important;
+}
+.header > .search {
+    float: right;
+    display: block;
+    height: inherit;
+    width: 15%;
+}
+.header > .search > form {
+    display:inline-block;
+    max-width: 90%;
+    margin: 15px 5%;
+    height: 30px;
+    background-color: #FFFFFF;
+}
+.header > .search > form > input {
+    background-color: inherit;
+    padding: 5px;
+    height: 30px;
+}
+.header > .search > form, .header > .search > form > input {
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+}
+.header > aside {
+    width: 100%;
+    max-width: 400px;
+    background-color: inherit;
+    position: fixed;
+    top: 60px;
+    right: 0px;
+    -webkit-border-bottom-left-radius: 5px;
+    -o-border-bottom-left-radius: 5px;
+    -moz-border-bottom-left-radius: 5px;
+    -ms-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 10px;
+    border-top: 1px solid #e6c975;
+}
+.header  .list-overflow-item {
+    width: 100%;
+    padding-right: 20px;
+}
+.main {
+    margin: 15px 7.5% 65px;
+    width: 85%;
+    text-align: center;
+    direction: rtl;
+    background-color: #ffffff;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0.5px 0.5px 5px #0a304e, -0.5px -0.5px 5px #0a304e;
+    -o-box-shadow: 0.5px 0.5px 5px #0a304e, -0.5px -0.5px 5px #0a304e;
+    -ms-box-shadow: 0.5px 0.5px 5px #0a304e, -0.5px -0.5px 5px #0a304e;
+    -moz-box-shadow: 0.5px 0.5px 5px #0a304e, -0.5px -0.5px 5px #0a304e;
+    box-shadow: 0.5px 0.5px 5px #0a304e, -0.5px -0.5px 5px #0a304e;
+    padding:20px 0px;
+}
+.header > aside {
+    height: 100%;
+    overflow-y: auto;
+}
+@media (min-width: 576px) {
+    .header > aside {
+        height: unset;
+    }
+    .header > nav {
+        width: 65%;
+    }
+    .header > .search {
+        width: 35%;
+    }
+    .header > .list-overflow {
+        right: 45%;
+    }
+    .header > nav > ul {
+        display: inline-block;
+    }
+    .header .list-overflow-button {
+        right: unset; 
+        left: 0px;
+    }
+    .header > nav .list-item:first-of-type {
+        display: inline-block;
+    }
+    .header > nav .list-item:last-of-type {
+        font-size: 18px;
+    }
+}
+@media (min-width: 768px) {
+    .header > .list-overflow {
+        right: 55%;
+    }
+}
+@media (min-width: 992px) {
+    .header > .list-overflow {
+        right: 64%;
+    }
+    .header > aside {
+        max-width: 500px;
+        padding: 20px;
+    }
+}
+@media (min-width: 1200px) {
+}
