@@ -31,4 +31,9 @@ return [
     'security' => 'سياسات الامن',
     'Register' => 'تسجيل',
     'Please confirm your password before continuing' => 'الرجاء تأكيد رمز المرور قبل الاستمرار.',
+    'Verify Your Email Address' => 'تفعيل البريد الالكتروني',
+    'A fresh verification link has been sent to your email address.' => 'تم ارسال بريد الكتروني اخر لك',
+    'click here to request another' => 'اعادة ارسال رابط التفعيل',
+    'Before proceeding, please check your email for a verification link.' => 'الرجاء التحقق من بريدك اذا استقبل رابط التفعيل !',
+    'If you did not receive the email' => 'اذا لم تستقبل بريد الكتروني اضغط زر اعادة الارسال',
 ];

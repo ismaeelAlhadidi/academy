@@ -20,9 +20,9 @@ Route::group(['prefix' => 'blob' ,'middleware' => 'access'],function() {
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('password.confirm');
+});
 
-Auth::routes();
+Auth::routes(["verify" => "true"]);
 /* 
     Uses HTTPS
     Add `rel="noopener"` or `rel="noreferrer"` to any external links to improve performance and prevent security vulnerabilities 

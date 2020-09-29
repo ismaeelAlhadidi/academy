@@ -1,28 +1,42 @@
 @extends('layouts.app')
 
+@section('title'){{ __('auth.Verify Your Email Address') }}@endsection
+
+@section('links')
+    <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\auth\login.css') }}" />
+@endsection
+
+@section('style')
+    <style type="text/css">
+        .login-button {
+            width: unset;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+@endsection
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+    <div class="container standerd-direction">
+        <div class="login-container">
+            <header>{{ __('auth.Verify Your Email Address') }}</header>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
+            <div class="login-body">
+                @if (session('resent'))
+                    <div class="alert-success" role="alert">
+                        {{ __('auth.A fresh verification link has been sent to your email address.') }}
+                    </div>
+                    <br/><br/>
+                @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
+                <div>{{ __('auth.Before proceeding, please check your email for a verification link.') }}</div>
+                <br/>
+                <div>{{ __('auth.If you did not receive the email') }}</div>
+                <form class="login-footer" method="POST" action="{{ route('verification.resend') }}">
+                    @csrf
+                    <button type="submit" class="login-button">{{ __('auth.click here to request another') }}</button>.
+                </form>
             </div>
         </div>
     </div>
-</div>
 @endsection
