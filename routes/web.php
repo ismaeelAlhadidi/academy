@@ -20,7 +20,7 @@ Route::group(['prefix' => 'blob' ,'middleware' => 'access'],function() {
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('password.confirm');
 
 Auth::routes();
 /* 

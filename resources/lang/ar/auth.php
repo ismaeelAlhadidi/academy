@@ -30,4 +30,5 @@ return [
     'and' => 'و',
     'security' => 'سياسات الامن',
     'Register' => 'تسجيل',
+    'Please confirm your password before continuing' => 'الرجاء تأكيد رمز المرور قبل الاستمرار.',
 ];
