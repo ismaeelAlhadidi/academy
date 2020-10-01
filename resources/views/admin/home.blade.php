@@ -25,15 +25,15 @@
 
         <section class="arabic">
             <header class="no-select">{{ __('headers.visiters') }}</header>
-            <div><span class="no-select">{{ __('masseges.visites-count-today') }}</span><span>{{ $todayVisitesCount }}</span></div>
-            <div><span class="no-select">{{ __('masseges.all-visiters-count') }}</span><span>{{ $allVisiterCount }}</span></div>
+            <div><span class="no-select">{{ __('masseges.visites-count-today') }}</span><span  class="no-select">{{ $todayVisitesCount }}</span></div>
+            <div><span class="no-select">{{ __('masseges.all-visiters-count') }}</span><span  class="no-select">{{ $allVisiterCount }}</span></div>
             <div class="no-select"><a id="buttonShowVisiter">{{ __('masseges.show-visiters') }}</a></div>
         </section>
 
         <section class="arabic">
             <header class="no-select">{{ __('headers.profit') }}</header>
-            <div><span class="no-select">{{ __('masseges.profit-count-today') }}</span><span>{{ $todayVisitesCount }}</span></div>
-            <div><span class="no-select">{{ __('masseges.all-profit-count') }}</span><span>{{ $allVisiterCount }}</span></div>
+            <div><span class="no-select">{{ __('masseges.profit-count-today') }}</span><span  class="no-select">{{ $todayVisitesCount }}</span></div>
+            <div><span class="no-select">{{ __('masseges.all-profit-count') }}</span><span  class="no-select">{{ $allVisiterCount }}</span></div>
             <div class="no-select"><a id="buttonShowProfit">{{ __('masseges.show-profit') }}</a></div>
         </section>
     </div>

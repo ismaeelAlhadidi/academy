@@ -1,5 +1,5 @@
 var popUpMassageDiv = document.getElementById('popUpMassageDiv');
-
+var defaultStyleOfPopUpMassegeInWeb = {'headerBackgroundColor': '#3499b8', 'buttonBackgroundColor': '#3499b8', 'buttonColor': '#fff'};
 function makeFocusEfectOfInput(element) {
     "use strict"
     if(element != null) {
@@ -106,6 +106,21 @@ function showPopUpMassage(content,exitButtonListener = null,okButtonListener = n
             if(popUpMassageDiv.children[0].children[2].children.length > 0) {
                 popUpMassageDiv.children[0].children[2].children[0].textContent = buttonContent;
                 popUpMassageDiv.children[0].children[2].children[0].onclick = okButtonListenerDefault;
+            }
+            if(data != null) {
+                if(typeof(data) == "object") {
+                    try {
+                        if(data.hasOwnProperty("headerBackgroundColor")) {
+                            popUpMassageDiv.children[0].children[0].setAttribute('style', 'background-color: ' + data.headerBackgroundColor + ';');
+                        }
+                        if(data.hasOwnProperty("buttonBackgroundColor")) {
+                            popUpMassageDiv.children[0].children[2].children[0].setAttribute('style', (popUpMassageDiv.children[0].children[2].children[0].getAttribute('style') == null || popUpMassageDiv.children[0].children[2].children[0].getAttribute('style') == undefined ? '' : popUpMassageDiv.children[0].children[2].children[0].getAttribute('style')) + 'background-color: ' + data.buttonBackgroundColor + ';');
+                        }
+                        if(data.hasOwnProperty("buttonColor")) {
+                            popUpMassageDiv.children[0].children[2].children[0].setAttribute('style', (popUpMassageDiv.children[0].children[2].children[0].getAttribute('style') == null || popUpMassageDiv.children[0].children[2].children[0].getAttribute('style') == undefined ? '' : popUpMassageDiv.children[0].children[2].children[0].getAttribute('style')) + 'color: ' + data.buttonColor + ';');
+                        }
+                    } catch(ex) { }
+                }
             }
             popUpMassageDiv.setAttribute('style','');
             popUpMassageDiv.style = '';

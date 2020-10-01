@@ -16,6 +16,7 @@
         @yield('preScripts')
     </head>
     <body>
+        <header id="header" class="header-after-scroll-down no-select"><nav><ul><a href="{{ route('login') }}"><li>{{ __('title.adminLogin') }}</li></a><a href="{{ route('register') }}"><li>{{ __('title.Register') }}</li></a></ul></nav><div class="logo">logo</div></header>
         <div id="app">
             @yield('content')
         </div>

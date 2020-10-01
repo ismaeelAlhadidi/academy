@@ -1,8 +1,54 @@
 .standerd-direction {
     direction: rtl;
 }
-body {
-    background-color: #3bbbff;
+body, html {
+    background-image: url(../../images/static/gray-background.png);
+    background-color: #fafafa;
+}
+body > header {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    overflow: hidden;
+    color: #fff;
+    -moz-transition: background-color .75s ease-in-out;
+    -webkit-transition: background-color .75s ease-in-out;
+    -ms-transition: background-color .75s ease-in-out;
+    transition: background-color .75s ease-in-out;
+}
+body > header nav {
+    float: right;
+    height: inherit;
+    background-color: transparent;
+    padding: 0px;
+}
+body > header nav li {
+    display: inline-block;
+    margin: 0px;
+    padding: 15px 20px;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    border-bottom: solid 2px transparent;
+}
+body > header nav li:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-bottom: solid 2px #ffffff;
+}
+body > header .logo {
+    float: left;
+    padding: 15px;
+}
+.default-input:focus {
+    -webkit-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -o-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -ms-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -moz-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
 }
 .container {
     margin: 20% 0 10px;
@@ -18,11 +64,11 @@ body {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     border-radius: 5px;
-    -webkit-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
-    -o-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
-    -ms-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
-    -moz-box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
-    box-shadow: 0.5px 0.5px 5px #8898a0, -0.5px -0.5px 5px #8898a0;
+    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
     max-width: 532px;
 }
 .login-container > header {
@@ -68,7 +114,7 @@ body {
     padding: 10px 0px;
     margin: 10px 10px 10px 0px;
     width: 85px;
-    background-color: #3bbbff;
+    background-color: #3499b8;
     color: #fff;
     -webkit-border-radius: 5px;
     -o-border-radius: 5px;

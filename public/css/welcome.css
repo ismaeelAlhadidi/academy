@@ -1,0 +1,332 @@
+body, html {
+    direction: rtl;
+}
+body > header {
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    overflow: hidden;
+    color: #fff;
+    -moz-transition: background-color .75s ease-in-out;
+    -webkit-transition: background-color .75s ease-in-out;
+    -ms-transition: background-color .75s ease-in-out;
+    transition: background-color .75s ease-in-out;
+}
+body > header nav {
+    float: right;
+    height: inherit;
+    background-color: transparent;
+    padding: 0px;
+}
+body > header nav li {
+    display: inline-block;
+    margin: 0px;
+    padding: 15px 20px;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    border-bottom: solid 2px transparent;
+}
+body > header nav li:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-bottom: solid 2px #ffffff;
+}
+body > header .logo {
+    float: left;
+    padding: 15px;
+}
+.top-section {
+    width: 100%;
+    padding-top: 50px;
+    min-height: 450px;
+    background-color: #3499b8;/*#3bbbff*/
+    color: #fff;
+    text-align: center;
+    background-attachment: fixed;
+    background-image: url(../images/static/bg.svg);
+    background-position: center center;
+    background-repeat: repeat;
+}
+.top-section > div {
+    width: 90%;
+    display: inline-block;
+    margin: 25px 5%;
+}
+.top-section > div h1 {
+    font-size: 28px;
+    margin: 10px 0px 25px;
+    font-weight: 600;
+}
+.top-section > div p {
+    font-size: 20px;
+    margin: 10px 0px;
+    color: #eee;
+    color: rgba(255, 255, 255, 0.75);
+}
+.top-section a {
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #fff !important;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    cursor: pointer;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    display: inline-block;
+    line-height: 3em;
+    text-align: center;
+    padding: 0em 1.5em;
+    border: solid 2px #ffffff;
+    font-size: 1.25em;
+    margin: 35px 20px;
+}
+.top-section a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+body > footer {
+    background-color: #363333;
+    color: #fff;
+    overflow: hidden;
+    text-shadow: -1px -1px 0px #181818;
+    padding: 30px 0;
+    background-color: #3499b8;
+    text-align: center;
+    background-attachment: fixed;
+    background-image: url(../images/static/bg.svg);
+}
+.footer-details, .social-midea {
+    text-align: center;
+    padding: 10px;
+}
+.footer-details {
+    margin: 25px 0px;
+}
+.footer-details > a {
+    display: inline-block;
+    margin: 0px 10px;
+    padding: 15px 0px;
+}
+.footer-details > a:hover {
+    cursor: pointer;
+    color: red;
+}
+.social-midea > a {
+    margin: 0px 10px;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    -moz-transition: background-color 0.25s ease-in-out;
+    -webkit-transition: background-color 0.25s ease-in-out;
+    -ms-transition: background-color 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out;
+    display: inline-block;
+    margin-bottom: 2em;
+    width: 3em;
+    height: 3em;
+    line-height: 6.6em;
+    border: solid 2px rgba(255, 255, 255, 0.35);
+    font-size: 26px;
+}
+.social-midea > a > span {
+    height: 5em;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 100%;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+.social-midea > a:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.about-coach {
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+    background-image: url("../images/static/gray-background.png");
+    padding: 15px 0px;
+}
+.about-coach img {
+    width: 300px;
+    height: 330px;/* remove */
+    margin: 15px 5% 10px;
+    -webkit-border-radius: 7px;
+    -o-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    border-radius: 7px;
+    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    background-image: url(../images/static/user-default.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.about-coach img:hover {
+    cursor: pointer;
+}
+.about-coach p {
+    padding: 10px;
+    font-size: 18px;
+    line-height: 34px;
+    text-align: right;
+    margin: 10px;
+    color: #888;
+}
+.about-coach p > span {
+    font-size: 26px;
+    display: block;
+    margin-bottom: 10px;
+    color: #000;
+}
+.welcome-playlists {
+    margin: 0px 0px;
+    text-align: center;
+    background-image: url("../images/static/gray-background.png");
+    background-color: #fafafa;
+    padding: 20px 0px;
+}
+.welcome-playlist {
+    width: 300px;
+    margin: 20px 5px;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 350px;
+    display: inline-block;
+    position: relative;
+    -moz-transition: box-shadow .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: box-shadow .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: box-shadow .25s ease-in-out, color .25s ease-in-out;
+    transition: box-shadow .25s ease-in-out, color .25s ease-in-out;
+}
+.welcome-playlist:hover {
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 0px 1px #00BCD4, 0px 2px 3px 0px #00BCD4;
+    -o-box-shadow: inset 0px 0px 0px 1px #00BCD4, 0px 2px 3px 0px #00BCD4;
+    -ms-box-shadow: inset 0px 0px 0px 1px #00BCD4, 0px 2px 3px 0px #00BCD4;
+    -moz-box-shadow: inset 0px 0px 0px 1px #00BCD4, 0px 2px 3px 0px #00BCD4;
+    box-shadow: inset 0px 0px 0px 1px #00BCD4, 0px 2px 3px 0px #00BCD4;
+    color: #00BCD4;
+}
+.welcome-playlist:hover img {
+    -webkit-background-size: 50% auto;
+    -o-background-size: 50% auto;
+    -ms-background-size: 50% auto;
+    -moz-background-size: 50% auto;
+    background-size: 50% auto;
+}
+.welcome-playlist img {
+    width: 100%;
+    height: 180px;
+    background-image: url(../images/static/playlist-default.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    -moz-transition: background-size .5s ease-in-out;
+    -webkit-transition: background-size .5s ease-in-out;
+    -ms-transition: background-size .5s ease-in-out;
+    transition: background-size .5s ease-in-out;
+}
+.welcome-playlist div {
+    margin-top: 5px;
+    height: 160px;
+    padding: 0px 5px 35px;
+}
+.welcome-playlist h3 {
+    font-size: 24px;
+    height: 50px;
+    width: 290px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.welcome-playlist p {
+    color: #888;
+    height: 70px;
+    width: 290px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.welcome-playlist .playlist-price, .welcome-playlist .playlist-time {
+    font-size: 16px;
+    position: absolute;
+    bottom: 5px;
+}
+.welcome-playlist .playlist-price {
+    color: #3499b8;
+    left: 15px;
+}
+.welcome-playlist .playlist-time {
+    color: red;
+    right: 15px;
+}
+@media (min-width: 390px) {
+    .welcome-playlist {
+        width: 350px;
+        margin: 30px 10px;
+        height: 400px;
+    }
+    .welcome-playlist div {
+        height: 185px;
+    }
+    .welcome-playlist img {
+        height: 205px;
+    }
+    .welcome-playlist h3 {
+        height: 50px;
+        width: 340px;
+    }
+    .welcome-playlist p {
+        height: 95px;
+        width: 340px;
+    }
+}
+@media (min-width: 576px) {
+    
+}
+@media (min-width: 768px) {
+    .about-coach div {
+        width: 40%;
+    }
+    .about-coach img {
+        width: 320px;
+        margin: 15px 5px 10px;
+    }
+    .about-coach p {
+        width: 52%;
+        margin: 10px 4% 10px 4%;
+        padding-top: 30px;
+    }
+    .about-coach div, .about-coach p {
+        float: right;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .footer-details {
+        float: left;
+    } 
+    .social-midea {
+        float: right;
+    }
+    .welcome-playlist {
+        margin: 30px 15px;
+    }
+}

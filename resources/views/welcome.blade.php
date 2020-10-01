@@ -2,15 +2,71 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
         <title>Laravel</title>
+        <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\default.css') }}" />
+        <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\welcome.css') }}" />
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    </head>
+    <body>
+        <header id="header" class="no-select"><nav><ul><a href="{{ route('login') }}"><li>{{ __('title.adminLogin') }}</li></a><a href="{{ route('register') }}"><li>{{ __('title.Register') }}</li></a></ul></nav><div class="logo">logo</div></header>
+        <section id="topSection" class="top-section section-borders no-select">
+            <div>
+                <h1>Title</h1>
+                <p>this statment can fixed it or change it</p>
+                <a href="{{ route('register') }}"> {{ __('title.Register') }} </a><a href="{{ route('login') }}"> {{ __('title.adminLogin') }} </a>
+            </div>
+        </section>
+        <div class="main section-borders">
+            <section class="welcome-playlists section-borders">
+                @for($i = 0; $i < 9; $i++)
+                    <div class="welcome-playlist no-select" onclick="openPlaylistTemplate('1');">
+                        <img/>
+                        <div>
+                            <h3>Title Title Title Title Title Title Title Title</h3>
+                            <p>description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description</p>
+                        </div>
+                        <span class="playlist-price">price</span>
+                        <span class="playlist-time">Time to redy</span>
+                    </div>
+                @endfor
+            </section>
+            <div class="clear-float"></div>
+            <section class="about-coach section-borders">
+                <div class="no-select"><img/></div><p><span>Title</span> this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it</p>
+            </section>
+        </div>
+        <footer class="section-borders no-select">
+            <section class="social-midea"><a><span class="fa">&#xf082;</span></a><a><span class="fa">&#xf16d;</span></a><a><span class="fa">&#xf232;</span></a></section>
+            <section class="footer-details"><span>&copy; for this site</span> <a>{{ __('auth.privacy') }}</a> <a>{{ __('auth.security') }}</a></section>
+        </footer>
+        <div id="playlistTemplate" class="pop-up-template template-of-this-playlist big-template no-select" style="display: none;">
+            <header><div><canvas id="exitButtonCanvasOfPlaylistTemplate" width="25" height="25"></canvas></div></header>
+            <div id="contentOfPlaylistTemplate"></div>
+        </div>
+        <script type="text/javascript" lang="javascript" src="{{ asset('js\drawCanvas.js') }}"></script>
+        <script type="text/javascript" lang="javascript" src="{{ asset('js\ajax.js') }}"></script>
+        <script type="text/javascript" lang="javascript" src="{{ asset('js\styleEfect.js') }}"></script>
+        <script type="text/javascript" lang="javascript" src="{{ asset('js\welcome.js') }}"></script>
+        <script type="text/javascript" lang="javascript">
+            var exitButtonCanvasOfPlaylistTemplate = document.getElementById('exitButtonCanvasOfPlaylistTemplate'),
+                playlistTemplate = document.getElementById('playlistTemplate'),
+                playlistNotForUseAlert = '{{ __() }}';
 
-        <!-- Styles -->
-        <style>
+            if(exitButtonCanvasOfPlaylistTemplate != null) {
+                exitButtonCanvasOfPlaylistTemplate.width = 25;
+                exitButtonCanvasOfPlaylistTemplate.height = 25;
+                if(typeof(drawRemoveIconCanvas) == "function") drawRemoveIconCanvas(exitButtonCanvasOfPlaylistTemplate,'#ffffff');
+                exitButtonCanvasOfPlaylistTemplate.onclick = function () {
+                    if(typeof(closeBobUpTemplate) == "function") closeBobUpTemplate(playlistTemplate);
+                };
+            }
+
+        </script>
+    </body>
+</html>
+<!-- 
+    <style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -61,10 +117,8 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
+        </style>s
+<div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -95,5 +149,4 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
+-->
