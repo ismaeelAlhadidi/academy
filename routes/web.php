@@ -12,15 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'blob' ,'middleware' => 'access'],function() { 
+Route::group(['prefix' => 'blob' ,'middleware' => 'access'],function() {
     Route::get('/video/{video}','BlobController@getVideo');
     Route::get('/audio/{audio}','BlobController@getAudio');
     Route::get('/book/{book}','BlobController@getBook');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
+Route::get('/getOpinionsOfPlaylist/{id}', 'WelcomeController@getOpinionsOfPlaylist');
 
 Auth::routes(["verify" => "true"]);
 /* 

@@ -19,17 +19,17 @@
         </section>
         <div class="main section-borders">
             <section class="welcome-playlists section-borders">
-                @for($i = 0; $i < 9; $i++)
-                    <div class="welcome-playlist no-select" onclick="openPlaylistTemplate('1');">
-                        <img/>
+                @foreach($playlists as $playlist)
+                    <div class="welcome-playlist no-select" onclick="openPlaylistTemplate('{{ $playlist->id }}');">
+                        <img style="background-image: url({{ asset($playlist->poster) }})"/>
                         <div>
-                            <h3>Title Title Title Title Title Title Title Title</h3>
-                            <p>description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description description</p>
+                            <h3>{{ $playlist->title }}</h3>
+                            <p>{{ $playlist->description }}</p>
                         </div>
-                        <span class="playlist-price">price</span>
-                        <span class="playlist-time">Time to redy</span>
+                        <span class="playlist-price">{{ $playlist->price . ' $' }}</span>
+                        <span class="playlist-time">{{ $playlist->availability_time }}</span>
                     </div>
-                @endfor
+                @endforeach
             </section>
             <div class="clear-float"></div>
             <section class="about-coach section-borders">
@@ -42,7 +42,16 @@
         </footer>
         <div id="playlistTemplate" class="pop-up-template template-of-this-playlist big-template no-select" style="display: none;">
             <header><div><canvas id="exitButtonCanvasOfPlaylistTemplate" width="25" height="25"></canvas></div></header>
-            <div id="contentOfPlaylistTemplate"></div>
+            <div id="contentOfPlaylistTemplate" class="welcome-playlist-opend-template">
+                <section>
+                    <p>{{ __('masseges.to-show-playlist-signIn') }}</p>
+                    <div><a href="{{ route('register') }}"> {{ __('title.Register') }} </a></div><div><a href="{{ route('login') }}"> {{ __('title.adminLogin') }} </a></div>
+                </section>
+                <h2 id="opinionsHeader">{{ __('masseges.users-opinions-of-this-playlist') }}</h2>
+                <div id="opinionsContainer" class="opinions-outer-container">
+                    <section id="opinionsSection" class="opinions-inner-container"></section>
+                </div>
+            </div>
         </div>
         <script type="text/javascript" lang="javascript" src="{{ asset('js\drawCanvas.js') }}"></script>
         <script type="text/javascript" lang="javascript" src="{{ asset('js\ajax.js') }}"></script>
@@ -51,7 +60,7 @@
         <script type="text/javascript" lang="javascript">
             var exitButtonCanvasOfPlaylistTemplate = document.getElementById('exitButtonCanvasOfPlaylistTemplate'),
                 playlistTemplate = document.getElementById('playlistTemplate'),
-                playlistNotForUseAlert = '{{ __() }}';
+                playlistNotForUseAlert = '{{ __('masseges.playlist-deleted') }}';
 
             if(exitButtonCanvasOfPlaylistTemplate != null) {
                 exitButtonCanvasOfPlaylistTemplate.width = 25;

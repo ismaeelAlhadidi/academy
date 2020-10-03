@@ -278,6 +278,112 @@ body > footer {
     color: red;
     right: 15px;
 }
+.welcome-playlist-opend-template > section {
+    width: 100%;
+    text-align: center;
+    padding: 25px 10px;
+}
+.welcome-playlist-opend-template > section > p {
+    font-size: 24px;
+    color: #3499b8;
+}
+.welcome-playlist-opend-template > section > div {
+    display: inline-block;
+    background-color: #3499b8;
+    margin: 35px 20px;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+.welcome-playlist-opend-template > section > div > a {
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #fff !important;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    display: inline-block;
+    line-height: 3em;
+    text-align: center;
+    padding: 0em 1.5em;
+    border: solid 2px #ffffff;
+    font-size: 1.25em;
+    margin: 0;
+}
+.welcome-playlist-opend-template > section > div:hover > a {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.welcome-playlist-opend-template > h2 {
+    text-align: right;
+    padding: 10px 55px 10px 10px;
+    color: #3499b8;
+    margin-bottom: 25px;
+}
+.opinions-outer-container {
+    background-color: #ffffff;
+    border-top: solid 2px #eeeeee;
+    padding: 4em 4em 2em 4em;
+}
+.opinions-outer-container * {
+    vertical-align: baseline;
+}
+.opinions-inner-container {
+    width: 100%;
+}
+.opinion {
+    color: #999999;
+    letter-spacing: -0.015em;
+    margin: 0 0 2em 0;
+    border-top: solid 2px #eeeeee;
+    margin-bottom: 0;
+    margin-top: 3em;
+    padding-top: 55px;
+    position: relative;
+}
+.opinion:first-child {
+    border-top: 0;
+    margin-top: 0;
+}
+.opinion .image {
+    width: 50px;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    display: block;
+    -webkit-box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px #e6e6e6;
+    -o-box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px #e6e6e6;
+    -ms-box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px #e6e6e6;
+    -moz-box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px #e6e6e6;
+    box-shadow: 0 0 0 4px #ffffff, 0 0 0 5px #e6e6e6;
+    border: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.opinion .image img {
+    display: block;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    width: 100%;
+}
+.opinion .content {
+    padding-top: 10px;
+    padding-right: 10px;
+}
 @media (min-width: 390px) {
     .welcome-playlist {
         width: 350px;
@@ -328,5 +434,46 @@ body > footer {
     }
     .welcome-playlist {
         margin: 30px 15px;
+    }
+    .opinion {
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: flex;
+        -moz-align-items: center;
+        -webkit-align-items: center;
+        -ms-align-items: center;
+        align-items: center;
+        padding-top: 3em;
+    }
+    .opinion:first-child {
+        padding-top: 0;
+    }
+    .opinion .image {
+        width: 25%;
+        margin: 0 0 0 3em;
+        position: relative;
+    }
+    .opinion .content {
+        width: 75%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .opinion .content h3 {
+        font-size: 1.5em;
+        line-height: 1.5em;
+        color: #828282;
+        font-weight: normal;
+        margin: 0 0 1em 0;
+        letter-spacing: -0.0125em;
+    }
+    .opinion:nth-child(2n) {
+        -moz-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+    }
+    .opinion:nth-child(2n) .image {
+        margin: 0 3em 0 0;
     }
 }

@@ -27,4 +27,7 @@ class Playlist extends Model
     public function types() {
         return $this->belongsToMany('App\Models\Type','playlist_type','playlist_id','type_id','id','id');
     }
+    public function specialPlaylist() {
+        return $this->belongsTo('App\Models\SpecialPlaylist', 'special_playlist_id', 'id');
+    }
 }
