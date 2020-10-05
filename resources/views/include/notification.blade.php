@@ -5,27 +5,31 @@
             @forelse(session()->get('notifcations') as $notifcation)
                 <div class="transition{{ $notifcation['readed'] ? '' : ' not-readed'}}" 
                     id="notifcation{{ $notifcation['type'] . $notifcation['id'] }}"   
-                    onclick="showNotifcation({{ $notifcation['id'] }},'{{ $notifcation['type'] }}',
-                    [
-                        /* 00 => */ '{{ __('masseges.general-error') }}',
-                        /* 01 => */ '{{ __('masseges.hidden')}}',
-                        /* 02 => */ '{{ __('masseges.visible')}}',
-                        /* 03 => */ '{{ __('masseges.session-reverse-admission') }}',
-                        /* 04 => */ '{{ __('masseges.session-set-admission') }}',
-                        /* 05 => */ '{{ __('masseges.session-set-admission-ask') }}',
-                        /* 06 => */ '{{ __('masseges.session-reverse-admission-ask') }}',
-                        /* 07 => */ '{{ __('masseges.ok') }}',
-                    ]);"> <!-- this lang array of needed statement from server to use it with javascript -->
+                    @auth('admin')
+                        onclick="showNotifcation({{ $notifcation['id'] }},'{{ $notifcation['type'] }}',
+                        [
+                            /* 00 => */ '{{ __('masseges.general-error') }}',
+                            /* 01 => */ '{{ __('masseges.hidden')}}',
+                            /* 02 => */ '{{ __('masseges.visible')}}',
+                            /* 03 => */ '{{ __('masseges.session-reverse-admission') }}',
+                            /* 04 => */ '{{ __('masseges.session-set-admission') }}',
+                            /* 05 => */ '{{ __('masseges.session-set-admission-ask') }}',
+                            /* 06 => */ '{{ __('masseges.session-reverse-admission-ask') }}',
+                            /* 07 => */ '{{ __('masseges.ok') }}',
+                        ]);"
+                    @else 
+                        onclick="console.log('this-user-notifcations');"
+                    @endauth > <!-- this lang array of needed statement from server to use it with javascript -->
                     <img src="{{ $notifcation['image'] }}" />
                     <span>{{ Date('F j, Y, g:i a',strtotime($notifcation['time'])) }}</span>
                     <span class="text">{{ $notifcation['content'] }}</span>
                 </div>
             @empty
-				<section>لا يوجد اشعارات جديدة</section>
+				<section>{{ __('notifcations.no-new-notifcations') }}</section>
             @endforelse
             {{ session()->forget('notifcations') }}
         @else
-			<section>لا يوجد اشعارات جديدة</section>
+			<section>{{ __('notifcations.no-new-notifcations') }}</section>
 		@endif
 	</div>
 </div>

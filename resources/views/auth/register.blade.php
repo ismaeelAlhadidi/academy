@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="container standerd-direction">
-    <div class="login-container">
+    <div class="login-container  no-select">
         <header>{{ __('title.Register') }}</header>
 
         <div class="login-body">

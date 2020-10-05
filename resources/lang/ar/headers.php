@@ -19,4 +19,6 @@ return [
     'audios' => 'التسجيلات',
     'books' => 'الكتب',
     'admin-navbar-add-offer-session' => 'اضافة عرض',
+    'navbar-my-playlists' => 'قائمة دوراتي',
+    'navbar-my-account' => 'حسابي',
 ];

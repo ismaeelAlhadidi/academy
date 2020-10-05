@@ -23,4 +23,9 @@ return [
     'for-who-not' => 'لمن لا تصلح',
     'desc' => 'الوصف',
     'form-url' => 'رابط الفورم',
+    'subscriptions-of-this-playlist' => 'اشترك بالدورة',
+    'show-playlist' => 'عرض الدورة',
+    'request-the-session' => 'طلب الجلسة',
+    'time' => 'الوقت',
+    'date' => 'التاريخ',
 ];

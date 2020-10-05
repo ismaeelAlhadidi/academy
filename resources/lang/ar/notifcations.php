@@ -6,4 +6,5 @@ return [
     'comment' => 'علق على',
     'replay' => 'رد على تعليق',
     'session' => 'يطلب جلسة',
+    'no-new-notifcations' => 'لا يوجد اشعارات جديدة',
 ];

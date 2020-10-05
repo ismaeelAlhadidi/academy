@@ -36,4 +36,5 @@ return [
     'click here to request another' => 'اعادة ارسال رابط التفعيل',
     'Before proceeding, please check your email for a verification link.' => 'الرجاء التحقق من بريدك اذا استقبل رابط التفعيل !',
     'If you did not receive the email' => 'اذا لم تستقبل بريد الكتروني اضغط زر اعادة الارسال',
+    'Logout' => 'خروج',
 ];

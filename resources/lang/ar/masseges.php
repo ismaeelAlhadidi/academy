@@ -124,6 +124,12 @@ return [
     'not-fixed' => 'غير محدد',
     'not-available' => 'غير متاحة حاليا',
     'playlist-deleted' => 'الدورة غير موجودة, قد تكون حذفت او هنالك عطل بالسيرفر الرجاء المحاولة في وقت اخر !',
+    'session-deleted' => 'هذه الجلسة غير متاحة حاليا الرجاء المحاولة في وقت لاحق',
     'to-show-playlist-signIn' => 'الرجاء الدخول للموقع لمشاهدة هذه الدورة !',
-    'users-opinions-of-this-playlist' => 'اراء المستخدمين في هذه الدورة'
+    'users-opinions-of-this-playlist' => 'اراء المستخدمين في هذه الدورة',
+    'no-playlists-available-now' => 'لا يوجد دورات متاحة حاليا',
+    'hours' => 'ساعات',
+    'hour' => 'ساعة',
+    'two-hours' => 'ساعتان',
+    'duration-not-fixed' => 'المدة غير محددة',
 ];

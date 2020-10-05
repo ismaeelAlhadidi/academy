@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="container standerd-direction">
-    <div class="login-container">
+    <div class="login-container no-select">
         <header>{{ __('title.adminLogin') }}</header>
         <div class="login-body">
             <form method="POST" action="{{ route('login') }}">
