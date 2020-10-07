@@ -75,7 +75,8 @@ class HomeController extends Controller
             } elseif (! $playlist->available) {
                 $playlist->availability_time = __('masseges.not-available');
             }
-            if($playlist->price == 0) $playlist->price = null;
+            if($playlist->price == 0) $playlist->price = __('masseges.free');
+            else  $playlist->price .= ' $';
             return $playlist;
         });
         return view('home', ['playlists' => $playlists]);

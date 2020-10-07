@@ -26,7 +26,7 @@
                             <h3>{{ $playlist->title }}</h3>
                             <p>{{ $playlist->description }}</p>
                         </div>
-                        <span class="playlist-price">{{ $playlist->price . ' $' }}</span>
+                        <span class="playlist-price">{{ $playlist->price }}</span>
                         <span class="playlist-time">{{ $playlist->availability_time }}</span>
                     </div>
                 @endforeach

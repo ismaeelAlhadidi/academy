@@ -39,12 +39,37 @@ class SessionController extends Controller
     }
     public function getSessionOfferData($id) {
         $offer = SessionsOffer::find($id);
-        if(! $offer) abort(404);
+        if(! $offer) return abort(404);
         return $this->getResponse(true,'',$offer);
     }
 
     public function requestSession(Request $request) {
-        $validator = Validator::make($data, $rules);
-        if(! $validator) return $this->getResponse(true,'',$offer);
+        $data = array();
+        if($request->has('date')) $data['date'] = $request->input('date');
+        if($request->has('time')) $data['time'] = $request->input('time');
+        if($request->has('id')) {
+            $offer = SessionsOffer::find($request->input('id'));
+            if(! $offer) return abort(404);
+            $data['sessions_offer_id'] = $request->input('id');
+        }
+        $rules = [
+            'date' => 'required|date',
+            'time' => 'required|date_format:H:i',
+            'sessions_offer_id' => 'integer',
+        ];
+        $validator = Validator::make($data,$rules);
+        if($validator->fails()) {
+            return $this->getResponse(false, __('masseges.data-not-valid'), ['invalid']);
+        }
+        $data['time'] = $data['date'] . ' ' . $data['time'];
+        $data['user_id'] = auth()->user()->id;
+        if(strtotime($data['time']) <= time()) {
+            return $this->getResponse(false, __('masseges.data-not-valid'), ['invalid']);
+        }
+        $session = SessionsOnline::create($data);
+        if(! $session) {
+            return $this->getResponse(false, __('masseges.session-deleted'), null);
+        }
+        return $this->getResponse(true, __('masseges.session-online-requested'), null);
     }
 }

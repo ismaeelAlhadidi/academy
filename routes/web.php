@@ -35,6 +35,9 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function()
     });
 });
 
+Route::post('/pay-playlist', 'PaymentController@paywithpaypal')->name('paywithpaypal');
+Route::get('/pay-status', 'PaymentController@getPaymentStatus')->name('pay.status');
+
 Auth::routes(["verify" => "true"]);
 /* 
     Uses HTTPS

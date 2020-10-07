@@ -46,12 +46,12 @@ function setTitleInPlaylistTemplate(title) {
 }
 function setRouteInPlaylistTemplate(id) {
     var showButtonInPlaylistTemplate = document.getElementById('showButtonInPlaylistTemplate'),
-        subscriptionButtonInPlaylistTemplate = document.getElementById('subscriptionButtonInPlaylistTemplate');
+        idInputOfSelectedPlaylistToPay = document.getElementById('idInputOfSelectedPlaylistToPay');
     if(showButtonInPlaylistTemplate != null) {
         showButtonInPlaylistTemplate.setAttribute('href', showButtonInPlaylistTemplate.getAttribute('href') + '/' + id);
     }
-    if(subscriptionButtonInPlaylistTemplate != null) {
-        subscriptionButtonInPlaylistTemplate.setAttribute('href', subscriptionButtonInPlaylistTemplate.getAttribute('href') + '/' + id);
+    if(idInputOfSelectedPlaylistToPay != null) {
+        idInputOfSelectedPlaylistToPay.value = id;
     }
 }
 
@@ -104,18 +104,20 @@ function setContentToSessionDataDiv(data, div) {
                         `<div><span>${sessionOfferLang[0]}</span><span>${data.for_who}</span></div>`
                     ) : ''}
                     ${data.for_who_not != null ? (
-                        `<div><span>${sessionOfferLang[0]}</span><span>${data.for_who_not}</span></div>`
+                        `<div><span>${sessionOfferLang[1]}</span><span>${data.for_who_not}</span></div>`
                     ) : ''}
                     ${data.benefits != null ? (
-                        `<div><span>${sessionOfferLang[0]}</span><span>${data.benefits}</span></div>`
+                        `<div><span>${sessionOfferLang[2]}</span><span>${data.benefits}</span></div>`
                     ) : ''}
                     ${data.notes != null ? (
-                        `<div><span>${sessionOfferLang[0]}</span><span>${data.notes}</span></div>`
+                        `<div><span>${sessionOfferLang[3]}</span><span>${data.notes}</span></div>`
                     ) : ''}`;
 }
 function openRequestToSessionTemplate(id) {
     if(requestToSessionTemplate == null) return;
     requestToSessionTemplate.style = '';
+    if(inputDateOfRequestToSession != null) inputDateOfRequestToSession.setAttribute('class', '');
+    if(inputTimeOfRequestToSession != null) inputTimeOfRequestToSession.setAttribute('class', '');
     if(buttonSendRequestToSession != null) {
         buttonSendRequestToSession.onclick = function () {
             var formData = new FormData();
@@ -137,12 +139,24 @@ function openRequestToSessionTemplate(id) {
                         if(jsonResponse.hasOwnProperty('data')) {
                             if(typeof(jsonResponse.data) == "object") {
                                 showPopUpMassage(jsonResponse.msg,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+                                inputDateOfRequestToSession.value = '';
+                                inputTimeOfRequestToSession.value = '';
                                 requestToSessionTemplate.style = 'display: none !important;';
                                 return;
                             }
                         }
                     } else if(jsonResponse.hasOwnProperty('msg')) {
                         showPopUpMassage(jsonResponse.msg,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+                        if(jsonResponse.hasOwnProperty('data')) {
+                            if(typeof(jsonResponse.data) == "object") {
+                                if(jsonResponse.data.length == 1) {
+                                    if(jsonResponse.data[0] == 'invalid') {
+                                        inputDateOfRequestToSession.setAttribute('class', 'input-invalid');
+                                        inputTimeOfRequestToSession.setAttribute('class', 'input-invalid');
+                                    }
+                                }
+                            }
+                        }
                         return;
                     }
                     showPopUpMassage(SessionNotForUseAlert,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);

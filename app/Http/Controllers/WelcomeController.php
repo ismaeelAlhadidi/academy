@@ -15,6 +15,18 @@ class WelcomeController extends Controller
     public function index () {
         $countOfSpecialPlaylistsInWelcomePage = 9;
         $playlists = SpecialPlaylist::offset(0)->limit($countOfSpecialPlaylistsInWelcomePage)->orderBy('id', 'desc')->get();
+        if( $playlists) {
+            $playlists->transform(function ($playlist) {
+                if($playlist->availability_time != null) {
+                    $playlist->availability_time = Date('F j, Y, g:i a',strtotime($playlist->availability_time));
+                } elseif (! $playlist->available) {
+                    $playlist->availability_time = __('masseges.not-available');
+                }
+                if($playlist->price == 0) $playlist->price = __('masseges.free');
+                else  $playlist->price .= ' $';
+                return $playlist;
+            });
+        }
         if(! $playlists) {
             $playlists = Playlist::offset(0)->limit($countOfSpecialPlaylistsInWelcomePage)->orderBy('id', 'desc')->get();
             $playlists->transform(function ($playlist) {
@@ -23,7 +35,8 @@ class WelcomeController extends Controller
                 } elseif (! $playlist->available) {
                     $playlist->availability_time = __('masseges.not-available');
                 }
-                if($playlist->price == 0) $playlist->price = null;
+                if($playlist->price == 0) $playlist->price = __('masseges.free');
+                else $playlist->price .= ' $';
                 return $playlist;
             });
         } else if($playlists->count() == 0) {
@@ -34,7 +47,8 @@ class WelcomeController extends Controller
                 } elseif (! $playlist->available) {
                     $playlist->availability_time = __('masseges.not-available');
                 }
-                if($playlist->price == 0) $playlist->price = null;
+                if($playlist->price == 0) $playlist->price = __('masseges.free');
+                else  $playlist->price .= ' $';
                 return $playlist;
             });
         } else if($playlists->count() < $countOfSpecialPlaylistsInWelcomePage) {
@@ -46,7 +60,8 @@ class WelcomeController extends Controller
                 } elseif (! $data->available) {
                     $data->availability_time = __('masseges.not-available');
                 }
-                if($data->price == 0) $data->price = null;
+                if($data->price == 0) $data->price = __('masseges.free');
+                else $data->price .= ' $';
                 return $data;
             });
             $normalPlaylists = Playlist::offset(0)->limit($limitFromNormalPlaylists)->orderBy('id', 'desc')->get();
@@ -56,7 +71,8 @@ class WelcomeController extends Controller
                 } elseif (! $playlist->available) {
                     $playlist->availability_time = __('masseges.not-available');
                 }
-                if($playlist->price == 0) $playlist->price = null;
+                if($playlist->price == 0) $playlist->price = __('masseges.free');
+                else $playlist->price .= ' $';
                 return $playlist;
             });
             $playlists = $playlists->merge($normalPlaylists);
