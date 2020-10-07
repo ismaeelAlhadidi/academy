@@ -35,6 +35,24 @@
             <section class="about-coach section-borders no-select">
                 <div class="no-select"><img/></div><p><span>Title</span> this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it</p>
             </section>
+            @if($coachOpinions->count() > 0)
+            <section class="coach-opinions section-borders no-select">
+                <h2>{{ __('masseges.users-coach-opinions') }}</h2>
+                <div class="opinions-outer-container">
+                    <div class="opinions-inner-container">
+                        @foreach($coachOpinions as $coachOpinion)
+                        <div class="opinion">
+                            <div class="image"><img src="{{ $coachOpinion->user->image }}" title="{{ $coachOpinion->user->first_name . ' ' . $coachOpinion->user->last_name }}"/></div>
+                            <div class="content">
+                                <h3>{{ $coachOpinion->user->first_name . ' ' . $coachOpinion->user->last_name }}</h3>
+                                <p>{{ $coachOpinion->content }}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
         </div>
         <footer class="section-borders no-select">
             <section class="social-midea"><a><span class="fa">&#xf082;</span></a><a><span class="fa">&#xf16d;</span></a><a><span class="fa">&#xf232;</span></a></section>

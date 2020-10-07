@@ -278,6 +278,29 @@ body > footer {
     color: red;
     right: 15px;
 }
+.coach-opinions { 
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+    background-image: url("../images/static/gray-background.png");
+    padding: 15px 0px;
+    padding-bottom: 55px;
+}
+.coach-opinions .opinions-outer-container {
+    background-color: #fff;
+    overflow: hidden;
+    text-align: center;
+    background-image: url("../images/static/gray-background.png");
+    border-top: none;
+}
+.coach-opinions h2 {
+    text-align: right;
+    padding: 10px 55px 10px 10px;
+    color: #3499b8;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    font-size: 28px;
+}
 @media (min-width: 390px) {
     .welcome-playlist {
         width: 350px;
@@ -328,5 +351,33 @@ body > footer {
     }
     .welcome-playlist {
         margin: 30px 15px;
+    }
+    .coach-opinions .opinions-inner-container {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .coach-opinions h2 {
+        padding-right: 100px;
+    }
+}
+@media (min-width: 992px) {
+    .coach-opinions .opinions-inner-container {
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+    .coach-opinions h2 {
+        padding-right: 120px;
+    }
+}
+@media (min-width:1200px) {
+    .coach-opinions .opinions-inner-container {
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+    .coach-opinions h2 {
+        padding-right: 140px;
     }
 }

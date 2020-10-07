@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SpecialPlaylist;
 use App\Models\Playlist;
 use App\Models\PlaylistOpinion;
+use App\Models\CoachOpinion;
 use App\Traits\AjaxResponse;
 
 class WelcomeController extends Controller
@@ -77,7 +78,8 @@ class WelcomeController extends Controller
             });
             $playlists = $playlists->merge($normalPlaylists);
         }
-        return view('welcome', ['playlists' => $playlists]);
+        $coachOpinions = CoachOpinion::where('allow', 1)->offset(0)->limit(10)->orderBy('id', 'desc')->get();
+        return view('welcome', ['playlists' => $playlists, 'coachOpinions' => $coachOpinions]);
     }
 
     public function getOpinionsOfPlaylist($id) {

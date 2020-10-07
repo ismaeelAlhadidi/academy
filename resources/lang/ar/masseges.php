@@ -138,4 +138,5 @@ return [
     'Payment-success' => 'تمت عملية الدفع بنجاح',
     'Connection-timeout' => 'قطع الاتصال الرجاء المحاولة مرة اخرى !',
     'subscription-success' => 'تم الاشتراك بالدورة',
+    'users-coach-opinions' => 'اراء المتدربين في المدرب',
 ];
