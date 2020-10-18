@@ -32,6 +32,11 @@ body > header nav li {
     transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
     border-bottom: solid 2px transparent;
 }
+body > header nav .icon {
+    padding: 12.5px 20px 7.5px;
+    font-size: 24px;
+    line-height: 1;
+}
 body > header nav li:hover {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.15);
@@ -408,6 +413,39 @@ body > aside {
 }
 .request-session > section span {
     color: #3499b8;
+}
+.default-authenticated-button {
+    background-color: #3499b8;
+    margin: 10px 0;
+    padding: 0;
+    display: inline-block;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    border-color: rgba(255, 255, 255, 0.35);
+    border: solid 2px #ffffff;
+}
+.default-authenticated-button > button {
+    cursor: pointer;
+    color: #fff !important;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    display: inline-block;
+    text-align: center;
+    padding: 0em 1.3em;
+    background-color: transparent;
+}
+.default-authenticated-button:hover > button {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 @media (min-width: 390px) {
     .welcome-playlist {

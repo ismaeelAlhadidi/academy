@@ -1,0 +1,177 @@
+.user-data-content {
+    width: 100%;
+    background-color: #fff;
+    margin-top: 50px;
+    padding: 10px;
+    text-align: center;
+    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+}
+.user-data-content .user-image {
+    width: 90%;
+    margin: 5px 5% 20px;
+}
+.user-data-content .user-image img {
+    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    border: 1.5px solid #3499b8;
+}
+.user-data-content .user-image img, .user-data-content .user-image > div, .user-data-content .user-image > div div {
+    width: 200px;
+    height: 200px;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    display: inline-block;
+}
+.user-data-content .user-image > div {
+    position: relative;
+    cursor: pointer;
+}
+.user-data-content .user-image > div div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: transparent;
+    background-color: transparent;
+    -moz-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: background-color .25s ease-in-out, color .25s ease-in-out;
+}
+.user-data-content .user-image > div div > span {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 45%;
+    text-align: center;
+}
+.user-data-content .user-image > div:hover div {
+    color: #fff;
+    background-color: #3499b8bf;
+}
+.user-data-content .user-data {
+    width: 90%;
+    margin: 5px 5%;
+}
+.user-data-content .user-data form div {
+    margin: 10px 0;
+}
+.user-data-content .user-data form div span {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    color: #3499b8;
+    padding: 7.5px 0px;
+}
+.user-data-content .user-data input[type="text"] {
+    padding: 7.5px;
+    color: #000;
+    border: 1px solid #3499b8;
+    -webkit-border-radius: .25rem;
+    -o-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -moz-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -ms-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-color: #f9fcff;
+}
+.user-data-content .user-data input[type="text"]:focus {
+    -webkit-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -o-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -ms-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -moz-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+}
+.user-data-content .user-data footer div {
+    background-color: #3499b8;
+    margin: 10px 0;
+    padding: 0;
+    display: inline-block;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    border-color: rgba(255, 255, 255, 0.35);
+    border: solid 2px #ffffff;
+}
+.user-data-content .user-data input[type="button"], .user-data-content .user-data a {
+    cursor: pointer;
+    color: #fff !important;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    display: inline-block;
+    line-height: 2em;
+    text-align: center;
+    padding: 0em 1.3em;
+    font-size: 1.25em;
+    background-color: transparent;
+}
+.user-data-content .user-data div:hover input[type="submit"], .user-data-content .user-data div:hover a {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.user-data-content .user-data footer {
+    margin: 20px 0 10px;
+}
+@media (max-width: 360px) {
+    .user-data-content .user-data footer div {
+        display: block;
+    }
+}
+@media (min-width: 576px) {
+    .user-data-content .user-image img, .user-data-content .user-image > div, .user-data-content .user-image > div div  {
+        width: 250px;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) {
+    .user-data-content .user-image {
+        width: 42.5%;
+        margin: 15px 2.5% 20px;
+        display: inline-block;
+    }
+    .user-data-content .user-data {
+        width: 42.5%;
+        margin: 25px 2.5% 5px;
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+@media (min-width: 992px) {
+    .user-data-content .user-image img, .user-data-content .user-image > div, .user-data-content .user-image > div div  {
+        width: 300px;
+        height: 300px;
+    }
+}
+@media (min-width:1200px) {
+    .user-data-content .user-image {
+        margin: 15px 0 20px 5%;
+        text-align: left;
+    }
+    .user-data-content .user-data {
+        margin: 25px 5% 5px 0;
+        text-align: right;
+    }
+}

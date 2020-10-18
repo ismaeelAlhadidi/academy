@@ -28,4 +28,5 @@ return [
     'request-the-session' => 'طلب الجلسة',
     'time' => 'الوقت',
     'date' => 'التاريخ',
+    'send' => 'ارسال',
 ];

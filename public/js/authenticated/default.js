@@ -48,7 +48,7 @@ function setRouteInPlaylistTemplate(id) {
     var showButtonInPlaylistTemplate = document.getElementById('showButtonInPlaylistTemplate'),
         idInputOfSelectedPlaylistToPay = document.getElementById('idInputOfSelectedPlaylistToPay');
     if(showButtonInPlaylistTemplate != null) {
-        showButtonInPlaylistTemplate.setAttribute('href', showButtonInPlaylistTemplate.getAttribute('href') + '/' + id);
+        showButtonInPlaylistTemplate.setAttribute('href', window.location.origin + '/playlist/' + id);
     }
     if(idInputOfSelectedPlaylistToPay != null) {
         idInputOfSelectedPlaylistToPay.value = id;

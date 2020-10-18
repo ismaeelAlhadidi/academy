@@ -8,6 +8,7 @@
         <title>@yield('title')</title>
 
         @yield('preLinks')
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" />
         <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\default.css') }}" />
         @yield('links')
 

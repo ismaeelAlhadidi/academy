@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'blob' ,'middleware' => 'access'],function() {
+Route::group(['prefix' => 'blob'],function() { // ,'middleware' => 'access'
     Route::get('/video/{video}','BlobController@getVideo');
     Route::get('/audio/{audio}','BlobController@getAudio');
     Route::get('/book/{book}','BlobController@getBook');
@@ -28,10 +28,19 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function()
         Route::get('/playlist/subscription/{id?}', 'PlaylistController@subscription')->name('playlist.subscription');
     });
     Route::get('/sessions', 'SessionController@index')->name('sessions');
+    Route::get('/profile/{id?}', 'UserController@index')->name('user.profile');
     /****************************  AJAX Requests ****************************/
     Route::group(['prefix' => 'ajax'],function() {
         Route::get('/session-offer/{id}', 'SessionController@getSessionOfferData');
         Route::post('/session-offer/request', 'SessionController@requestSession');
+        Route::post('/profile/save-changes', 'UserController@saveChanges');
+        Route::post('/profile/change-image', 'UserController@changeImage');
+        Route::post('/post-opinion/playlist/{id}', 'UserController@postOpinionOfPlaylist');
+        Route::post('/post-opinion/coach', 'UserController@postOpinionOfCoach');
+        Route::post('/post-opinion/coach', 'UserController@postOpinionOfCoach');
+        Route::post('/playlist/{id}/post-comment/', 'UserController@postComment' );
+        Route::get('/playlist/{id}/more-comment/', 'PlaylistController@getMoreComments');
+        Route::post('/playlist/{id}/post-replay/', 'UserController@postReplay' );
     });
 });
 

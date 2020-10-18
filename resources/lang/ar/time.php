@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'before' => 'قبل',
+    'now' => 'الان',
+    'one-second' => 'ثانية',
+    'two-second' => 'ثانيتان',
+    'seconds' => 'ثواني',
+    'one-minute' => 'دقيقة',
+    'two-minute' => 'دقيقتان',
+    'minutes' => 'دقائق',
+    'one-hour' => 'ساعة',
+    'two-hour' => 'ساعتان',
+    'hours' => 'ساعات',
+    'one-day' => 'يوم',
+    'two-day' => 'يومان',
+    'days' => 'ايام',
+    'one-week' => 'اسبوع',
+    'two-week' => 'اسبوعان',
+    'weeks' => 'اسابيع',
+    'one-month' => 'شهر',
+    'two-month' => 'شهران',
+    'months' => 'اشهر',
+    'one-year' => 'سنة',
+    'two-year' => 'سنتان',
+    'years' => 'سنين',
+];

@@ -1,4 +1,4 @@
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+/*@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);*/
 * {
     margin: 0px;
     padding: 0px;
@@ -19,6 +19,10 @@ a {
 }
 a:hover {
     color: unset;
+}
+.material-icons {
+    font-size: inherit;
+    line-height: inherit;
 }
 .section-borders {
     -webkit-box-shadow: inset 0px 1px 0px 0px rgba(0, 0, 0, 0.05), inset 0px 2px 3px 0px rgba(0, 0, 0, 0.1);

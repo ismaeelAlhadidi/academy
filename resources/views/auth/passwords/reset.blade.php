@@ -4,6 +4,43 @@
 
 @section('links')
     <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\auth\login.css') }}" />
+    @auth 
+        <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\authenticated\default.css') }}" />
+    @endauth
+@endsection
+
+@section('style')
+    @auth
+        <style type="text/css">
+            .container {
+                margin-top: unset;
+                margin-bottom: unset;
+                margin: 20% 0 10px;
+                text-align: center;
+                width: unset;
+            }
+            @media (min-width: 576px) {
+                .container {
+                    margin: 15% 10%;
+                }
+            }
+            @media (min-width: 768px) {
+                .container {
+                    margin: 12% 10%;
+                }
+            }
+            @media (min-width: 992px) {
+                .container {
+                    margin: 10% 10%;
+                }
+            }
+            @media (min-width:1200px) {
+                .container {
+                    margin: 8% 10%;
+                }
+            }
+        </style>
+    @endauth
 @endsection
 
 @section('content')
