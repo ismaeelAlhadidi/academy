@@ -2,6 +2,8 @@
 
 return [
     'before' => 'قبل',
+    'after' => 'بعد',
+    'after-subscription' => 'بعد الاشتراك ب',
     'now' => 'الان',
     'one-second' => 'ثانية',
     'two-second' => 'ثانيتان',

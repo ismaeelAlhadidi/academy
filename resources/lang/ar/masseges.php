@@ -156,4 +156,9 @@ return [
     'new-replay' => 'رد جديد',
     'add-replay' => 'رد',
     'post-replay' => 'اكتب رد',
+    'no-videos-on-this-playlist-now' => 'لا يوجد فيديوهات على الدورة حاليا',
+    'no-audios-on-this-playlist-now' => 'لا يوجد تسجيلات صوتية على الدورة حاليا',
+    'no-books-on-this-playlist-now' => 'لا يوجد كتب على الدورة حاليا',
+    'available' => 'متاح',
+    'available-for-subscription' => 'متاح للمشتركين',
 ];

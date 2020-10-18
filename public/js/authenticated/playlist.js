@@ -16,7 +16,13 @@ var PlaylistOpinionTemplate = document.getElementById('PlaylistOpinionTemplate')
         tempAddCoachOpinionButton = document.getElementById('addCoachOpinionButton'),
         tempSendOpinionOfPlaylistButton = document.getElementById('sendOpinionOfPlaylistButton');
         tempSendOpinionOfCoachButton = document.getElementById('sendOpinionOfCoachButton'),
-        tempPostCommentButton = document.getElementById('postCommentButton');
+        tempPostCommentButton = document.getElementById('postCommentButton'),
+        tempOpenVideosButton = document.getElementById('openVideosButton'),
+        tempOpenAudiosButton = document.getElementById('openAudiosButton'),
+        tempOpenBooksButton = document.getElementById('openBooksButton'),
+        tempVideos = document.getElementById('videos'),
+        tempAudios = document.getElementById('audios'),
+        tempBooks = document.getElementById('books');
 
     if(tempAddPlaylistOpinionButton != null) tempAddPlaylistOpinionButton.onclick = openPlaylistOpinionTemplate;
     if(tempAddCoachOpinionButton != null) tempAddCoachOpinionButton.onclick = openCoachOpinionTemplate;
@@ -28,6 +34,33 @@ var PlaylistOpinionTemplate = document.getElementById('PlaylistOpinionTemplate')
     window.document.body.oncontextmenu = function (e) {
         e.preventDefault();
     };
+    var openVideos = function openVideos() {
+        if(tempOpenVideosButton != null) tempOpenVideosButton.setAttribute('class', 'selected-blob');
+        if(tempOpenAudiosButton != null) tempOpenAudiosButton.setAttribute('class', '');
+        if(tempOpenBooksButton != null) tempOpenBooksButton.setAttribute('class', '');
+        if(tempVideos != null) tempVideos.style = '';
+        if(tempAudios != null) tempAudios.style = 'display: none !important;';
+        if(tempBooks != null) tempBooks.style = 'display: none !important;';
+    };
+    var openAudios = function openAudios() {
+        if(tempOpenVideosButton != null) tempOpenVideosButton.setAttribute('class', '');
+        if(tempOpenAudiosButton != null) tempOpenAudiosButton.setAttribute('class', 'selected-blob');
+        if(tempOpenBooksButton != null) tempOpenBooksButton.setAttribute('class', '');
+        if(tempVideos != null) tempVideos.style = 'display: none !important;';
+        if(tempAudios != null) tempAudios.style = '';
+        if(tempBooks != null) tempBooks.style = 'display: none !important;';
+    };
+    var openBooks = function openBooks() {
+        if(tempOpenVideosButton != null) tempOpenVideosButton.setAttribute('class', '');
+        if(tempOpenAudiosButton != null) tempOpenAudiosButton.setAttribute('class', '');
+        if(tempOpenBooksButton != null) tempOpenBooksButton.setAttribute('class', 'selected-blob');
+        if(tempVideos != null) tempVideos.style = 'display: none !important;';
+        if(tempAudios != null) tempAudios.style = 'display: none !important;';
+        if(tempBooks != null) tempBooks.style = '';
+    };
+    if(tempOpenVideosButton != null) tempOpenVideosButton.onclick = openVideos;
+    if(tempOpenAudiosButton != null) tempOpenAudiosButton.onclick = openAudios;
+    if(tempOpenBooksButton != null) tempOpenBooksButton.onclick = openBooks;
 } )();
 ( function drawCanvas() {
     var tempExitButtonCanvasOfPlaylistOpinionTemplate = document.getElementById('exitButtonCanvasOfPlaylistOpinionTemplate'),

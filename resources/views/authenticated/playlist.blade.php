@@ -10,7 +10,42 @@
 @section('content')
     <div class="margin-to-main-header"></div>
     <div class="selected-video no-select" oncontextmenu="return false;">
-        <div class="opened-video"><div class="play"><video preload="none" src="{{ ($playlist->blobs->count() > 0) ? asset('/blob/video/' . $playlist->blobs->first()->public_route) : '' }}" id="currentVideoElement" controls controlslist="nodownload" ></video></div></div>
+        <div class="opened-video">
+            <div class="play">
+                <video preload="none" tabindex="-1" id="currentVideoElement" controls="false" controlslist="nodownload" >
+
+                </video>
+                <div class="video-controller">
+                    <div class="video-poster">
+                        <div class="start-button"><section>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="78px" height="78px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg>
+                            <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="78px" height="78px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1zm4 0c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1z"/></svg>
+                        </section></div>
+                        <img src="{{ asset('/images/static/video-default.jpg') }}" alt=".."/>
+                    </div>
+                    <footer style="display: none;">
+                        <div class="video-progress-bar-container">
+                            <div class="video-progress-bar"></div>
+                            <div class="video-progress-bar-left-buttons">
+                                <span class="controls-button play-pause-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="center" height="35" width="100%"><path fill="#ffffffcc" d="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z"></path></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="center" style="display: none;" height="35" width="100%"><path fill="#ffffffcc" d="M 12,26 16,26 16,10 12,10 z M 21,26 25,26 25,10 21,10 z"></path></svg>
+                                </span>
+                                <span class="controls-text">
+                                    <section class="center">00:00:00 / 00:00:00</section>
+                                </span>
+                            </div>
+                            <div class="video-progress-bar-right-buttons">
+                                <span class="controls-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="center" fill="#ffffffcc" width="35" height="35"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 14c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1H7v-2c0-.55-.45-1-1-1zm0-4c.55 0 1-.45 1-1V7h2c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1zm11 7h-2c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v2zM14 6c0 .55.45 1 1 1h2v2c0 .55.45 1 1 1s1-.45 1-1V6c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1z"/></svg>
+                                    <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="center" fill="#ffffffcc" width="35" height="35"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 16h2v2c0 .55.45 1 1 1s1-.45 1-1v-3c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1s.45 1 1 1zm2-8H6c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1s-1 .45-1 1v2zm7 11c.55 0 1-.45 1-1v-2h2c.55 0 1-.45 1-1s-.45-1-1-1h-3c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1zm1-11V6c0-.55-.45-1-1-1s-1 .45-1 1v3c0 .55.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1h-2z"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
         <div class="playlist-description">
             <h3>{{ $playlist->title }}</h3>
             <p>{{ $playlist->description }}</p>
@@ -18,37 +53,51 @@
     </div>
     <div class="videos no-select" oncontextmenu="return false;">
         <div class="some-buttons"><section><div class="default-authenticated-button"><button id="addPlaylistOpinionButton">{{ __('masseges.what-your-opinion-in-playlist') }}</button></div><div class="default-authenticated-button"><button id="addCoachOpinionButton">{{ __('masseges.what-your-opinion-in-coach') }}</button></div></section></div>
-        <div class="videos-contianer">
-            @foreach($playlist->blobs as $blob)
-                <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                        <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
-                        <span>after 2 day</span>
-                    </div></div>
-            @endforeach
+        <div class="blob-nav"><div class="default-authenticated-button blob-button"><button id="openVideosButton" class="selected-blob">{{ __('headers.videos') }}</button></div><div class="default-authenticated-button blob-button"><button id="openAudiosButton">{{ __('headers.audios') }}</button></div><div class="default-authenticated-button blob-button"><button id="openBooksButton">{{ __('headers.books') }}</button></div></div>
+        <div id="videos" class="videos-contianer">
+            @forelse($videos as $type)
+                @if(count($type) > 0 && $type[0]->type_id != null)
+                    <section class="blob-type">{{ $type[0]->type->name }}</section>
+                @endif
+                @foreach($type as $blob)
+                    <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
+                            <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
+                            <span>{{ $blob->time }}</span>
+                        </div></div>
+                @endforeach
+            @empty
+                <div class="video blob-empty">{{ __('masseges.no-videos-on-this-playlist-now') }}</div>
+            @endforelse
         </div>
-        <div class="videos-contianer">
-            @foreach($playlist->blobs as $blob)
-                <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                        <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
-                        <span>after 2 day</span>
-                    </div></div>
-            @endforeach
+        <div id="audios" class="videos-contianer" style="display: none !important;">
+            @forelse($audios as $type)
+                @if(count($type) > 0 && $type[0]->type_id != null)
+                    <section class="blob-type">{{ $type[0]->type->name }}</section>
+                @endif
+                @foreach($type as $blob)
+                    <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
+                            <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
+                            <span>{{ $blob->time }}</span>
+                        </div></div>
+                @endforeach
+            @empty
+                <div class="video blob-empty">{{ __('masseges.no-audios-on-this-playlist-now') }}</div>
+            @endforelse
         </div>
-        <div class="videos-contianer">
-            @foreach($playlist->blobs as $blob)
-                <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                        <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
-                        <span>after 2 day</span>
-                    </div></div>
-            @endforeach
-        </div>
-        <div class="videos-contianer">
-            @foreach($playlist->blobs as $blob)
-                <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                        <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
-                        <span>after 2 day</span>
-                    </div></div>
-            @endforeach
+        <div id="books" class="videos-contianer" style="display: none !important;">
+            @forelse($books as $type)
+                @if(count($type) > 0 && $type[0]->type_id != null)
+                    <section class="blob-type">{{ $type[0]->type->name }}</section>
+                @endif
+                @foreach($type as $blob)
+                    <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
+                            <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
+                            <span>{{ $blob->time }}</span>
+                        </div></div>
+                @endforeach
+            @empty
+                <div class="video blob-empty">{{ __('masseges.no-books-on-this-playlist-now') }}</div>
+            @endforelse
         </div>
     </div>
     <div class="comments" oncontextmenu="return false;">
@@ -140,7 +189,7 @@
 
 @section('scripts')
     <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\playlist.js') }}"></script>
-    <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\watching\play.js') }}"></script>
+    <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\watching\player.js') }}"></script>
     <script type="text/javascript" lang="javascript">
         ( function loadingImage() {
             var lazyURL = '{{ asset('js/lazysizes.min.js') }}';
