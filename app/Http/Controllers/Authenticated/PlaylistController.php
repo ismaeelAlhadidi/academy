@@ -53,6 +53,14 @@ class PlaylistController extends Controller
         if($playlist->availability_time != null) $playlistTime = $playlist->availability_time;
         else $playlistTime = $playlist->created_at;
 
+        $firstBlob = $playlist->blobs->first();
+        $firstBlob['blobType'] = ($firstBlob->blobable_type == "App\Models\Video") 
+            ? 'video' 
+            : ( ($firstBlob->blobable_type == "App\Models\Audio") 
+                ? 'audio'
+                : 'book'
+        );
+
         $tempVideos = $playlist->blobs->filter(function($value) {
             return ($value->blobable_type == "App\Models\Video");
         })->all();
@@ -124,7 +132,6 @@ class PlaylistController extends Controller
             }
             if(count($audiosTypes) == 0 && count($audios['noneType']) == 0) $audios = array();
         }
-
         return view('authenticated.playlist', [
             'playlist' => $playlist,
             'comments' => $comments,
@@ -132,6 +139,7 @@ class PlaylistController extends Controller
             'videos' => $videos,
             'books' => $books,
             'audios' => $audios,
+            'firstBlob' => $firstBlob,
         ]);
     }
     public function subscription($id = null) {

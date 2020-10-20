@@ -446,10 +446,10 @@ body, html {
 }
 .video-controller footer .video-progress-bar-container {
     bottom: 0;
-    height: 40px;
+    height: 44px;
     width: 100%;
     z-index: 7;
-    padding-top: 3px;
+    padding-top: 7px;
     text-align: left;
     direction: ltr;
     position: absolute;
@@ -465,37 +465,46 @@ body, html {
     float: right;
     margin-right: 7px;
 }
+.video-controller footer .video-progress-bar-container .video-progress-bar-right-buttons,
+.video-controller footer .video-progress-bar-container .video-progress-bar-left-buttons {
+    height: 36px;
+}
 .video-controller footer .video-progress-bar-container .video-progress-bar {
     display: block;
     position: absolute;
     left: 2px;
     right: 2px;
-    bottom: 35px;
-    height: 5px;
+    bottom: 37px;
+    height: 4px;
     margin: 0 10px;
     background: rgba(255,255,255,.4);
+    cursor: pointer;
+}
+.video-controller footer .video-progress-bar-container .video-progress-bar:hover {
+    height: 5px;
 }
 .video-controller footer .video-progress-bar-container .controls-button, 
 .video-controller footer .video-progress-bar-container .controls-text {
     color: rgb(255,255,255,0.8);
 }
+.video-controller footer .video-progress-bar-container .controls-button, 
+.video-controller footer .video-progress-bar-container .controls-text,
+.video-controller footer .video-progress-bar-container .controls-button svg {
+    height: 35px;
+}
 .video-controller footer .video-progress-bar-container .controls-button {
     display: inline-block;
     cursor: pointer;
     width: 40px;
-    height: 35px;
     position: relative;
     margin: 0 5px;
 }
 .video-controller footer .video-progress-bar-container .controls-button svg {
     display: inline-block;
-    height: 35px;
     width: 35px;
 }
 .video-controller footer .video-progress-bar-container .controls-text {
     display: inline-block;
-    cursor: pointer;
-    height: 35px;
     position: relative;
     margin: 0 5px;
     width: 95px;
@@ -511,6 +520,78 @@ body, html {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+.background-of-footer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACSCAYAAACE56BkAAAA9UlEQVQoU2XI6UcYABzG8e5j3cfWfV9bW/d9t6P7MCYjk8hEZiIzkkQSSSKJJJFE+iPzefN70/Pi4+tJSHi1RE8SkoMUlYq0IF1lIDN4o7KQHeSoXOQF+aoAhUGRKsbb4J0qQSnKgnJVgcqgSlWjJqhVdagPGlQjmoJm1YL3wQfVio/BJ9WG9qBDdaIr6FY96A36VD8GgkE1hOFgRI1iDOPBhJoMPqsv+IpvwZSaxkwwq+YwHyyoRSxhGd/xAyv4iVX8whrWsYHf2MQW/uAvtrGDf/iPXexhHwc4xBGOcYJTnOEcF7jEFa5xg1vc4R4PeMQTnl8A4w0j1xltFl0AAAAASUVORK5CYII=");
+    background-repeat: repeat-x;
+    background-position: bottom;
+    z-index: 3;
+}
+.video-progress-bar > section {
+    height: inherit;
+    width: 0%;
+    background-color: #f00;
+}
+.video-full-screen {
+    position: fixed !important;
+    display: block !important;
+    width: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    z-index: 99999999 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.video-full-screen > div {
+    width: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.video-full-screen .video-controller footer .video-progress-bar-container .controls-button, 
+.video-full-screen .video-controller footer .video-progress-bar-container .controls-text {
+    height: 45px;
+}
+.video-full-screen .video-controller footer .video-progress-bar-container {
+    margin-bottom: 5px;
+}
+.play {
+    overflow: hidden;
+}
+.video-progress-bar-pointer {
+    width: 10px;
+    height: 10px;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -o-border-radius: 100%;
+    border-radius: 100%;
+    background-color: #f00;
+    position: absolute;
+    top: -2.5px;
+    display: none;
+}
+.video-progress-hover-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: inherit;
+    width: 0%;
+    background-color: rgb(255,255,255,0.5);
+    z-index: -1;
 }
 @media (min-width: 380px) {
     .comment > div:first-of-type {

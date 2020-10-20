@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'blob'],function() { // ,'middleware' => 'access'
+Route::group(['prefix' => 'blob'], function() { // ,'middleware' => 'access'
     Route::get('/video/{video}','BlobController@getVideo');
     Route::get('/audio/{audio}','BlobController@getAudio');
     Route::get('/book/{book}','BlobController@getBook');
@@ -22,6 +22,7 @@ Route::get('/', 'WelcomeController@index')->middleware('guest');
 Route::get('/getOpinionsOfPlaylist/{id}', 'WelcomeController@getOpinionsOfPlaylist');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/ajax/{playlistId}/blob/check-permision/{id}','BlobController@checkBlobPermision')->middleware('auth');
 Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function() {
     Route::group(['prefix' => 'playlist'],function() {
         Route::get('/{id?}', 'PlaylistController@index')->name('playlist.show');

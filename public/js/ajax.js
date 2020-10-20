@@ -58,6 +58,15 @@ function ajaxUploadVideo(method,url,formElement,onResponse = null,uploadProgress
     request.upload.ontimeout = timeOutHandler;
     request.send(formElement);
 }
+function ajaxGetVideoRequest(url, onResponse) {
+    var request = new XMLHttpRequest();
+    request.open('get', url);
+    request.responseType = 'blob';
+    request.onload = function () {
+        onResponse(request.response);
+    };
+    request.send();
+}
 /*
 function test () {
     var temp = document.createElement('video');

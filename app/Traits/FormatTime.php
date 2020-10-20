@@ -38,8 +38,9 @@ trait FormatTime {
             $target = $availabilityTime - $playlistTime;
         } else {
             $availability = $availabilityTime - $playlistTime;
+            if($availability < 0) return __('masseges.available');
             $target = time() - $subscriptionTime;
-            if($target <= $availability) return __('masseges.available');
+            if($target >= $availability) return __('masseges.available');
             $target = $target - $availability;
         }
 
@@ -53,10 +54,24 @@ trait FormatTime {
                 ( $target . ' ' . __('time.one-' . $periods[$i]) )
             )
         );
-        
+
         if($subscriptionTime == null) {
             return __('time.after-subscription') . ' ' . $target;
         }
         return __('time.after') . ' ' . $target;
+    }
+
+    function blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime) {
+        if($subscriptionTime == null) return false;
+        if($availabilityTime == null) return true;
+        if($playlistTime == null) return true;
+        $availabilityTime = strtotime($availabilityTime);
+        $subscriptionTime = strtotime($subscriptionTime);
+        $playlistTime = strtotime($playlistTime);
+        $availability = $availabilityTime - $playlistTime;
+        if($availability < 0) return true;
+        $target = time() - $subscriptionTime;
+        if($target >= $availability) return true;
+        return false;
     }
 }

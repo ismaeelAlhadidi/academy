@@ -161,4 +161,6 @@ return [
     'no-books-on-this-playlist-now' => 'لا يوجد كتب على الدورة حاليا',
     'available' => 'متاح',
     'available-for-subscription' => 'متاح للمشتركين',
+    'error-in-start-file' => 'حدث خطأ بفتح هذا الملف الرجاء المحاولة مرة اخرى !',
+    'need-subscription-to-show-blobs' => 'الرجاء الاشتراك بالدورة لمشاهدت الملف !',
 ];

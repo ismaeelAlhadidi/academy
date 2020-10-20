@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Storage;
 use App\Models\Blob;
-use App\Models\ShowBlob;
+use App\Models\Video;
+use App\Models\Subscription;
+use App\Models\Playlist;
+use App\Events\ShowBlob;
+use App\Traits\AjaxResponse;
+use App\Traits\FormatTime;
 use Auth;
 
 class BlobController extends Controller
 {
+    use AjaxResponse,FormatTime;
     public function getVideo($video) {
         $blob = Blob::where('public_route',$video)->first();
         if(! $blob) return abort('404');
@@ -47,6 +53,27 @@ class BlobController extends Controller
         }
         $this->saveView($blob->id);
         return response()->file(storage_path('app' . $path));
+    }
+
+    public function checkBlobPermision($playlistId, $id) {
+        $blob = Blob::find($id);
+        if(! $blob) return abort('404');
+        $playlist = Playlist::find($playlistId);
+        if(! $playlist) return abort('404');
+
+        $subscription = Subscription::where('playlist_id', $playlistId)->where('user_id', auth()->user()->id)->first();
+
+        if(! $subscription) return $this->getResponse(false, 'needSub', []);
+
+        $subscriptionTime = $subscription->created_at;
+
+        if($playlist->availability_time != null) $playlistTime = $playlist->availability_time;
+        else $playlistTime = $playlist->created_at;
+
+        $availabilityTime = $blob->blobable->availability_time;
+
+        if($this->blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime)) return $this->getResponse(true, '', []);
+        return $this->getResponse(false, 'videoTime', []);
     }
 
     private function saveView($blob_id) {
