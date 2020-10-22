@@ -10,7 +10,7 @@ class Audio extends Model
     use Notifiable;
     protected $table = 'audio';
     protected $fillable = [
-        'pre_title', 'title',  'availability_time', 'src', 'driver', 'mimi_type',
+        'pre_title', 'title',  'availability_time', 'src', 'driver', 'mimi_type', 'poster_src',
         'available', 'description','created_at','updated_at'
     ];
     protected $hidden = ['driver', 'src'];

@@ -398,3 +398,32 @@ function renderNewReplay(data, commentId) {
         replaysOfComment.insertBefore(replay, postReplayElement);
     }
 }
+function openThisVideo(publicKey, posterSrc, blobId, videoId) {
+    if(typeof(player) == "undefined") return;
+    if(player == null) return;
+    if(typeof(changeStorage) == "function") {
+        changeStorage(publicKey, posterSrc, blobId, videoId, 'video');
+    }
+    player.setVideo(publicKey, posterSrc, blobId);
+    window.scrollTo(0, 0);
+}
+function openThisAudio(publicKey, posterSrc, blobId, audioId) {
+    if(typeof(player) == "undefined") return;
+    if(player == null) return;
+    if(typeof(changeStorage) == "function") {
+        changeStorage(publicKey, posterSrc, blobId, audioId, 'audio');
+    }
+    player.setVideo(publicKey, posterSrc, blobId, 'audio');
+    window.scrollTo(0, 0);
+}
+function openThisBook(publicKey, permision) {
+    if(! permision) {
+        showPopUpMassage(lang.needSubscriptionMassege, null, null, 'ok', defaultStyleOfPopUpMassegeInWeb);
+        return;
+    }
+    var url = window.location.origin + '/blob/book/' + publicKey;
+    var link = document.createElement('a');
+    link.href = url;
+    link.target = "_blank";
+    link.click();
+}

@@ -19,13 +19,13 @@
                             <svg id="centerMainButtonInPlayer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="78px" height="78px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 13.5v-7c0-.41.47-.65.8-.4l4.67 3.5c.27.2.27.6 0 .8l-4.67 3.5c-.33.25-.8.01-.8-.4z"/></svg>
                             <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="78px" height="78px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1zm4 0c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1z"/></svg>
                             <p id="centerMassegeInPlayer" style="display: none;"></p>
-                            <button id="centerSubButtonInPlayer" style="display: none;">{{ __('input.subscriptions-of-this-playlist') }}</button>
+                            <div id="centerSubButtonInPlayer" class="default-authenticated-button" style="display: none;"><button id="subscriptionButton">{{ __('input.subscriptions-of-this-playlist') }}</button></div>
                         </section></div>
                         <img id="imageOfOpendVideo" src="{{ asset('/images/static/video-default.jpg') }}" alt=".."/>
                     </div>
                     <footer id="opendVideoConrols" style="display: none;">
                         <div id="divForMakeEventPlayPauseOnFooter" class="background-of-footer"></div>
-                        <div class="video-progress-bar-container">
+                        <div id="videoProgressBarContainer" class="video-progress-bar-container">
                             <div id="videoProgressBar" class="video-progress-bar"><section id="progressRedPar"></section><div id="progressHoverPar" class="video-progress-hover-bar"></div><div id="progressPointer" class="video-progress-bar-pointer"></div></div>
                             <div class="video-progress-bar-left-buttons">
                                 <span class="controls-button play-pause-button">
@@ -48,8 +48,8 @@
             </div>
         </div>
         <div class="playlist-description">
-            <h3>{{ $playlist->title }}</h3>
-            <p>{{ $playlist->description }}</p>
+            <h1 id="mainTitleElement">{{ $playlist->title }}</h1>
+            <p id="mainDescriptionElement">{{ $playlist->description }}</p>
         </div>
     </div>
     <div class="videos no-select" oncontextmenu="return false;">
@@ -61,8 +61,8 @@
                     <section class="blob-type">{{ $type[0]->type->name }}</section>
                 @endif
                 @foreach($type as $blob)
-                    <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                            <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
+                    <div class="video" onclick="openThisVideo('{{ $blob->public_route }}', '{{ asset($blob->blobable->poster_src) }}', {{ $blob->id }}, {{ $blob->blobable->id }});"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
+                            <h3 class="edit-overflow-text">{{ ($isSubscription ? $blob->blobable->title : $blob->blobable->pre_title) }}</h3>
                             <span>{{ $blob->time }}</span>
                         </div></div>
                 @endforeach
@@ -76,8 +76,8 @@
                     <section class="blob-type">{{ $type[0]->type->name }}</section>
                 @endif
                 @foreach($type as $blob)
-                    <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                            <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
+                    <div class="video" onclick="openThisAudio('{{ $blob->public_route }}', '{{ asset($blob->blobable->poster_src) }}', {{ $blob->id }}, {{ $blob->blobable->id }});"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
+                            <h3 class="edit-overflow-text">{{ ($isSubscription ? $blob->blobable->title : $blob->blobable->pre_title) }}</h3>
                             <span>{{ $blob->time }}</span>
                         </div></div>
                 @endforeach
@@ -91,8 +91,8 @@
                     <section class="blob-type">{{ $type[0]->type->name }}</section>
                 @endif
                 @foreach($type as $blob)
-                    <div class="video"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
-                            <h3 class="edit-overflow-text">{{ $blob->blobable->title }}</h3>
+                    <div class="video" onclick="openThisBook('{{ $blob->public_route }}', {{ $isSubscription }})"><div class="video-poster"><img data-src="{{ asset($blob->blobable->poster_src) }}" class="lazyload" loading="lazy" /></div><div class="video-data">
+                            <h3 class="edit-overflow-text">{{ ($isSubscription ? $blob->blobable->title : $blob->blobable->pre_title) }}</h3>
                             <span>{{ $blob->time }}</span>
                         </div></div>
                 @endforeach
@@ -186,6 +186,10 @@
             <footer><div><a id="sendOpinionOfCoachButton">{{ __('input.send') }}</a></div></footer>
         </div>
     </div>
+    <form id="payPlaylistForm" method="post" action="{{ asset('/pay-playlist') }}" style="display:none !important">
+        @csrf
+        <input type="hidden" name="id" value="{{ $playlist->id }}"/>
+    </form>
 @endsection
 
 @section('scripts')
@@ -207,6 +211,8 @@
         } )();
         var TOKEN = '{{ csrf_token() }}',
             PLAYLIST_ID = '{{ $playlist->id }}',
+            PLAYLIST_TITLE = '{{ $playlist->title }}',
+            PLAYLIST_DESCRIPTION = '{{ $playlist->description }}',
             lang = {
                 'thanksForShareYourOpinion': '{{ __('masseges.thanks-for-share-your-opinion') }}',
                 'generalError': '{{ __('masseges.general-error') }}',
@@ -222,6 +228,7 @@
                 'addReplay': '{{ __('masseges.add-replay') . ' ' }}',
                 'errorInPlayVideo': '{{ __('masseges.error-in-start-file') }}',
                 'needSubscriptionMassege': '{{ __('masseges.need-subscription-to-show-blobs') }}',
+                'notAvillableMassage': '{{ __('masseges.file-not-avillable-now') }}'
             },
             thisUser = {
                 'image': '{{ asset(auth()->user()->image) }}',
@@ -231,11 +238,11 @@
             commentsCountOnOneScroll = '{{ $commentsCountOnOneScroll }}',
             profilePageURL = '{{ route('user.profile') }}',
             currentBlob = {
-                'blob_id': '{{ $firstBlob->id }}',
-                'publicKey': '{{ $firstBlob->public_route }}',
-                'video_id': '{{ $firstBlob->blobable->id }}',
-                'poster_src': '{{ $firstBlob->blobable->poster_src }}',
-                'type': '{{ $firstBlob->blobType }}',
+                'blob_id': '{{ ($firstBlob) ? $firstBlob->id : '' }}',
+                'publicKey': '{{ ($firstBlob) ? $firstBlob->public_route : '' }}',
+                'video_id': '{{ ($firstBlob) ? $firstBlob->blobable->id : '' }}',
+                'poster_src': '{{ ($firstBlob) ? $firstBlob->blobable->poster_src : '' }}',
+                'type': '{{ ($firstBlob) ? $firstBlob->blobType : '' }}',
             },
             svgPaths = {
                 'bigPause': 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1zm4 0c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1z',
@@ -248,13 +255,17 @@
             };
         if(typeof(Player) == "function") if(Player.hasOwnProperty('defaultPoster')) Player.defaultPoster = "{{ asset('/images/static/video-default.jpg') }}";
         
-        /*
-            setItem(): Add key and value to localStorage
-            getItem(): Retrieve a value by the key from localStorage
-            removeItem(): Remove an item by key from localStorage
-            clear(): Clear all localStorage
-            key(): Passed a number to retrieve nth key of a localStorage
-        */
+        var subscriptionButton = document.getElementById('subscriptionButton'),
+                payPlaylistForm = document.getElementById('payPlaylistForm');
+        if(subscriptionButton != null) {
+            subscriptionButton.onclick = function () {
+                if(payPlaylistForm != null) payPlaylistForm.submit();
+            };
+        }
+        @if(session()->has('error'))
+            showPopUpMassage('{{ session()->get('error') }}',null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+            {{ session()->forget('error') }}
+        @endif
     </script>
     <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\watching\play.js') }}"></script>
 @endsection

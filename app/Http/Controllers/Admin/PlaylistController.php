@@ -418,7 +418,7 @@ class PlaylistController extends Controller
             'type_id' => 'integer',
             'blob' => 'required|file|' .  (( $type == "book" ) ? 
                 'mimetypes:application/pdf, application/x-pdf,application/acrobat, applications/vnd.pdf, text/pdf, text/x-pdf'
-                : 'mimetypes:application/octet-stream,audio/mpeg,mpga,mp3,wav'),
+                : 'mimetypes:application/octet-stream,audio/webm,audio/weba,audio/mpeg,mpga,mp3,wav,m4a'), /* edit audio types */
             'playlist_id' => 'integer',
             'description' => 'string',
         ];
@@ -488,7 +488,7 @@ class PlaylistController extends Controller
         }
 
         $data = array();
-        $data['type_id'] = $request->type_id;
+        if($request->has('type_id')) $data['type_id'] = $request->type_id;
         $data['public_route'] = $this->createPublicRoute($file->id);
         $data['blobable_type'] = ($type == "book") ? 'App\Models\Book' : 'App\Models\Audio';
         $data['blobable_id'] = $file->id;
@@ -587,7 +587,6 @@ class PlaylistController extends Controller
             'availability_time' => 'date',
             'poster_src' => 'file|max:2000|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/svg',
             'type_id' => 'integer',
-            'playlist_id' => 'integer',
         ];
         $validator = Validator::make($data,$ruels);
         if($validator->fails()) {
@@ -654,8 +653,6 @@ class PlaylistController extends Controller
             'availability_time' => 'date',
             'poster_src' => 'file|max:2000|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/svg',
             'type_id' => 'integer',
-            'playlist_id' => 'integer',
-            'description' => 'string',
         ];
         $validator = Validator::make($data,$ruels);
         if($validator->fails()) {

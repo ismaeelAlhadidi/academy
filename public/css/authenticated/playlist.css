@@ -30,6 +30,11 @@ body, html {
     border-top: 2px solid #e2e2e2;
     color: #030303;
 }
+.playlist-description h1 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 19px 0px;
+}
 .videos-contianer {
     overflow: hidden;
     border-top: 2px solid #e2e2e2;
@@ -416,6 +421,20 @@ body, html {
     width: 100%;
     background-color: transparent;
 }
+.play {
+    height: 250px;
+}
+.play > video,
+.video-controller .video-poster img {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: unset;
+    bottom: unset;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
 .video-controller .video-poster {
     overflow: hidden;
     z-index: 2;
@@ -433,6 +452,13 @@ body, html {
     transform: translate(-50%, -50%);
     color: red;
     cursor: pointer;
+}
+.video-controller .video-poster .start-button > section p {
+    color: #3499b8;
+}
+.video-controller .video-poster .start-button > section > .default-authenticated-button > button {
+    line-height: 2em;
+    font-size: 1em;
 }
 .video-controller footer {
     position: absolute;
@@ -560,6 +586,7 @@ body, html {
     right: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
+    height: unset;
 }
 .video-full-screen .video-controller footer .video-progress-bar-container .controls-button, 
 .video-full-screen .video-controller footer .video-progress-bar-container .controls-text {
@@ -605,6 +632,9 @@ body, html {
     .video-controller footer .video-progress-bar-container .controls-text section {
         width: 115px;
     }
+    .play {
+        height: 300px;
+    }
 }
 @media (min-width: 474px) {
     .videos-contianer .video .video-data h3 {
@@ -616,6 +646,9 @@ body, html {
     .videos-contianer .video .video-poster, .videos-contianer .video .video-data { height: 120px; }
     .comment > div:nth-of-type(2) > footer span {
         left: 10px;
+    }
+    .play {
+        height: 330px;
     }
 }
 @media (min-width: 576px) {
@@ -633,6 +666,9 @@ body, html {
         left: 15px;
     }
     .videos-contianer .video .video-poster, .videos-contianer .video .video-data { height: 140px; }
+    .play {
+        height: 360px;
+    }
 }
 @media (min-width: 768px) {
     .comment > div:nth-of-type(2) > footer span {
@@ -644,9 +680,15 @@ body, html {
         float: right;
     }
     .videos-contianer .video .video-poster, .videos-contianer .video .video-data { height: 100px; }
+    .play {
+        height: 380px;
+    }
 }
 @media (min-width: 868px) {
     .videos-contianer .video .video-poster, .videos-contianer .video .video-data { height: 120px; }
+    .play {
+        height: 400px;
+    }
 }
 @media (min-width: 992px) {
     .videos-contianer .video {
@@ -687,6 +729,9 @@ body, html {
         line-height: 2.5em;
     }
     .videos-contianer .video .video-poster, .videos-contianer .video .video-data { height: 85px; }
+    .play {
+        height: 330px;
+    }
 }
 @media (min-width:1200px) {
     #app {
@@ -728,6 +773,9 @@ body, html {
     .opened-video, .playlist-description, .comments > header, .comments > .comments-contianer {
         width: 95%;
         margin: 0px 2.5%;
+    }
+    .play {
+        height: 375px;
     }
 }
 @media (min-width:1350px) {

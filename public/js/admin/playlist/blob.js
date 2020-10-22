@@ -358,7 +358,8 @@ class Blob {
     }
     getUpdateFormData() {
         if(this.id != -1) {
-            this.updateFormData.append('id',this.id);
+            if(! this.updateFormData.has('id')) this.updateFormData.append('id',this.id);
+            else  this.updateFormData.set('id',this.id);
             return this.updateFormData;
         }
         return null;

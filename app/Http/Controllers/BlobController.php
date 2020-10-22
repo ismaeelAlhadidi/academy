@@ -38,7 +38,7 @@ class BlobController extends Controller
         if (!Storage::disk($driver)->exists($path)) {
             return abort('404');
         }
-        $this->saveView($blob->id);
+        //$this->saveView($blob->id);
         return response()->file(storage_path('app' . $path));
     }
 
@@ -51,7 +51,7 @@ class BlobController extends Controller
         if (!Storage::disk($driver)->exists($path)) {
             return abort('404');
         }
-        $this->saveView($blob->id);
+        //$this->saveView($blob->id);
         return response()->file(storage_path('app' . $path));
     }
 
@@ -63,7 +63,7 @@ class BlobController extends Controller
 
         $subscription = Subscription::where('playlist_id', $playlistId)->where('user_id', auth()->user()->id)->first();
 
-        if(! $subscription) return $this->getResponse(false, 'needSub', []);
+        if(! $subscription) return $this->getResponse(false, 'needSub', ['title' => $blob->blobable->pre_title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
 
         $subscriptionTime = $subscription->created_at;
 
@@ -72,8 +72,8 @@ class BlobController extends Controller
 
         $availabilityTime = $blob->blobable->availability_time;
 
-        if($this->blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime)) return $this->getResponse(true, '', []);
-        return $this->getResponse(false, 'videoTime', []);
+        if($this->blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime)) return $this->getResponse(true, '', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
+        return $this->getResponse(false, 'videoTime', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
     }
 
     private function saveView($blob_id) {

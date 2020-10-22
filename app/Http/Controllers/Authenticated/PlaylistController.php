@@ -48,18 +48,26 @@ class PlaylistController extends Controller
         });
 
         $subscription = Subscription::where('user_id', auth()->user()->id)->where('playlist_id', $playlist->id)->first();
-        if($subscription) $subscriptionTime = $subscription->created_at;
-        else $subscriptionTime = null;
+        if($subscription) {
+            $subscriptionTime = $subscription->created_at;
+            $isSubscription = true;
+        }
+        else {
+            $subscriptionTime = null;
+            $isSubscription = false;
+        }
         if($playlist->availability_time != null) $playlistTime = $playlist->availability_time;
         else $playlistTime = $playlist->created_at;
 
         $firstBlob = $playlist->blobs->first();
-        $firstBlob['blobType'] = ($firstBlob->blobable_type == "App\Models\Video") 
-            ? 'video' 
-            : ( ($firstBlob->blobable_type == "App\Models\Audio") 
-                ? 'audio'
-                : 'book'
-        );
+        if($firstBlob) {
+            $firstBlob['blobType'] = ($firstBlob->blobable_type == "App\Models\Video") 
+                ? 'video' 
+                : ( ($firstBlob->blobable_type == "App\Models\Audio") 
+                    ? 'audio'
+                    : 'book'
+            );
+        }
 
         $tempVideos = $playlist->blobs->filter(function($value) {
             return ($value->blobable_type == "App\Models\Video");
@@ -140,6 +148,7 @@ class PlaylistController extends Controller
             'books' => $books,
             'audios' => $audios,
             'firstBlob' => $firstBlob,
+            'isSubscription' => $isSubscription,
         ]);
     }
     public function subscription($id = null) {
