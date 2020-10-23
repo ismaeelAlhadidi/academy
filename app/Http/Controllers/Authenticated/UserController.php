@@ -10,6 +10,7 @@ use App\Models\PlaylistOpinion;
 use App\Models\CoachOpinion;
 use App\Models\Comment;
 use App\Models\Replay;
+use App\Models\SessionsOnline;
 use App\User;
 use Validator;
 use Storage;
@@ -36,7 +37,7 @@ class UserController extends Controller
             'first_name' => 'required|string|min:1|max:256',
             'second_name' => 'required|string|min:1|max:256',
             'last_name' => 'required|string|min:1|max:256',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email' . ( ($data['email'] != auth()->user()->email) ? '|unique:users' : '' ),
         ];
         $validator = Validator::make($data, $rules);
         if($validator->fails()) return $this->getResponse(false, 'invalid', null);
@@ -157,5 +158,9 @@ class UserController extends Controller
             return $this->getResponse(true, '', $data);
         }
         return $this->getResponse(false, '', null);
+    }
+    public function mySessions() {
+        $sessions = SessionsOnline::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(14);
+        return view('authenticated.mySessions',[ 'sessions' => $sessions ]);
     }
 }

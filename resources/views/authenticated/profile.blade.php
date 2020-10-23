@@ -13,7 +13,7 @@
             <div>
                 <img id="imageElement" src="{{ asset($user->image) }}"/>
                 @if($haveThisProfile)
-                <div id="editImageButton"><span>{{ __('masseges.update') }} <span class="fa"> &#xf03e;</span></span></div>
+                <div id="editImageButton"><span>{{ __('masseges.update') }} <span class="material-icons"> image</span></span></div>
                 <input id="inputFileElement" type="file" accept=".png,.jpg,.tif,.gif" style="display: none !important;"/>
                 @endif
             </div>

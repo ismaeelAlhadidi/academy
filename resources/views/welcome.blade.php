@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
         <title>{{ config('app.name') }}</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" />
         <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\default.css') }}" />
         <link rel="stylesheet" type="text/css" media="all" href="{{ asset('css\welcome.css') }}" />
-
     </head>
     <body>
         @include('include.header')
@@ -33,7 +33,7 @@
             </section>
             <div class="clear-float"></div>
             <section class="about-coach section-borders no-select">
-                <div class="no-select"><img/></div><p><span>Title</span> this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it</p>
+                <div class="no-select"><img data-src="{{ asset('images/static/user-default.jpg') }}" class="lazyload welcome-coach-image" loading="lazy" /></div><p><span>Title</span> this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it</p>
             </section>
             @if($coachOpinions->count() > 0)
             <section class="coach-opinions section-borders no-select">
@@ -42,7 +42,7 @@
                     <div class="opinions-inner-container">
                         @foreach($coachOpinions as $coachOpinion)
                         <div class="opinion">
-                            <div class="image"><img src="{{ $coachOpinion->user->image }}" title="{{ $coachOpinion->user->first_name . ' ' . $coachOpinion->user->last_name }}"/></div>
+                            <div class="image"><img data-src="{{ $coachOpinion->user->image }}" class="lazyload" title="{{ $coachOpinion->user->first_name . ' ' . $coachOpinion->user->last_name }}" loading="lazy" /></div>
                             <div class="content">
                                 <h3>{{ $coachOpinion->user->first_name . ' ' . $coachOpinion->user->last_name }}</h3>
                                 <p>{{ $coachOpinion->content }}</p>
@@ -55,7 +55,7 @@
             @endif
         </div>
         <footer class="section-borders no-select">
-            <section class="social-midea"><a><span class="fa">&#xf082;</span></a><a><span class="fa">&#xf16d;</span></a><a><span class="fa">&#xf232;</span></a></section>
+            <section class="social-midea"><a><span class="material-icons">facebook</span></a><a><span class="material-icons">email</span></a><a><span class="material-icons">call</span></a></section>
             <section class="footer-details"><span>&copy; for this site</span> <a>{{ __('auth.privacy') }}</a> <a>{{ __('auth.security') }}</a></section>
         </footer>
         <div id="playlistTemplate" class="pop-up-template template-of-this-playlist big-template no-select" style="display: none;">
@@ -77,6 +77,19 @@
         <script type="text/javascript" lang="javascript" src="{{ asset('js\default.js') }}"></script>
         <script type="text/javascript" lang="javascript" src="{{ asset('js\welcome.js') }}"></script>
         <script type="text/javascript" lang="javascript">
+            ( function loadingImage() {
+                var lazyURL = "{{ asset('js/lazysizes.min.js') }}";
+                if('loading' in HTMLImageElement.prototype) {
+                    const images = document.querySelectorAll('img.lazyload');
+                    images.forEach(img => {
+                        img.src = img.dataset.src;
+                    });
+                } else {
+                    const script = document.createElement('script');
+                    script.src = lazyURL;
+                    document.body.appendChild(script);
+                }
+            } )();
             var exitButtonCanvasOfPlaylistTemplate = document.getElementById('exitButtonCanvasOfPlaylistTemplate'),
                 playlistTemplate = document.getElementById('playlistTemplate'),
                 playlistNotForUseAlert = '{{ __('masseges.playlist-deleted') }}';

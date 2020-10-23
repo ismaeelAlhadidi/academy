@@ -158,33 +158,12 @@ body > footer {
     background-image: url("../images/static/gray-background.png");
     padding: 15px 0px;
 }
-.about-coach img {
-    width: 300px;
-    height: 330px;/* remove */
-    margin: 15px 5% 10px;
-    -webkit-border-radius: 7px;
-    -o-border-radius: 7px;
-    -moz-border-radius: 7px;
-    -ms-border-radius: 7px;
-    border-radius: 7px;
-    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
-    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
-    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
-    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
-    background-image: url(../images/static/user-default.jpg);
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-.about-coach img:hover {
-    cursor: pointer;
-}
 .about-coach p {
     padding: 10px;
     font-size: 18px;
     line-height: 34px;
     text-align: right;
-    margin: 10px;
+    margin: 10%;
     color: #888;
 }
 .about-coach p > span {
@@ -301,6 +280,22 @@ body > footer {
     margin-bottom: 25px;
     font-size: 28px;
 }
+.welcome-coach-image {
+    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    border: 1.5px solid #3499b8;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+}
 @media (min-width: 390px) {
     .welcome-playlist {
         width: 350px;
@@ -321,17 +316,19 @@ body > footer {
         height: 95px;
         width: 340px;
     }
+    .welcome-coach-image {
+        width: 300px;
+        height: 300px;
+    }
 }
-@media (min-width: 576px) {
-    
+@media (max-width: 576px) {
+    .opinions-outer-container {
+        padding: 20px 20px 10px 20px;
+    }
 }
 @media (min-width: 768px) {
     .about-coach div {
         width: 40%;
-    }
-    .about-coach img {
-        width: 320px;
-        margin: 15px 5px 10px;
     }
     .about-coach p {
         width: 52%;
@@ -369,6 +366,57 @@ body > footer {
     }
     .coach-opinions h2 {
         padding-right: 120px;
+    }
+}
+@media(max-width:1200px) {
+    .opinions-outer-container .opinions-inner-container .opinion {
+        width: 100% !important;
+        margin: 0px 0px !important;
+        padding: 25px 0px 40px !important;
+        overflow: hidden !important;
+        -moz-box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        -webkit-box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        -ms-box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        position: relative !important;
+        text-align: right !important;
+        display: block !important;
+        align-items: unset !important;
+        letter-spacing: unset !important;
+    }
+    .opinions-outer-container .opinions-inner-container .opinion > .image {
+        width: 75px !important;
+        position: absolute !important;
+        top: 15px !important;
+        right: 0px !important;
+        -webkit-box-shadow: unset !important;
+        -o-box-shadow: unset !important;
+        -ms-box-shadow: unset !important;
+        -moz-box-shadow: unset !important;
+        box-shadow: unset !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+    .opinions-outer-container .opinions-inner-container .opinion > .image > img {
+        -webkit-border-radius: 100% !important;
+        -o-border-radius: 100% !important;
+        -moz-border-radius: 100% !important;
+        -ms-border-radius: 100% !important;
+        border-radius: 100% !important;
+        width: 55px !important;
+        height: 55px !important;
+        margin: 0px 5px !important;
+    }
+    .opinions-outer-container .opinions-inner-container .opinion > .content {
+        padding: 0px 10px !important;
+        width: 100% !important;
+        padding-right: 75px !important;
+        padding-left: 35px !important;
+        min-height: 75px !important;
+    }
+    .opinion .content h3 {
+        font-size: 20px !important;
+        line-height: unset !important;  
     }
 }
 @media (min-width:1200px) {

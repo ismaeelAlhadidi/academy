@@ -9,6 +9,7 @@
 @section('content')
     <div class="container no-select">
         <div class="welcome-playlists">
+            @if($isMylist && $playlists->count() > 0) <section class="mylist-header">{{ __('masseges.your-list') }}</section>@endif
             @forelse($playlists as $playlist)
                 <div class="welcome-playlist no-select" onclick="openPlaylistTemplate('{{ $playlist->id }}', '{{ $playlist->title }}');">
                     <img style="background-image: url({{ asset($playlist->poster) }})"/>
@@ -30,7 +31,7 @@
         <div id="contentOfPlaylistTemplate" class="welcome-playlist-opend-template">
             <section>
                 <p id="titleInPlaylistTemplate"></p>
-                <div><a id="subscriptionButtonInPlaylistTemplate"> {{ __('input.subscriptions-of-this-playlist') }} </a></div><div><a id="showButtonInPlaylistTemplate" href="{{ route('playlist.show') }}"> {{ __('input.show-playlist') }} </a></div>
+                @if(! $isMylist)<div><a id="subscriptionButtonInPlaylistTemplate"> {{ __('input.subscriptions-of-this-playlist') }} </a></div>@endif<div><a id="showButtonInPlaylistTemplate" href="{{ route('playlist.show') }}"> {{ __('input.show-playlist') }} </a></div>
             </section>
             <h2 id="opinionsHeader">{{ __('masseges.users-opinions-of-this-playlist') }}</h2>
             <div id="opinionsContainer" class="opinions-outer-container">
@@ -38,10 +39,12 @@
             </div>
         </div>
     </div>
+    @if(! $isMylist)
     <form id="payPlaylistForm" method="post" action="{{ asset('/pay-playlist') }}" style="display:none !important">
         @csrf
         <input type="hidden" id="idInputOfSelectedPlaylistToPay" name="id"/>
     </form>
+    @endif
     @include('include.authenticatedFooter')
 @endsection
 @section('scripts')
@@ -59,6 +62,7 @@
                 };
             }
 
+            @if(! $isMylist)
             var subscriptionButtonInPlaylistTemplate = document.getElementById('subscriptionButtonInPlaylistTemplate'),
                 payPlaylistForm = document.getElementById('payPlaylistForm');
             if(subscriptionButtonInPlaylistTemplate != null) {
@@ -66,6 +70,7 @@
                     payPlaylistForm.submit();
                 };
             }
+            @endif
             @if(session()->has('error'))
                 showPopUpMassage('{{ session()->get('error') }}',null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
                 {{ session()->forget('error') }}

@@ -21,4 +21,5 @@ return [
     'admin-navbar-add-offer-session' => 'اضافة عرض',
     'navbar-my-playlists' => 'قائمة دوراتي',
     'navbar-my-account' => 'حسابي',
+    'navbar-my-sessions' => 'جلساتي',
 ];

@@ -151,10 +151,6 @@ class PlaylistController extends Controller
             'isSubscription' => $isSubscription,
         ]);
     }
-    public function subscription($id = null) {
-        if($id == null) return abort('404');
-        return $id;
-    }
     public function getMoreComments($id) {
         $comments = Comment::where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $id)->orderBy('id', 'desc')->paginate($this->commentsCountOnOneScroll);
         if(! $comments) return $this->getResponse(false, '', null);

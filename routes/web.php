@@ -22,14 +22,16 @@ Route::get('/', 'WelcomeController@index')->middleware('guest');
 Route::get('/getOpinionsOfPlaylist/{id}', 'WelcomeController@getOpinionsOfPlaylist');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/my-list', 'HomeController@myList')->name('my.playlists');
 Route::get('/ajax/{playlistId}/blob/check-permision/{id}','BlobController@checkBlobPermision')->middleware('auth');
 Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function() {
     Route::group(['prefix' => 'playlist'],function() {
         Route::get('/{id?}', 'PlaylistController@index')->name('playlist.show');
-        Route::get('/playlist/subscription/{id?}', 'PlaylistController@subscription')->name('playlist.subscription');
     });
     Route::get('/sessions', 'SessionController@index')->name('sessions');
     Route::get('/profile/{id?}', 'UserController@index')->name('user.profile');
+    Route::get('/my-sessions', 'UserController@mySessions')->name('my.sessions');
+
     /****************************  AJAX Requests ****************************/
     Route::group(['prefix' => 'ajax'],function() {
         Route::get('/session-offer/{id}', 'SessionController@getSessionOfferData');

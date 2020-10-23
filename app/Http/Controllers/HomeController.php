@@ -24,49 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $notifcations = [
-            array (
-                'id' => 0,
-                'readed' => true,
-                'content' => 'hi esmaeel',
-                'image' => '/images/static/user-default.jpg',
-                'time' => time(),
-                'type' => 'n',
-            ),
-            array (
-                'id' => 0,
-                'readed' => true,
-                'content' => 'hi esmaeel',
-                'image' => '/images/static/user-default.jpg',
-                'time' => time(),
-                'type' => 'n',
-            ),
-            array (
-                'id' => 0,
-                'readed' => true,
-                'content' => 'hi esmaeel',
-                'image' => '/images/static/user-default.jpg',
-                'time' => time(),
-                'type' => 'n',
-            ),
-            array (
-                'id' => 0,
-                'readed' => true,
-                'content' => 'hi esmaeel',
-                'image' => '/images/static/user-default.jpg',
-                'time' => time(),
-                'type' => 'n',
-            ),
-            array (
-                'id' => 0,
-                'readed' => true,
-                'content' => 'hi esmaeel',
-                'image' => '/images/static/user-default.jpg',
-                'time' => time(),
-                'type' => 'n',
-            ),
-        ];
-        session(['notifcations' => $notifcations]);
         $countOfPlaylistsInHomePage = 12;
         $playlists = Playlist::orderBy('id','desc')->paginate($countOfPlaylistsInHomePage);
         $playlists->transform(function ($playlist) {
@@ -79,6 +36,22 @@ class HomeController extends Controller
             else  $playlist->price .= ' $';
             return $playlist;
         });
-        return view('home', ['playlists' => $playlists]);
+        return view('home', ['playlists' => $playlists, 'isMylist' => false]);
+    }
+    public function myList() {
+        $countOfPlaylistsInHomePage = 12;
+        $playlists_id = auth()->user()->subscriptions->pluck('playlist_id');
+        $playlists = Playlist::whereIn('id', $playlists_id)->orderBy('id','desc')->paginate($countOfPlaylistsInHomePage);
+        $playlists->transform(function ($playlist) {
+            if($playlist->availability_time != null) {
+                $playlist->availability_time = Date('F j, Y, g:i a',strtotime($playlist->availability_time));
+            } elseif (! $playlist->available) {
+                $playlist->availability_time = __('masseges.not-available');
+            }
+            if($playlist->price == 0) $playlist->price = __('masseges.free');
+            else  $playlist->price .= ' $';
+            return $playlist;
+        });
+        return view('home', ['playlists' => $playlists, 'isMylist' => true]);
     }
 }

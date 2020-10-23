@@ -274,6 +274,8 @@ body > aside {
     border-bottom-left-radius: 5px;
     padding: 0px;
     border-top: 1px solid #e6c975;
+    border-left: 1px solid #e6c975;
+    border-bottom: 1px solid #e6c975;
     -webkit-box-shadow: inset 0px 2px 0px 0px rgba(0, 0, 0, 0.05), inset 0px 3px 4px 0px rgba(0, 0, 0, 0.1);
     -o-box-shadow: inset 0px 2px 0px 0px rgba(0, 0, 0, 0.05), inset 0px 3px 4px 0px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: inset 0px 2px 0px 0px rgba(0, 0, 0, 0.05), inset 0px 3px 4px 0px rgba(0, 0, 0, 0.1);
