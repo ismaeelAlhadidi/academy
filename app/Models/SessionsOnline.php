@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Models\AdminNotifaction; 
+use App\Models\UserNotifaction;
 
 class SessionsOnline extends Model
 {
@@ -35,5 +36,20 @@ class SessionsOnline extends Model
     }
     public function payment() {
         return $this->belongsTo('App\Models\Payment', 'payment_id', 'id');
+    }
+
+    public function setAdmissionAttribute($value) {
+        $oldValue = $this->attributes['admission'];
+        $this->attributes['admission'] = $value;
+        try {
+            if($oldValue != $value) {
+                $data = [
+                    'type' => 'SessionsOnline',
+                    'n_id' => $this->attributes['id'],
+                    'user_id' => $this->attributes['user_id']
+                ];
+                UserNotifaction::create($data);
+            }
+        } catch(Exception $ex) { }
     }
 }

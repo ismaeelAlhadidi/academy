@@ -2,7 +2,9 @@ var notifcation = document.getElementById('notifcation'),
 	notifcationButton = document.getElementById('notifcationButton'),
 	notifcationTemplate = document.getElementById('notifcationTemplate'),
 	notifcationTemplateDiv = document.getElementById('notifcationTemplateDiv'),
-	exitButtonCanvasOfNotifcationTemplate = document.getElementById('exitButtonCanvasOfNotifcationTemplate');
+	exitButtonCanvasOfNotifcationTemplate = document.getElementById('exitButtonCanvasOfNotifcationTemplate'),
+	countOfNewNotifcations = document.getElementById('countOfNewNotifcations'),
+	userLang = {};
 
 if(exitButtonCanvasOfNotifcationTemplate != null && notifcationTemplate != null) {
 	if(typeof(drawRemoveIconCanvas) == "function" && typeof(closeBobUpTemplate) == "function") {
@@ -30,6 +32,8 @@ function closeNotifcation() {
 }
 function showNotifcation(id, type, lang) {
 	var clickedNotifcation = document.getElementById('notifcation' + type + id);
+	if(clickedNotifcation.getAttribute('class') == 'transition not-readed') decreaseCountOfNewNotifcation();
+	else if(clickedNotifcation.class == 'transition not-readed') decreaseCountOfNewNotifcation();
 	if(clickedNotifcation != null) clickedNotifcation.setAttribute('class','transition');
 	if(notifcationTemplate == null) return;
 	if(notifcationTemplateDiv != null) notifcationTemplate.removeChild(notifcationTemplateDiv);
@@ -445,4 +449,204 @@ function RequestSetAdmissionNotification(SessionOnlineId,admission,generelErorrM
         });
         exitThis(popUpMassageDiv);
     },lang[4]);
+}
+function showUserNotifcation(id,type,lang) {
+	var clickedNotifcation = document.getElementById('notifcation' + type + id);
+	if(clickedNotifcation.getAttribute('class') == 'transition not-readed') decreaseCountOfNewNotifcation();
+	else if(clickedNotifcation.class == 'transition not-readed') decreaseCountOfNewNotifcation();
+	if(clickedNotifcation != null) clickedNotifcation.setAttribute('class','transition');
+	if(notifcationTemplate == null) return;
+	if(notifcationTemplateDiv != null) notifcationTemplate.removeChild(notifcationTemplateDiv);
+	notifcationTemplateDiv = document.createElement('div');
+	notifcationTemplateDiv.setAttribute('id', 'notifcationTemplateDiv');
+	notifcationTemplate.appendChild(notifcationTemplateDiv);
+	if(typeof(ajaxRequest) != "function") {
+		if(typeof(showPopUpMassage) == "function") showPopUpMassage(lang.generalError);
+		return;
+	}
+	switch(type) {
+		case 'Replay':
+			openReplayUserNotifcation(id, lang);
+			break;
+		case 'SessionsOnline':
+			openSessionsOnlineUserNotifcation(id, lang);
+			break;
+		default:
+			if(typeof(showPopUpMassage) == "function") showPopUpMassage(lang.generalError);
+			return;
+	}
+	ajaxRequest('get', location.origin + '/ajax/notification/setReaded/' + type + '/' + id, null, null);
+}
+function openSessionsOnlineUserNotifcation(id, lang) {
+	var template = findOrCreateTemplateRequestToSessionFromNotifcation(lang);
+	var titleOfTemplate = document.getElementById('titleOfContentOfRequestToSessionFromNotifcation'),
+		buttonSendRequestToSessionFromNotifcation = document.getElementById('buttonSendRequestToSessionFromNotifcation'),
+		inputDateOfRequestToSessionFromNotifcation = document.getElementById('inputDateOfRequestToSessionFromNotifcation'),
+		inputTimeOfRequestToSessionFromNotifcation = document.getElementById('inputTimeOfRequestToSessionFromNotifcation');
+	ajaxRequest('get', window.location.origin + '/ajax/notification/session-online/' + id + '/offer', null, function (jsonResponse) {
+		if(jsonResponse == null) {
+			showPopUpMassage(lang.SessionNotForUseAlert,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+			return;
+		}
+		if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('data')) {
+			if(jsonResponse.status) {
+				if(typeof(jsonResponse.data) == "object" && jsonResponse.data != null) {
+					if(jsonResponse.data.hasOwnProperty('offerId') && jsonResponse.data.hasOwnProperty('offerName') && jsonResponse.data.hasOwnProperty('admission') && jsonResponse.data.hasOwnProperty('sessionsUrl')) {
+						if(jsonResponse.data.admission) {
+							window.location.href = jsonResponse.data.sessionsUrl;
+							return;
+						}
+						offerId = jsonResponse.data.offerId;
+						title = jsonResponse.data.offerName;
+						if(titleOfTemplate != null) {
+							titleOfTemplate.textContent = jsonResponse.data.offerName;
+						}
+						if(buttonSendRequestToSessionFromNotifcation != null) {
+							buttonSendRequestToSessionFromNotifcation.onclick = function () {
+								var formData = new FormData();
+								if(inputDateOfRequestToSessionFromNotifcation != null) {
+									formData.append('date', inputDateOfRequestToSessionFromNotifcation.value);
+								}
+								if(inputTimeOfRequestToSessionFromNotifcation != null) {
+									formData.append('time', inputTimeOfRequestToSessionFromNotifcation.value);
+								}
+								formData.append('id', offerId);
+								formData.append('_token', lang.TOKEN);
+								ajaxRequest('post', window.location.origin + '/ajax/session-offer/request', formData, function(jsonResponse) {
+									if(jsonResponse == null) {
+										showPopUpMassage(lang.SessionNotForUseAlert,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+										return;
+									}
+									if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('msg')) {
+										if(jsonResponse.status) {
+											if(jsonResponse.hasOwnProperty('data')) {
+												if(typeof(jsonResponse.data) == "object") {
+													showPopUpMassage(jsonResponse.msg,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+													inputDateOfRequestToSessionFromNotifcation.value = '';
+													inputTimeOfRequestToSessionFromNotifcation.value = '';
+													template.style = 'display: none !important;';
+													return;
+												}
+											}
+										} else if(jsonResponse.hasOwnProperty('msg')) {
+											showPopUpMassage(jsonResponse.msg,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+											if(jsonResponse.hasOwnProperty('data')) {
+												if(typeof(jsonResponse.data) == "object") {
+													if(jsonResponse.data.length == 1) {
+														if(jsonResponse.data[0] == 'invalid') {
+															inputDateOfRequestToSessionFromNotifcation.setAttribute('class', 'input-invalid');
+															inputTimeOfRequestToSessionFromNotifcation.setAttribute('class', 'input-invalid');
+														}
+													}
+												}
+											}
+											return;
+										}
+										showPopUpMassage(lang.SessionNotForUseAlert,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+									}
+								});
+							};
+						}
+						template.style = "";
+						return;
+					}
+				}
+			}
+		}
+		showPopUpMassage(lang.SessionNotForUseAlert,null,null,'ok',defaultStyleOfPopUpMassegeInWeb);
+		return;
+	});
+}
+function findOrCreateTemplateRequestToSessionFromNotifcation(lang) {
+	var TemplateRequestToSessionFromNotifcation = document.getElementById('TemplateRequestToSessionFromNotifcation');
+
+	if(TemplateRequestToSessionFromNotifcation != null) return TemplateRequestToSessionFromNotifcation;
+
+	var TemplateRequestToSessionFromNotifcation = document.createElement('div'),
+		header = document.createElement('header'),
+		headerDiv = document.createElement('div'),
+		headerCanvas = document.createElement('canvas'),
+		contentOfRequestToSessionFromNotifcation = document.createElement('div');
+
+	headerCanvas.setAttribute('width' ,'25');
+	headerCanvas.setAttribute('height' ,'25');
+	if(typeof(drawRemoveIconCanvas) == "function" && typeof(closeBobUpTemplate) == "function") {
+		headerCanvas.width = 25;
+		headerCanvas.height = 25;
+		drawRemoveIconCanvas(headerCanvas,'#ffffff');
+		headerCanvas.onclick = function () {
+			closeBobUpTemplate(TemplateRequestToSessionFromNotifcation);
+		}
+	}
+	headerDiv.appendChild(headerCanvas);
+	header.appendChild(headerDiv);
+
+	contentOfRequestToSessionFromNotifcation.innerHTML = `<div><h2 id="titleOfContentOfRequestToSessionFromNotifcation"></h2></div><section><section><span>${ lang.date }</span><input id="inputDateOfRequestToSessionFromNotifcation" type="date" name="date" autocomplete="off" class=""></section><section><span>${ lang.time }</span><input id="inputTimeOfRequestToSessionFromNotifcation" type="time" name="time" autocomplete="off" class=""></section></section>
+	<footer><div><a id="buttonSendRequestToSessionFromNotifcation">${ lang.ok }</a></div></footer>`;
+	contentOfRequestToSessionFromNotifcation.setAttribute('class', 'welcome-playlist-opend-template offer-template request-session notifcation-session');
+	
+	TemplateRequestToSessionFromNotifcation.appendChild(header);
+	TemplateRequestToSessionFromNotifcation.appendChild(contentOfRequestToSessionFromNotifcation);
+	TemplateRequestToSessionFromNotifcation.setAttribute('class', 'pop-up-template template-of-this-playlist no-select');
+	TemplateRequestToSessionFromNotifcation.setAttribute('id', 'TemplateRequestToSessionFromNotifcation');
+	TemplateRequestToSessionFromNotifcation.setAttribute('style', 'display: none;');
+	document.body.appendChild(TemplateRequestToSessionFromNotifcation);
+
+	return TemplateRequestToSessionFromNotifcation;
+}
+function openReplayUserNotifcation(id, lang) {
+	notifcationTemplate.setAttribute('style', '');
+	ajaxRequest('get', location.origin + '/ajax/notification/replay/' + id, null, function(jsonResponse) {
+		if(jsonResponse == null) {
+			if(typeof(showPopUpMassage) == "function") showPopUpMassage(lang.generalError);
+			return;
+		}
+		if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('data')) {
+			if(jsonResponse.status) {
+				var div = document.createElement('div'),
+					image = document.createElement('img'),
+					name = document.createElement('span'),
+					playlistTitle = document.createElement('span'),
+					time = document.createElement('span'),
+					content = document.createElement('p'),
+					allowButton = document.createElement('a');
+
+				if(jsonResponse.data.hasOwnProperty('image')) image.setAttribute('src', jsonResponse.data.image);
+				if(jsonResponse.data.hasOwnProperty('name')) name.textContent = jsonResponse.data.name;
+				if(jsonResponse.data.hasOwnProperty('playlist_title')) playlistTitle.textContent = jsonResponse.data.playlist_title + ' - ';
+				if(jsonResponse.data.hasOwnProperty('time')) time.textContent = jsonResponse.data.time;
+				if(jsonResponse.data.hasOwnProperty('content')) content.textContent = jsonResponse.data.content;
+
+				div.appendChild(image);
+				div.appendChild(name);
+				div.appendChild(playlistTitle);
+				div.appendChild(time);
+				div.appendChild(content);
+
+				if(jsonResponse.data.hasOwnProperty('replay_url')) {
+					allowButton.textContent = lang.goToThisReplay;
+					allowButton.href = jsonResponse.data.replay_url;
+					div.appendChild(allowButton);
+				}
+
+				div.setAttribute('class', 'opend-notification-div no-select');
+				if(notifcationTemplateDiv != null) notifcationTemplateDiv.appendChild(div);
+				notifcationTemplate.setAttribute('style', '');
+				return;
+			} else if(jsonResponse.hasOwnProperty('msg')) {
+				if(typeof(showPopUpMassage) == "function") showPopUpMassage(jsonResponse.msg);
+				return;
+			}
+			if(typeof(showPopUpMassage) == "function") showPopUpMassage(lang.generalError);
+		}
+	});
+}
+function decreaseCountOfNewNotifcation() {
+	if(countOfNewNotifcations == null) return;
+	if(isNaN(countOfNewNotifcations.textContent)) {
+		countOfNewNotifcations.style = "display: none;";
+		return;
+	}
+	countOfNewNotifcations.textContent = countOfNewNotifcations.textContent -1;
+	if(countOfNewNotifcations.textContent <= 0) countOfNewNotifcations.style = "display: none;";
 }

@@ -6,7 +6,7 @@
                     <a id="headerNavButton"><li class="nav-button"><canvas id="headerNavCanvasButton" width="35" height="35"></canvas></li></a>
                     <a href="{{ route('user.profile') }}"><li class="nav-image"><img src="{{ asset(auth()->user()->image) }}" /></li></a>
                     <a href="{{ route('user.profile') }}"><li>{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</li></a>
-                    <a class="notifcations-button" id="notifcationButton" ><li class="icon"><span class="material-icons">notifications</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a>
+                    <a class="notifcations-button" id="notifcationButton" ><li class="icon"><span class="material-icons">notifications</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span id="countOfNewNotifcations" class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a>
                 @endguest
             </ul>
         </nav><div class="logo">logo</div></header>@auth<aside id="menuOfNavList" style="display: none;"><ul class="list-overflow">
@@ -23,4 +23,4 @@
                 @csrf
             </form>
         </ul>
-    </aside>@endauth
+    </aside>{{ session()->forget('newNotifcations') }}@endauth

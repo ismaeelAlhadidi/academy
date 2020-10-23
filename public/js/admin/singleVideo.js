@@ -348,7 +348,6 @@ class SingleVideo extends HTMLElement {
         });
     }
     setDataToProperties() {
-        console.log("setDataToProperties");
         if(typeof(IsJsonString) == "function") {
             if(IsJsonString(this.data)) {
                 var tempData = JSON.parse(this.data);

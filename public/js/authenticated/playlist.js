@@ -273,7 +273,7 @@ function setNewCountOfComment() {
 function handelScroll() {
     if( (window.scrollY + window.outerHeight) < document.documentElement.scrollHeight - 50 ) return;
     if(commentsContianer == null) return;
-    if(typeof(PLAYLIST_ID) != "number") var PLAYLIST_ID = window.location.href.split('/')[window.location.href.split('/').length -1];
+    if(typeof(PLAYLIST_ID) != "number") var PLAYLIST_ID = window.location.pathname.split('/')[window.location.pathname.split('/').length -1];
     if(getMoreCommentsURL == null) getMoreCommentsURL = window.location.origin + '/ajax/playlist/' + PLAYLIST_ID + '/more-comment?page=2';
     getMoreComments(getMoreCommentsURL);
 }

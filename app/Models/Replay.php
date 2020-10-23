@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Models\AdminNotifaction;
+use App\Models\UserNotifaction;
 
 class Replay extends Model
 {
@@ -21,7 +22,15 @@ class Replay extends Model
                 'type' => 'Replay',
                 'n_id' => $model->id,
             ];
-	        AdminNotifaction::create($data);
+            AdminNotifaction::create($data);
+            if($model->comment->user->id != $model->user_id) {
+                $data = [
+                    'type' => 'Replay',
+                    'n_id' => $model->id,
+                    'user_id' => $model->comment->user->id
+                ];
+                UserNotifaction::create($data);
+            }
         });
     }
     public function comment() {

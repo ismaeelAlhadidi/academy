@@ -24,13 +24,16 @@ Route::get('/getOpinionsOfPlaylist/{id}', 'WelcomeController@getOpinionsOfPlayli
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/my-list', 'HomeController@myList')->name('my.playlists');
 Route::get('/ajax/{playlistId}/blob/check-permision/{id}','BlobController@checkBlobPermision')->middleware('auth');
+
 Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function() {
-    Route::group(['prefix' => 'playlist'],function() {
-        Route::get('/{id?}', 'PlaylistController@index')->name('playlist.show');
+    Route::group(['middleware' => 'u.notifcation'],function() {
+        Route::group(['prefix' => 'playlist'],function() {
+            Route::get('/{id?}', 'PlaylistController@index')->name('playlist.show');
+        });
+        Route::get('/sessions', 'SessionController@index')->name('sessions');
+        Route::get('/profile/{id?}', 'UserController@index')->name('user.profile');
+        Route::get('/my-sessions', 'UserController@mySessions')->name('my.sessions');
     });
-    Route::get('/sessions', 'SessionController@index')->name('sessions');
-    Route::get('/profile/{id?}', 'UserController@index')->name('user.profile');
-    Route::get('/my-sessions', 'UserController@mySessions')->name('my.sessions');
 
     /****************************  AJAX Requests ****************************/
     Route::group(['prefix' => 'ajax'],function() {
@@ -44,6 +47,11 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function()
         Route::post('/playlist/{id}/post-comment/', 'UserController@postComment' );
         Route::get('/playlist/{id}/more-comment/', 'PlaylistController@getMoreComments');
         Route::post('/playlist/{id}/post-replay/', 'UserController@postReplay' );
+        Route::group(['prefix' => 'notification'],function () {
+            Route::get('/setReaded/{type}/{id}','NotificationController@setReaded');
+            Route::get('/replay/{id}','NotificationController@getReplay');
+            Route::get('/session-online/{id}/offer','NotificationController@getOffer');
+        });
     });
 });
 

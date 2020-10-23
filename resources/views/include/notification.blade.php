@@ -18,7 +18,15 @@
                             /* 07 => */ '{{ __('masseges.ok') }}',
                         ]);"
                     @else 
-                        onclick="console.log('this-user-notifcations');"
+                        onclick="showUserNotifcation({{ $notifcation['id'] }},'{{ $notifcation['type'] }}', {
+                            'generalError': '{{ __('masseges.general-error') }}',
+                            'goToThisReplay': '{{ __('notifcations.go-to-the-replay') }}',
+                            'ok': '{{ __('masseges.ok') }}',
+                            'date': '{{ __('masseges.date') }}',
+                            'time': '{{ __('masseges.time') }}',
+                            'SessionNotForUseAlert': '{{ __('masseges.session-deleted') }}',
+                            'TOKEN': '{{ csrf_token() }}'
+                        });"
                     @endauth > <!-- this lang array of needed statement from server to use it with javascript -->
                     <img src="{{ $notifcation['image'] }}" />
                     <span>{{ Date('F j, Y, g:i a',strtotime($notifcation['time'])) }}</span>

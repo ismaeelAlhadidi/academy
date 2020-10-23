@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class AdminNotifaction extends Model
+class UserNotifaction extends Model
 {
     use Notifiable;
-    protected $table = 'admin_notifactions';
+    protected $table = 'user_notifactions';
     protected $fillable = [
-        'type', 'n_id','readed', 'created_at','updated_at'
+        'type', 'n_id','readed', 'user_id','created_at','updated_at'
     ];
     protected $hidden = [];
     public $timestamps = true;

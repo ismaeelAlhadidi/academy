@@ -2,7 +2,7 @@
         <div class="nav-button"><canvas id="navButton"></canvas></div>
         <a class="header-profile-image"><img src="{{ isset(auth('admin')->user()->image) ? asset(auth('admin')->user()->image) : asset('images/static/adminLogin.png') }}"/></a>
         <ul><a class="list-item"><li>{{ auth('admin')->user()->username }}</li></a>
-        <a class="list-item notifcations-button" id="notifcationButton" ><li><span class="fa">&#xf0f3;</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a></ul>
+        <a class="list-item notifcations-button" id="notifcationButton" ><li><span class="fa">&#xf0f3;</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span id="countOfNewNotifcations" class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a></ul>
     </nav><div class="search" style="display: none;">
         <form id="searchForm" action="" method="get">
             @csrf

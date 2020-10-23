@@ -384,6 +384,12 @@ body > aside {
     border-radius: 0.5em;
     cursor: pointer;
 }
+.notifcation-session > footer {
+    padding: 1.5em 0;
+}
+.notifcation-session > footer div {
+    margin: 20px 20px;
+}
 .offer-template > footer div a {
     border-color: rgba(255, 255, 255, 0.35);
     color: #fff !important;
@@ -448,6 +454,14 @@ body > aside {
 }
 .default-authenticated-button:hover > button {
     background-color: rgba(255, 255, 255, 0.15);
+}
+.count-of-new-notifcations {
+    top: -15px;
+    right: 6px;
+    width: 17.5px;
+}
+.notifcation {
+    direction: ltr;
 }
 @media (min-width: 390px) {
     .welcome-playlist {

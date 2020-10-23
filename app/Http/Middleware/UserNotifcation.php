@@ -1,15 +1,13 @@
 <?php
 
 namespace App\Http\Middleware;
-use App\Models\SessionsOnline;
-use App\Models\CoachOpinion;
-use App\Models\PlaylistOpinion;
-use App\Models\Comment;
-use App\Models\Replay;
-use App\Models\AdminNotifaction as Notifcation;
-use Closure;
 
-class AdminNotifcation
+use Closure;
+use App\Models\SessionsOnline;
+use App\Models\Replay;
+use App\Models\UserNotifaction as Notifcation;
+
+class UserNotifcation
 {
     /**
      * Handle an incoming request.
@@ -18,7 +16,6 @@ class AdminNotifcation
      * @param  \Closure  $next
      * @return mixed
      */
-
     private $notifcations;
     private $new;
 
@@ -26,7 +23,7 @@ class AdminNotifcation
     {
         $this->notifcations = array();
         $this->new = 0;
-        $notifcations = Notifcation::orderBy('id','desc')->limit(30)->get();
+        $notifcations = Notifcation::where('user_id', auth()->user()->id)->orderBy('id','desc')->limit(30)->get();
         if(! $notifcations) return $next($request);
         $this->saveNotifcations($notifcations);
         session(['notifcations' => $this->notifcations]);
@@ -49,37 +46,29 @@ class AdminNotifcation
 
     private function getData($id, $type) {
         switch($type) {
-            case 'CoachOpinion':
-                $temp = CoachOpinion::find($id);
-                if(! $temp) return null;
-                $content = $temp->user->first_name . ' ' . __('notifcations.coach-opinoin');
-            break;
-            case 'PlaylistOpinion':
-                $temp = PlaylistOpinion::find($id);
-                if(! $temp) return null;
-                $content = $temp->user->first_name . ' ' . __('notifcations.playlist-opinoin') . ' ' . $temp->playlist->title;
-            break;
-            case 'Comment':
-                $temp = Comment::find($id);
-                if(! $temp) return null;
-                $content = $temp->user->first_name . ' ' . __('notifcations.comment') . ' ' . $temp->playlist->title;
-            break;
             case 'Replay':
                 $temp = Replay::find($id);
                 if(! $temp) return null;
-                $content = $temp->user->first_name . ' ' . __('notifcations.replay') . ' ' . $temp->comment->user->first_name;
+                if($temp->allow == false) return null;
+                $content = $temp->user->first_name . ' ' . __('notifcations.replay') . __('notifcations.you');
+                $poster = $temp->user->image;
             break;
             case 'SessionsOnline':
                 $temp = SessionsOnline::find($id);
                 if(! $temp) return null;
-                $content = $temp->user->first_name . ' ' . __('notifcations.session') . ' ' . $temp->sessionOffer->name;
+                if($temp->admission) {
+                    $content = __('notifcations.session-ok-from-coach') . ' ' . $temp->sessionOffer->name;
+                } else {
+                    $content = __('notifcations.session-not-ok-from-coach') . ' ' . $temp->sessionOffer->name . ' ' . __('notifcations.find-session-on-anouther-time');
+                }
+                $poster = $temp->sessionOffer->poster;
             break;
             default:
             return null;
         }
         return [
             'id' => $temp->id,
-            'image' => $temp->user->image,
+            'image' => $poster,
             'content' => $content
         ];
     }

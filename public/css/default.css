@@ -1,4 +1,3 @@
-/*@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);*/
 * {
     margin: 0px;
     padding: 0px;
@@ -437,6 +436,7 @@ a:hover {
     direction: rtl;
     text-align: right;
     position: relative;
+    overflow: hidden;
 }
 .opend-notification-div > img {
     width: 60px;
