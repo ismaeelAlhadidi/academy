@@ -42,19 +42,20 @@ var currentVideoElement = document.getElementById('currentVideoElement'),
     videoProgressBarContainer = document.getElementById('videoProgressBarContainer'),
     posterOfOpendVideo = document.getElementById('posterOfOpendVideo'),
     opendVideoController = document.getElementById('opendVideoController'),
-    videoProgressBar = document.getElementById('videoProgressBar');
+    videoProgressBar = document.getElementById('videoProgressBar'),
+    divForMakeEventPlayPauseOnFooter = document.getElementById('divForMakeEventPlayPauseOnFooter'),
+    centerWaitingInPlayer = document.getElementById('centerWaitingInPlayer');
 
 var player = new Player(currentBlob.publicKey, currentBlob.poster_src, currentVideoElement, currentBlob.blob_id, PLAYLIST_ID, currentBlob.type);
 function setWatchingEvents() {
     var tempPosterOfOpendVideo = document.getElementById('posterOfOpendVideo'),
-        tempDivForMakeEventPlayPauseOnFooter = document.getElementById('divForMakeEventPlayPauseOnFooter'),
         tempSmallPlayPauseSVGButton = document.getElementById('smallPlayPauseSVGButton');
         tempOpendVideoFullScrrenButton = document.getElementById('opendVideoFullScrrenButton');
 
     var startVideo = function startVideo() {
         player.start();
         tempPosterOfOpendVideo.onclick = playPauseHandler;
-        tempDivForMakeEventPlayPauseOnFooter.onclick = playPauseHandler;
+        divForMakeEventPlayPauseOnFooter.onclick = playPauseHandler;
         tempSmallPlayPauseSVGButton.onclick = playPauseHandler;
     };
     var playPauseHandler = function clickOnPlayedVideoHandler () {
@@ -67,11 +68,11 @@ function setWatchingEvents() {
         if(tempOpendVideoFullScrrenButton != null) tempOpendVideoFullScrrenButton.onclick = toggleFullScreenHandler;
         if(player.permision) {
             if(tempPosterOfOpendVideo != null) tempPosterOfOpendVideo.onclick = startVideo;
-            if(tempDivForMakeEventPlayPauseOnFooter != null) tempDivForMakeEventPlayPauseOnFooter.onclick = startVideo;
+            if(divForMakeEventPlayPauseOnFooter != null) divForMakeEventPlayPauseOnFooter.onclick = startVideo;
             if(tempSmallPlayPauseSVGButton != null) tempSmallPlayPauseSVGButton.onclick = startVideo;
         } else {
             if(tempPosterOfOpendVideo != null) tempPosterOfOpendVideo.onclick = function(){};
-            if(tempDivForMakeEventPlayPauseOnFooter != null) tempDivForMakeEventPlayPauseOnFooter.onclick = function(){};
+            if(divForMakeEventPlayPauseOnFooter != null) divForMakeEventPlayPauseOnFooter.onclick = function(){};
             if(tempSmallPlayPauseSVGButton != null) tempSmallPlayPauseSVGButton.onclick = function(){};
         }
     }

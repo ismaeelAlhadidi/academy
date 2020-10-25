@@ -280,7 +280,8 @@ function handelScroll() {
 function getMoreComments() {
     window.onscroll = null;
     window.ontouchmove = null;
-    ajaxRequest('get', getMoreCommentsURL,null , function(jsonResponse) {
+    var tempUrl = getMoreCommentsURL + ( getMoreCommentsURL.lastIndexOf('?') != -1 ? window.location.search.replace('?', '&') : window.location.search );
+    ajaxRequest('get', tempUrl, null, function(jsonResponse) {
         if(jsonResponse != null) {
             if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('data')) {
                 if(jsonResponse.status) {
@@ -333,7 +334,7 @@ function getMoreComments() {
             window.ontouchmove = handelScroll;
 
         }
-    });
+    }, false);
 }
 function renderCommentsOneByOne(comments) {
     for(var i = 0; i < comments.length; i++) {
@@ -405,7 +406,7 @@ function openThisVideo(publicKey, posterSrc, blobId, videoId) {
         changeStorage(publicKey, posterSrc, blobId, videoId, 'video');
     }
     player.setVideo(publicKey, posterSrc, blobId);
-    window.scrollTo(0, 0);
+    if(! needToGoToFirstComment) window.scrollTo(0, 0);
 }
 function openThisAudio(publicKey, posterSrc, blobId, audioId) {
     if(typeof(player) == "undefined") return;
@@ -414,7 +415,7 @@ function openThisAudio(publicKey, posterSrc, blobId, audioId) {
         changeStorage(publicKey, posterSrc, blobId, audioId, 'audio');
     }
     player.setVideo(publicKey, posterSrc, blobId, 'audio');
-    window.scrollTo(0, 0);
+    if(! needToGoToFirstComment) window.scrollTo(0, 0);
 }
 function openThisBook(publicKey, permision) {
     if(! permision) {
@@ -426,4 +427,10 @@ function openThisBook(publicKey, permision) {
     link.href = url;
     link.target = "_blank";
     link.click();
+}
+function goToFirstComment(commentId) {
+    var firstComment = document.getElementsByClassName('first-comment');
+    firstComment = firstComment[0];
+    openReplayOf(commentId);
+    firstComment.scrollIntoView();
 }

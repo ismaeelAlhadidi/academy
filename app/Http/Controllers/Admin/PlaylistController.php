@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Playlist;
 use App\Models\PlaylistOpinion;
+use App\Models\SpecialPlaylist;
+use App\Models\Subscription;
 use App\Models\Comment;
 use App\Models\Type;
 use App\Models\Video;
 use App\Models\Audio;
 use App\Models\Book;
 use App\Models\Blob;
+use App\User;
 use App\Traits\AjaxResponse;
 use Illuminate\Support\Str;
 use Storage;
@@ -717,6 +720,34 @@ class PlaylistController extends Controller
             'name' => $type->name,
         ];
         return response()->json($response);
+    }
+    public function toggleSpecialList($id) {
+        $specialPlaylist = SpecialPlaylist::where('playlist_id', $id)->first();
+        if(! $specialPlaylist) {
+            $specialPlaylist = SpecialPlaylist::create(['playlist_id' => $id]);
+            if(! $specialPlaylist) return $this->getResponse(false, '', null);
+            $added = true;
+        } else {
+            if($specialPlaylist->delete()) $added = false;
+        }
+        return $this->getResponse(true, '', ['id' => $id, 'added' => $added]);
+    }
+    public function addSubscription(Request $request) {
+        if(! $request->has('mail') || ! $request->has('playlist_id')) {
+            return $this->getResponse(false, __('masseges.please-input-data'), null);
+        }
+        $user = User::where('email', $request->input('mail'))->first();
+        if(! $user) return $this->getResponse(false, __('masseges.user-not-found'), null);
+        $playlist = Playlist::find($request->input('playlist_id'));
+        if(! $playlist) return $this->getResponse(false, __('masseges.playlist-not-found'), null);
+        $subscription = Subscription::where('playlist_id' , $request->input('playlist_id'))->where('user_id', $user->id)->first();
+        if($subscription) return $this->getResponse(false, __('masseges.this-user-subscription'), null);
+        $data = ['playlist_id' => $playlist->id, 'user_id' => $user->id];
+        if(Subscription::create($data)) {
+            return $this->getResponse(true, '', null);
+        } else {
+            return $this->getResponse(false, __('masseges.general-error'), null);
+        }
     }
 
     private function createBlobName($ex) {

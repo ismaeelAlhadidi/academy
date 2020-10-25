@@ -8,6 +8,7 @@
     -ms-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    word-break: break-word;
 }
 body {
     overflow: unset;
@@ -781,6 +782,83 @@ table {
     font-size: 24px;
     font-weight: 500;
 }
+.loading-dot-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 15 !important;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.loading-dot-inner-container {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.loading-dot {
+    background: #3499b8;
+}
+.loading-dot, .loading-dot:after {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    -webkit-animation: loading-dot-animation-frame 2s -webkit-calc(((var(--i) + var(--o, 0)) / var(--n) - 1) *1.5s) infinite;
+    -moz-animation: loading-dot-animation-frame 2s -moz-calc(((var(--i) + var(--o, 0)) / var(--n) - 1) *1.5s) infinite;
+    animation: loading-dot-animation-frame 2s calc(((var(--i) + var(--o, 0)) / var(--n) - 1) *1.5s) infinite;
+}
+.loading-dot:after {
+    --o: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    content: "";
+}
+.client-name-in-fixed-header {
+    width: 144.5px;
+    text-align: center;
+}
+@keyframes loading-dot-animation-frame {
+    0%,
+    50% {
+        -webkit-transform: scale(0);
+        -o-transform: scale(0);
+        -moz-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+    }
+    25% {
+        -webkit-transform: scale(.5);
+        -o-transform: scale(.5);
+        -moz-transform: scale(.5);
+        -ms-transform: scale(.5);
+        transform: scale(.5);
+    }
+    75% {
+        -webkit-transform: scale(.5);
+        -o-transform: scale(.5);
+        -moz-transform: scale(.5);
+        -ms-transform: scale(.5);
+        transform: scale(.5);
+    }
+}
+@media (max-width: 280px) {
+    .loading-dot-inner-container > div:nth-of-type(4) {
+        display: none;
+    }
+    .loading-dot-inner-container > div:last-of-type {
+        display: none;
+    }
+}
+@media (max-width: 352px) {
+    .loading-dot-inner-container > div:last-of-type {
+        display: none;
+    }
+}
 @media (min-width: 576px) {
     .default-pop-up-ok-massege > div {
         min-width: 350px;
@@ -825,6 +903,57 @@ table {
     .notifcation {
 		width: 500px;
 	}
+}
+@media(max-width:1200px) {
+    .opinions-outer-container .opinions-inner-container .opinion {
+        width: 100% !important;
+        margin: 0px 0px !important;
+        padding: 25px 0px 40px !important;
+        overflow: hidden !important;
+        -moz-box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        -webkit-box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        -ms-box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        box-shadow: 0 0.05em 0.15em 0 rgba(0, 0, 0, 0.15) !important;
+        position: relative !important;
+        text-align: right !important;
+        display: block !important;
+        align-items: unset !important;
+        letter-spacing: unset !important;
+    }
+    .opinions-outer-container .opinions-inner-container .opinion > .image {
+        width: 75px !important;
+        position: absolute !important;
+        top: 15px !important;
+        right: 0px !important;
+        -webkit-box-shadow: unset !important;
+        -o-box-shadow: unset !important;
+        -ms-box-shadow: unset !important;
+        -moz-box-shadow: unset !important;
+        box-shadow: unset !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+    .opinions-outer-container .opinions-inner-container .opinion > .image > img {
+        -webkit-border-radius: 100% !important;
+        -o-border-radius: 100% !important;
+        -moz-border-radius: 100% !important;
+        -ms-border-radius: 100% !important;
+        border-radius: 100% !important;
+        width: 55px !important;
+        height: 55px !important;
+        margin: 0px 5px !important;
+    }
+    .opinions-outer-container .opinions-inner-container .opinion > .content {
+        padding: 0px 10px !important;
+        width: 100% !important;
+        padding-right: 75px !important;
+        padding-left: 35px !important;
+        min-height: 75px !important;
+    }
+    .opinion .content h3 {
+        font-size: 20px !important;
+        line-height: unset !important;  
+    }
 }
 @media (min-width:1200px) {
     .notifcation-on-ex-aside {

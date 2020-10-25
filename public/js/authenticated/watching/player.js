@@ -11,6 +11,7 @@ class Player {
         this._blobUrl = null;
         this._isFullScreen = false;
         this._permision = false;
+        this._mimeType = '';
         this.setEventsOfProgress();
         this.checkPermision(window.location.origin + '/ajax/' + playlistId + '/blob/check-permision/' + blobId);
     }
@@ -158,13 +159,41 @@ class Player {
     preparationWatch() {
         var tempThis = this;
         var imageOfOpendVideo = document.getElementById('imageOfOpendVideo');
-        ajaxGetVideoRequest(tempThis.url, function (response) {
-            tempThis.currentFile = response;
-            if(tempThis.videoElement != null) {
-                tempThis.blobUrl = URL.createObjectURL(tempThis.currentFile);
+        var mimeCodec = this.mimeType;
+        var mediaSource = new MediaSource();
+        if(tempThis.videoElement != null) {
+            if('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
+                tempThis.blobUrl = window.URL.createObjectURL(mediaSource);
                 tempThis.videoElement.src = tempThis.blobUrl;
+                mediaSource.onsourceopen = function () {
+                    var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+                    ajaxGetVideoRequest(tempThis.url, function (response) {
+                        sourceBuffer.addEventListener('updateend', function (_) {
+                            if(mediaSource.readyState == "opend")mediaSource.endOfStream();
+                        });
+                        sourceBuffer.appendBuffer(response);
+                    }, TOKEN);
+                };
+            } else {
+                console.error('Unsupported MIME type or codec: ', mimeCodec);
             }
-        });
+            tempThis.videoElement.onwaiting = function() {
+                if(centerWaitingInPlayer != null) {
+                    centerWaitingInPlayer.style = "";
+                    centerWaitingInPlayer.setAttribute('style', '');
+                }
+            };
+            tempThis.videoElement.onprogress = function() {
+                var seekableEnd = tempThis.videoElement.seekable.end(tempThis.videoElement.seekable.length - 1);
+                console.log(timeHMSFormat(seekableEnd));
+            };
+            tempThis.videoElement.onplaying = function() {
+                if(centerWaitingInPlayer != null) {
+                    centerWaitingInPlayer.style = "display: none;";
+                    centerWaitingInPlayer.setAttribute('style', 'display: none;');
+                }
+            };
+        }
         if(imageOfOpendVideo != null) imageOfOpendVideo.src = tempThis.poster;
     }
     setVideo(publicKey, posterSrc, blobId, type = "video") {
@@ -206,7 +235,12 @@ class Player {
             if(jsonResponse != null) {
                 if(jsonResponse.hasOwnProperty('status')) {
                     if(jsonResponse.status) {
-                        ok = true;
+                        if(jsonResponse.hasOwnProperty('data')) {
+                            if(jsonResponse.data.hasOwnProperty('mimi')) {
+                                tempThis.mimeType = jsonResponse.data.mimi;
+                                ok = true;
+                            }
+                        }
                     } else if(jsonResponse.hasOwnProperty('msg')) {
                         if(jsonResponse.msg == 'needSub') status = 1;
                         else if(jsonResponse.msg == 'videoTime') status = 2;
@@ -271,9 +305,13 @@ class Player {
         }
         if(imageOfOpendVideo != null) imageOfOpendVideo.src = Player.defaultPoster;
         this.videoElement.src = '';
-        this.blobUrl = null;
-        URL.revokeObjectURL(this.currentFile);
+        if ('srcObject' in this.videoElement) {
+            this.videoElement.srcObject = null;
+        }
+        if(this.blobUrl != null) URL.revokeObjectURL(this.blobUrl);
+        if(this.currentFile != null) URL.revokeObjectURL(this.currentFile);
         this.currentFile = null;
+        this.blobUrl = null;
     }
     start() {
         var imageOfOpendVideo = document.getElementById('imageOfOpendVideo'),
@@ -308,6 +346,10 @@ class Player {
                 }
             }
             if(! isNaN(this.videoElement.duration)) this.videoElement.play();
+            if(centerWaitingInPlayer != null) {
+                centerWaitingInPlayer.style = "display: none;";
+                centerWaitingInPlayer.setAttribute('style', 'display: none;');
+            }
             this.setVisibltyEventsOfProgressPar();
         } else {
             if(centerMainButtonInPlayer != null) {
@@ -349,6 +391,10 @@ class Player {
                 }
             }
             if(! isNaN(this.videoElement.duration)) this.videoElement.play();
+            if(centerWaitingInPlayer != null) {
+                centerWaitingInPlayer.style = "display: none;";
+                centerWaitingInPlayer.setAttribute('style', 'display: none;');
+            }
             this.setVisibltyEventsOfProgressPar();
         }
     }
@@ -401,18 +447,39 @@ class Player {
                 if(! this.videoElement.paused && ! this.videoElement.ended) {
                     posterOfOpendVideo.onmouseout = function () {
                         videoProgressBarContainer.style = "display: none;";
+                        if(divForMakeEventPlayPauseOnFooter != null) {
+                            divForMakeEventPlayPauseOnFooter.style = "displae: none;";
+                            divForMakeEventPlayPauseOnFooter.setAttribute('style', 'display: none;');
+                        }
+
                     };
                     posterOfOpendVideo.onmouseover = function() {
                         videoProgressBarContainer.style = "";
+                        if(divForMakeEventPlayPauseOnFooter != null){
+                            divForMakeEventPlayPauseOnFooter.style = "";
+                            divForMakeEventPlayPauseOnFooter.setAttribute('style', '');
+                        }
                     };
                     opendVideoController.onmouseout = function () {
                         videoProgressBarContainer.style = "display: none;";
+                        if(divForMakeEventPlayPauseOnFooter != null) {
+                            divForMakeEventPlayPauseOnFooter.style = "displae: none;";
+                            divForMakeEventPlayPauseOnFooter.setAttribute('style', 'display: none;');
+                        }
                     };
                     opendVideoController.onmouseover = function() {
                         videoProgressBarContainer.style = "";
+                        if(divForMakeEventPlayPauseOnFooter != null){
+                            divForMakeEventPlayPauseOnFooter.style = "";
+                            divForMakeEventPlayPauseOnFooter.setAttribute('style', '');
+                        }
                     };
                 } else {
                     videoProgressBarContainer.style = "";
+                    if(divForMakeEventPlayPauseOnFooter != null){
+                        divForMakeEventPlayPauseOnFooter.style = "";
+                        divForMakeEventPlayPauseOnFooter.setAttribute('style', '');
+                    }
                     posterOfOpendVideo.onmouseout = function () {};
                     posterOfOpendVideo.onmouseover = function() {};
                     opendVideoController.onmouseout = function () {};
@@ -422,6 +489,10 @@ class Player {
                 opendVideoController.onmousemove = function() {};
             } else {
                 videoProgressBarContainer.style = "";
+                if(divForMakeEventPlayPauseOnFooter != null){
+                    divForMakeEventPlayPauseOnFooter.style = "";
+                    divForMakeEventPlayPauseOnFooter.setAttribute('style', '');
+                }
                 posterOfOpendVideo.onmouseout = function () {};
                 posterOfOpendVideo.onmouseover = function() {};
                 opendVideoController.onmouseout = function () {};
@@ -430,9 +501,17 @@ class Player {
                     var IntervalToHiddenProgressPar;
                     var fullScreenMovingHandler = function () {
                         videoProgressBarContainer.style = "";
+                        if(divForMakeEventPlayPauseOnFooter != null) {
+                            divForMakeEventPlayPauseOnFooter.style = "";
+                            divForMakeEventPlayPauseOnFooter.setAttribute('style', '');
+                        }
                         clearTimeout(IntervalToHiddenProgressPar);
                         IntervalToHiddenProgressPar = setTimeout( function() {
                             videoProgressBarContainer.style = "display: none;";
+                            if(divForMakeEventPlayPauseOnFooter != null) {
+                                divForMakeEventPlayPauseOnFooter.style = "displae: none;";
+                                divForMakeEventPlayPauseOnFooter.setAttribute('style', 'display: none;');
+                            }
                         }, 1 * 1000 * 4);
                     };
                     fullScreenMovingHandler();
@@ -462,6 +541,8 @@ class Player {
     set permision(value) { this._permision = value; }
     get type() { return this._type; }
     set type(value) { this._type = value; }
+    get mimeType() { return this._mimeType; }
+    set mimeType(value) { this._mimeType = value; }
 }
 function timeHMSFormat(timeInSeconds) {
     /* H:M:S */
@@ -481,3 +562,63 @@ function timeHMSFormat(timeInSeconds) {
     if(tempTime.h > 0) target = tempTime.h + ':' + target;
     return target;
 }
+/*
+var video = tempThis.videoElement;
+        var prevBuffer = {
+            "buffer": null,
+            "time": null
+        };
+        var isBuffering = function(){
+        
+            if(video && video.buffered && video.buffered.end && video.buffered.length > 0){
+                var buffer = video.buffered.end(0);
+                var time   = video.currentTime;
+        
+                // Check if the video hangs because of issues with e.g. performance
+                if(prevBuffer.buffer === buffer && prevBuffer.time === time && !video.paused){
+                    return true;
+                }
+                prevBuffer = {
+                    "buffer": buffer,
+                    "time": time
+                };
+                // Check if video buffer is less
+                // than current time (tolerance 3 sec)
+                if((buffer - 3) < time){
+                    return true;
+                }
+            }
+            return false;
+        
+        };
+        video.addEventListener("play", function(e){
+            // Make sure this handler is only called once
+            e.target.removeEventListener(e.type, arguments.called);
+            // Give browsers 3secs time to buffer
+            setTimeout(function(){
+                // As "progress", "stalled" or "waiting" aren't fired
+                // reliable, we need to use an interval
+                var interval = setInterval(function(){
+                    if(isBuffering()){
+                        clearInterval(interval);
+                        console.log("Buffering");
+                    }
+                }, 500);
+            }, 3000);
+        });
+        var addFrameToUrlObject = function addFrameToUrlObject() {
+    
+};
+var downloadFrame = function downloadFrame() {
+
+};
+var checkBuffer = function checkBuffer() {
+
+};
+var threeSecondsInterval = setInterval(function() {
+    downloadNextFrame();
+});
+var halfSecondInterval = setInterval(function () {
+    checkBuffer();
+});
+        */

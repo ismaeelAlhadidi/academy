@@ -1,4 +1,4 @@
-function ajaxRequest(method,url,formElement,onResponse = null) {
+function ajaxRequest(method,url,formElement,onResponse = null, loadingRequired = true, autoStopOfLoading = true) {
     if(formElement != null) {
         if(formElement.constructor == HTMLFormElement) var formData = new FormData(formElement);
     }
@@ -10,6 +10,12 @@ function ajaxRequest(method,url,formElement,onResponse = null) {
             if(IsJsonString(request.responseText)){
                 temp = JSON.parse(request.responseText);
             } else console.log('not JSON'); /* remove in product */
+            if(autoStopOfLoading && loadingRequired) {
+                if(loadingDotElement != null) {
+                    loadingDotElement.style = 'display: none;';
+                    loadingDotElement.setAttribute('style', 'display: none;');
+                }
+            }
             onResponse(temp);
         }
     }
@@ -19,6 +25,13 @@ function ajaxRequest(method,url,formElement,onResponse = null) {
         else request.send();
     }
     else request.send();
+    if(typeof(loadingDotElement) == "undefined") var loadingDotElement = document.getElementById('loadingDotElement');
+    if(loadingRequired) {
+        if(loadingDotElement != null && typeof(onResponse) == "function") {
+            loadingDotElement.style = '';
+            loadingDotElement.setAttribute('style', '');
+        }
+    }
 }
 function IsJsonString(temp) {
     "use strict"
@@ -58,14 +71,16 @@ function ajaxUploadVideo(method,url,formElement,onResponse = null,uploadProgress
     request.upload.ontimeout = timeOutHandler;
     request.send(formElement);
 }
-function ajaxGetVideoRequest(url, onResponse) {
+function ajaxGetVideoRequest(url, onResponse, TOKEN) {
     var request = new XMLHttpRequest();
-    request.open('get', url);
-    request.responseType = 'blob';
+    var formData = new FormData();
+    formData.append('_token', TOKEN);
+    request.open('post', url);
+    request.responseType = 'arraybuffer';
     request.onload = function () {
         onResponse(request.response);
     };
-    request.send();
+    request.send(formData);
 }
 /*
 function test () {

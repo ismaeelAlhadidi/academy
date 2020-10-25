@@ -434,6 +434,7 @@ body, html {
     bottom: unset;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    max-height: 100%;
 }
 .video-controller .video-poster {
     overflow: hidden;
@@ -620,6 +621,21 @@ body, html {
     background-color: rgb(255,255,255,0.5);
     z-index: -1;
 }
+.video-waiting-loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: video-waiting-loader-animation-frame 2s linear infinite;
+}
+.first-comment .target-replay {
+    outline: #3499b8 solid 2px;
+}
 @media (min-width: 380px) {
     .comment > div:first-of-type {
         width: 55px;
@@ -791,5 +807,9 @@ body, html {
         color: #3AB493;
         transform: translateY(20px);
     }
+}
+@keyframes video-waiting-loader-animation-frame {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 

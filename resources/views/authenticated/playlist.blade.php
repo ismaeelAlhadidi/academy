@@ -20,6 +20,7 @@
                             <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="78px" height="78px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1zm4 0c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1z"/></svg>
                             <p id="centerMassegeInPlayer" style="display: none;"></p>
                             <div id="centerSubButtonInPlayer" class="default-authenticated-button" style="display: none;"><button id="subscriptionButton">{{ __('input.subscriptions-of-this-playlist') }}</button></div>
+                            <div id="centerWaitingInPlayer" class="center" style="display: none;"><div class="video-waiting-loader"></div></div>
                         </section></div>
                         <img id="imageOfOpendVideo" src="{{ asset('/images/static/video-default.jpg') }}" alt=".."/>
                     </div>
@@ -128,6 +129,35 @@
             </div></div>
         </header>
         <div id="commentsContianer" class="comments-contianer">
+            @if($firstComment != null)
+            <div class="comment first-comment">
+                <div class="no-select"><a href="{{ route('user.profile') . '/' . $firstComment['userId'] }}"><img loading="lazy" data-src="{{ asset($firstComment['image']) }}" class="lazyload" /></a></div>
+                <div>
+                    <header class="no-select">{{ $firstComment['name'] }}</header>
+                    <div><p>{{ $firstComment['content'] }}</p></div>
+                    <footer class="footer-with-replays no-select"><button id="replaysButtonOfComment{{ $firstComment['id'] }}" onclick="openReplayOf('{{ $firstComment['id'] }}')" class="open-replays-button">{{  __('masseges.replays') }}</button><span>{{ $firstComment['time'] }}</span></footer>
+                    <div id="replaysOfComment{{ $firstComment['id'] }}" class="replays-contianer" style="display: none !important;">
+                        @foreach($firstComment['replays'] as $replay)
+                        <div class="comment replay{{ ($replay['id'] == $targetReplay) ? ' target-replay' : ''}}">
+                            <div class="no-select"><a href="{{ route('user.profile') . '/' . $replay['userId'] }}"><img loading="lazy" data-src="{{ asset($replay['image']) }}" class="lazyload" /></a></div>
+                            <div>
+                                <header class="no-select">{{ $replay['name'] }}</header>
+                                <div><p>{{ $replay['content'] }}</p></div>
+                                <footer class="footer-with-replays no-select"><span>{{ $replay['time'] }}</span></footer>
+                            </div>
+                        </div>
+                        @endforeach
+                        <div id="postReplayElement{{ $firstComment['id'] }}" class="post-comment"><div class="comment replay post-replay">
+                            <div class="no-select"><a><img loading="lazy" data-src="{{ asset(auth()->user()->image) }}" class="lazyload" /></a></div>
+                            <div>
+                                <div><textarea id="inputContentOfReplay{{ $firstComment['id'] }}" class="add-opinion-textarea" placeholder="{{ __('masseges.post-replay') . ' ...' }}"></textarea></div>
+                                <footer class="no-select"><button onclick="postReplay('{{ $firstComment['id'] }}');" class="post-comment-button">{{ __('masseges.add-replay') . ' ' }}<li class="material-icons">add</li></button></footer>
+                            </div>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+            @endif
             @if($comments)
             @foreach($comments as $comment)
             @if($comment)
@@ -252,7 +282,8 @@
                 'smallReplay': 'M12 5V2.21c0-.45-.54-.67-.85-.35l-3.8 3.79c-.2.2-.2.51 0 .71l3.79 3.79c.32.31.86.09.86-.36V7c3.73 0 6.68 3.42 5.86 7.29-.47 2.27-2.31 4.1-4.57 4.57-3.57.75-6.75-1.7-7.23-5.01-.07-.48-.49-.85-.98-.85-.6 0-1.08.53-1 1.13.62 4.39 4.8 7.64 9.53 6.72 3.12-.61 5.63-3.12 6.24-6.24C20.84 9.48 16.94 5 12 5z',
                 'fullScreen': 'M6 14c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1H7v-2c0-.55-.45-1-1-1zm0-4c.55 0 1-.45 1-1V7h2c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1zm11 7h-2c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v2zM14 6c0 .55.45 1 1 1h2v2c0 .55.45 1 1 1s1-.45 1-1V6c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1z',
                 'exitFullScreen': 'M6 16h2v2c0 .55.45 1 1 1s1-.45 1-1v-3c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1s.45 1 1 1zm2-8H6c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1s-1 .45-1 1v2zm7 11c.55 0 1-.45 1-1v-2h2c.55 0 1-.45 1-1s-.45-1-1-1h-3c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1zm1-11V6c0-.55-.45-1-1-1s-1 .45-1 1v3c0 .55.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1h-2z',
-            };
+            },
+            needToGoToFirstComment = {{ ($firstComment != null) ? 1 : 0 }};
         if(typeof(Player) == "function") if(Player.hasOwnProperty('defaultPoster')) Player.defaultPoster = "{{ asset('/images/static/video-default.jpg') }}";
         
         var subscriptionButton = document.getElementById('subscriptionButton'),
@@ -268,4 +299,9 @@
         @endif
     </script>
     <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\watching\play.js') }}"></script>
+    @if($firstComment != null)
+    <script>
+        goToFirstComment("{{ $firstComment['id'] }}");
+    </script>
+    @endif
 @endsection

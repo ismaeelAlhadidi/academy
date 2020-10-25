@@ -19,9 +19,15 @@
         <div class="main" id="main">
             @yield('content')
         </div>
-        <!-- @auth('admin')
-            @include('admin\include\footer')
-        @endauth -->
+        <div id="loadingDotElement" class="loading-dot-container no-select" style="display: none;">
+            <div class="loading-dot-inner-container" style="--n: 5;">
+                <div class="loading-dot" style="--i: 0"></div>
+                <div class="loading-dot" style="--i: 1"></div>
+                <div class="loading-dot" style="--i: 2"></div>
+                <div class="loading-dot" style="--i: 3"></div>
+                <div class="loading-dot" style="--i: 4"></div>
+            </div>
+        </div>
         <script type="text/javascript" lang="javascript" src="{{ asset('js\drawCanvas.js') }}"></script>
         <script type="text/javascript" lang="javascript" src="{{ asset('js\ajax.js') }}"></script>
         <script type="text/javascript" lang="javascript" src="{{ asset('js\styleEfect.js') }}"></script>

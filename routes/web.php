@@ -12,9 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['prefix' => 'blob'], function() { // ,'middleware' => 'access'
-    Route::get('/video/{video}','BlobController@getVideo');
-    Route::get('/audio/{audio}','BlobController@getAudio');
+Route::get('/blob/video/{video}',function($video) {
+    if(! auth('admin')->check()) return abort('404');
+    $temp = new App\Http\Controllers\BlobController();
+    return $temp->getVideo($video);
+});
+Route::get('/blob/audio/{audio}',function($audio) {
+    if(! auth('admin')->check()) return abort('404');
+    $temp = new App\Http\Controllers\BlobController();
+    return $temp->getAudio($audio);
+});
+Route::group(['prefix' => 'blob', 'middleware' => 'access'], function() {
+    Route::post('/video/{video}','BlobController@getVideo');
+    Route::post('/audio/{audio}','BlobController@getAudio');
     Route::get('/book/{book}','BlobController@getBook');
 });
 
@@ -62,4 +72,23 @@ Auth::routes(["verify" => "true"]);
 /* 
     Uses HTTPS
     Add `rel="noopener"` or `rel="noreferrer"` to any external links to improve performance and prevent security vulnerabilities 
-*/
+        var handelResponse = function handelResponse(response){
+            var currentFile = response;
+            var video = document.createElement('video');
+            blobUrl = URL.createObjectURL(currentFile);
+            video.src = blobUrl;
+            document.body.appendChild(video);
+        };
+        var get = function get(url, onResponse, TOKEN) {
+            var request = new XMLHttpRequest();
+            var formData = new FormData();
+            formData.append('_token', TOKEN);
+            request.open('post', url);
+            request.responseType = 'blob';
+            request.onload = function () {
+                onResponse(request.response);
+            };
+            request.send(formData);
+        }
+        get('http://127.0.0.1:8000/blob/video/UE2wz0-1599105084-YW5D1tLDYOp-5f50683c822881-78597172', handelResponse, 'DRPGp89sQBNH1zhyi73yDGBzsitzLJF5w9U8qhSH');
+    */

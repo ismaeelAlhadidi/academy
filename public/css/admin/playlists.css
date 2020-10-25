@@ -36,6 +36,10 @@
 }
 .header-of-main-div > a:hover {
     background-color: rgba(0,0,0,0.1);
+    -webkit-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -o-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -ms-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -moz-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
     transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
     -webkit-box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
     -o-box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
@@ -261,7 +265,156 @@
 .playlist-opinion > div > a {
     margin: 10px 30px;
 }
+.button-add-playlist-to-fav {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    -webkit-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -o-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -ms-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -moz-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #3a78a9;
+    cursor: pointer;
+    -webkit-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -o-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -ms-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -moz-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+}
+.button-add-playlist-to-fav:hover {
+    color: red;
+    -webkit-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    -o-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    -ms-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    -moz-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+}
+.button-add-playlist-to-fav > span {
+    vertical-align: bottom;
+    font-size: 18px;
+}
+.playlist-div > section {
+    position: relative;
+}
+.div-of-add-to-sub-button {
+    padding: 2px 0 2px 15px;
+    margin-top: 15px;
+    text-align: left;
+}
+.div-of-add-to-sub-button button {
+    padding: 10px;
+    background-color: #008eff;
+    color: #fff;
+    cursor: pointer;
+    -webkit-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -o-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -ms-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -moz-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -webkit-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -o-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -ms-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -moz-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+}
+.div-of-add-to-sub-button button:hover {
+    color: #ffacac;
+    -webkit-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    -o-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    -ms-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    -moz-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+    box-shadow: 0.5px 0.5px 5px #ffacac, -0.5px -0.5px 5px #ffacac;
+}
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.add-user-to-playlist-template > div {
+    max-width: 90%;
+}
+.add-user-to-playlist-template > div > header > div {
+    width: 25px;
+    height: 25px;
+}
+.add-user-to-playlist-template > div > div {
+    padding: 20px;
+    text-align: left;
+    color: #398dd0;
+}
+.add-user-to-playlist-template > div > div div {
+    margin: 10px 0 20px;
+    padding: 5px 10px;
+    text-align: right;
+}
+.add-user-to-playlist-template > div > div section:first-of-type {
+    font-size: 14px;
+    padding: 5px;
+    text-align: right;
+}
+.add-user-to-playlist-template > div > div section:last-of-type {
+    color: #f00;
+    font-size: 12px;
+    padding: 5px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+.add-user-to-playlist-template > div > div div input {
+    max-width: 90%;
+    width: 190px;
+    display: inline-block;
+    padding: 10px;
+    margin: 10px 10px;
+    direction: ltr;
+    text-align: left;
+}
+.add-user-to-playlist-template > div > div button {
+    padding: 10px;
+    background-color: #0a304e;
+    color: #fff;
+    cursor: pointer;
+    -webkit-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -o-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -ms-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -moz-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -webkit-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -o-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -ms-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -moz-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    max-width: 90%;
+    width: 130px;
+    font-size: 18px;
+}
 @media (min-width: 576px) {
+    .add-user-to-playlist-template > div > div div input {
+        min-width: 250px;
+    }
     .header-of-main-div {
         padding-right: 50px;
     }
@@ -289,6 +442,9 @@
     }
 }
 @media (min-width: 768px) {
+    .add-user-to-playlist-template > div > div div input {
+        min-width: 300px;
+    }
     .template-of-this-playlist > div {
         margin-top: 10%;
     }

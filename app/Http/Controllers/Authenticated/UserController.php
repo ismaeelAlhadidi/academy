@@ -160,7 +160,13 @@ class UserController extends Controller
         return $this->getResponse(false, '', null);
     }
     public function mySessions() {
-        $sessions = SessionsOnline::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(14);
-        return view('authenticated.mySessions',[ 'sessions' => $sessions ]);
+        $firstSession = null;
+        if(request()->has('session')) {
+            $firstSession = SessionsOnline::find(request()->get('session'));
+            if(! $firstSession) $firstSession = null;
+        }
+        if($firstSession == null) $sessions = SessionsOnline::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(14);
+        else $sessions = SessionsOnline::where('user_id', auth()->user()->id)->where('id', '!=', $firstSession->id)->orderBy('id', 'desc')->paginate(14);
+        return view('authenticated.mySessions',[ 'sessions' => $sessions, 'firstSession' => $firstSession ]);
     }
 }

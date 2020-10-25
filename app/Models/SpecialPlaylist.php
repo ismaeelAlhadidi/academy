@@ -14,7 +14,8 @@ class SpecialPlaylist extends Model
     ];
     protected $hidden = [];
     public $timestamps = false;
+
     public function playlist() {
-        return $this->belongsTo('App\Models\Playlist', 'playlist_id', 'id');
+        return $this->belongsTo('App\Models\Playlist', 'playlist_id');
     }
 }

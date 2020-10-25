@@ -5,6 +5,7 @@ namespace App\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use App\Events\ShowBlob;
+use App\Models\View;
 class InsertView
 {
     /**
@@ -27,7 +28,7 @@ class InsertView
     {
         $view = View::where('visiter_id',$eventOpject->visiter_id)
             ->where('user_id',$eventOpject->user_id)
-            ->where('blob_id',$eventOpject->blob_id)->first();
+            ->where('object_id',$eventOpject->blob_id)->first();
         if(! $view) {
             View::create([
                 'visiter_id' => $eventOpject->visiter_id,

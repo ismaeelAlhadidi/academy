@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 Route::group(['namespace' => 'Admin'],function() {
     Route::group(['middleware' => ['auth:admin','a.notifcation']],function() {
         Route::group(['prefix' => 'home'],function() {
@@ -57,6 +56,8 @@ Route::group(['namespace' => 'Admin'],function() {
             Route::post('/update/blob/{type?}','PlaylistController@updateBlobData');
             Route::get('/delete/{type}/{id}','PlaylistController@deleteBlob');
             Route::get('/getTypeNameFromId/{id}','PlaylistController@getTypeNameFromId');
+            Route::get('/toggle-special/{playlist_id?}','PlaylistController@toggleSpecialList')->name('playlist.toggle.special');
+            Route::post('/add-new-subscription','PlaylistController@addSubscription')->name('playlist.add.new.subscription');
         });
         Route::group(['prefix' => 'session-offer'],function () {
             Route::post('/store','OfferController@store')->name('admin.store-session-offer');

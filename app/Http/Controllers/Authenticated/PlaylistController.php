@@ -8,6 +8,7 @@ use App\Traits\AjaxResponse;
 use App\Traits\FormatTime;
 use App\Models\Playlist;
 use App\Models\Comment;
+use App\Models\Replay;
 use App\Models\Subscription;
 
 class PlaylistController extends Controller
@@ -19,8 +20,44 @@ class PlaylistController extends Controller
         if($id == null) return abort('404');
         $playlist = Playlist::find($id);
         if(! $playlist) return abort('404');
+        $firstComment = null;
+        if(request()->has('replay')) {
+            $replay = Replay::find(request()->get('replay'));
+            if(! $replay) $firstComment = null;
+            else {
+                $firstComment = $replay->comment;
+            }
+        }
         $comments = Comment::where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $playlist->id)->orderBy('id', 'desc')->paginate($commentsCountOnOneScroll);
-        $comments->transform(function ($comment) {
+        if($firstComment != null) {
+            $replays = $firstComment->replays->filter(function($value) {
+                return ($value->allow);
+            });
+            $replays = $replays->transform(function($replay) {
+                $data = array (
+                    'name' => $replay->user->first_name . ' ' . $replay->user->last_name,
+                    'image' => asset($replay->user->image),
+                    'time' => $this->convertToBeforeFormat($replay->created_at),
+                    'content' => $replay->content,
+                    'userId' => $replay->user->id,
+                    'id' => $replay->id,
+                );
+                return $data;
+            });
+            $firstComment = $data = array (
+                'name' => $firstComment->user->first_name . ' ' . $firstComment->user->last_name,
+                'image' => asset($firstComment->user->image),
+                'time' => $this->convertToBeforeFormat($firstComment->created_at),
+                'content' => $firstComment->content,
+                'userId' => $firstComment->user->id,
+                'replays' => $replays,
+                'id' => $firstComment->id,
+            );
+        }
+        $comments->transform(function ($comment) use ($firstComment) {
+            if($firstComment != null) {
+                if($comment->id == $firstComment['id']) return null;
+            }
             $replays = $comment->replays->filter(function($value) {
                 return ($value->allow);
             });
@@ -149,12 +186,50 @@ class PlaylistController extends Controller
             'audios' => $audios,
             'firstBlob' => $firstBlob,
             'isSubscription' => $isSubscription,
+            'firstComment' => $firstComment,
+            'targetReplay' => ( request()->has('replay') ? request()->get('replay') : -1),
         ]);
     }
     public function getMoreComments($id) {
+        $firstComment = null;
+        if(request()->has('replay')) {
+            $replay = Replay::find(request()->get('replay'));
+            if(! $replay) $firstComment = null;
+            else {
+                $firstComment = $replay->comment;
+            }
+        }
         $comments = Comment::where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $id)->orderBy('id', 'desc')->paginate($this->commentsCountOnOneScroll);
         if(! $comments) return $this->getResponse(false, '', null);
-        $comments->transform(function ($comment) {
+        if($firstComment != null) {
+            $replays = $firstComment->replays->filter(function($value) {
+                return ($value->allow);
+            });
+            $replays = $replays->transform(function($replay) {
+                $data = array (
+                    'name' => $replay->user->first_name . ' ' . $replay->user->last_name,
+                    'image' => asset($replay->user->image),
+                    'time' => $this->convertToBeforeFormat($replay->created_at),
+                    'content' => $replay->content,
+                    'userId' => $replay->user->id,
+                    'id' => $replay->id,
+                );
+                return $data;
+            });
+            $firstComment = $data = array (
+                'name' => $firstComment->user->first_name . ' ' . $firstComment->user->last_name,
+                'image' => asset($firstComment->user->image),
+                'time' => $this->convertToBeforeFormat($firstComment->created_at),
+                'content' => $firstComment->content,
+                'userId' => $firstComment->user->id,
+                'replays' => $replays,
+                'id' => $firstComment->id,
+            );
+        }
+        $comments->transform(function ($comment) use ($firstComment) {
+            if($firstComment != null) {
+                if($comment->id == $firstComment['id']) return null;
+            }
             $replays = $comment->replays->filter(function($value) {
                 return ($value->allow);
             });

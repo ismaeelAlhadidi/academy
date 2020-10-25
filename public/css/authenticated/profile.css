@@ -1,3 +1,6 @@
+body, html {
+    background-color: #d7edf7;
+}
 .user-data-content {
     width: 100%;
     background-color: #fff;

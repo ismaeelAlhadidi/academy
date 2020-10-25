@@ -5,7 +5,7 @@
                 @else
                     <a id="headerNavButton"><li class="nav-button"><canvas id="headerNavCanvasButton" width="35" height="35"></canvas></li></a>
                     <a href="{{ route('user.profile') }}"><li class="nav-image"><img src="{{ asset(auth()->user()->image) }}" /></li></a>
-                    <a href="{{ route('user.profile') }}"><li>{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</li></a>
+                    <a href="{{ route('user.profile') }}"><li class="client-name-in-fixed-header">{{ strlen(auth()->user()->first_name . ' ' . auth()->user()->last_name) > 15 ? ( strlen(auth()->user()->first_name) > 15 ? substr(auth()->user()->first_name, 0, 12) . '...' : auth()->user()->first_name) : auth()->user()->first_name . ' ' . auth()->user()->last_name }}</li></a>
                     <a class="notifcations-button" id="notifcationButton" ><li class="icon"><span class="material-icons">notifications</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span id="countOfNewNotifcations" class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a>
                 @endguest
             </ul>

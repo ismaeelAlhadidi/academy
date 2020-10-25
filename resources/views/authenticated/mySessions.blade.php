@@ -53,6 +53,24 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if($firstSession != null)
+                        <tr class="first-session">
+                            <td><img class="user-image-in-sessions-table lazyload" data-src="{{ asset($firstSession->sessionOffer->poster) }}" loading="lazy" /></td>
+                            <td><span class="text-feild-in-sessions-table">{{ $firstSession->user->first_name }}</span></td>
+                            <td><span class="text-feild-in-sessions-table">{{ $firstSession->sessionOffer->name }}</span></td>
+                            <td><span class="text-feild-in-sessions-table">{{ $firstSession->time}}</span></td>
+                            <td>
+                                @if(! $firstSession->taken)
+                                    <button id="SessionOnlineAdmissionButton{{ $firstSession->id }}" 
+                                            class="toggleAcceptButton-in-sessions-table">
+                                    {{ $firstSession->admission ? __('masseges.admission-ok') : __('masseges.admission-wating') }}
+                                    </button>
+                                @else 
+                                    <canvas class="correct-sign" width="40" height="40"></canvas>
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                     @foreach($sessions as $session)
                         <tr>
                             <td><img class="user-image-in-sessions-table lazyload" data-src="{{ asset($session->sessionOffer->poster) }}" loading="lazy" /></td>

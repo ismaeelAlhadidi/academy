@@ -12,13 +12,13 @@
     <header class="header-of-main-div no-select"><h3>{{ __('headers.admin-navbar-playlists') }}</h3><a href="{{ route('admin.playlist.add') }}">{{ __('headers.admin-navbar-add-playlist') }}</a></header>
     @forelse($playlists as $playlist)
         <div class="playlist-div" id="playlistDiv{{ $playlist->id }}">
-            <section><img src="{{ asset($playlist->poster) }}"/></section>
+            <section><img src="{{ asset($playlist->poster) }}"/><button id="buttonToggleSpecialList{{ $playlist->id }}" onclick="toggleSpecialList({{ $playlist->id }});" class="center button-add-playlist-to-fav">{{ ($playlist->specialPlaylist == null) ? __('masseges.add-to-fav') : __('masseges.remove-from-fav') }}&nbsp;&nbsp;&nbsp;<span class="fa" style="{{ ($playlist->specialPlaylist == null) ? '' : 'color: #e6c975 !important;'}}">&#xf005;</span></button></section>
             <div>
                 <div><span class="no-select">{{ __('masseges.playlist-title') }}</span><span>{{ $playlist->title }}</span></div>
                 <div><span class="no-select">{{ __('masseges.video-count') }}</span><span>{{ $playlist->blobs->count() }}</span></div>
                 <div><span class="no-select">{{ __('masseges.count-of-subscriptions') }}</span><span>{{ $playlist->subscriptions->count() }}</span></div>
                 <div class="no-select">
-                    <a href="javascript:ShowUsersOfThisPlaylist('{{ '../admin/home/' . $playlist->id . '/getUsersOfThisPlaylist'  }}');">{{ __('masseges.show-user-subscription') }}</a>
+                    <a href="javascript:ShowUsersOfThisPlaylist('{{ '../admin/home/' . $playlist->id . '/getUsersOfThisPlaylist'  }}', {{ $playlist->id }});">{{ __('masseges.show-user-subscription') }}</a>
                     <a href="javascript:ShowOpinionOfThisPlaylist('{{ '../admin/playlist/' . $playlist->id . '/getOpinionOfThisPlaylist'  }}');">{{ __('masseges.show-opinions') }}</a>
                     <a href="javascript:ShowCommentsWithReplaysOfThisPlaylist('{{ '../admin/playlist/' . $playlist->id . '/getCommentsWithReplaysOfThisPlaylist'  }}');">{{ __('masseges.comments-and-replays') }}</a>
                     <a href="{{ route('admin.playlist.update',$playlist->id) }}">{{ __('masseges.update') }}</a>
@@ -37,13 +37,25 @@
         <div>
         </div>
     </div>
+    <div id="addUserToThisPlaylistTemplate" class="pop-up-template add-user-to-playlist-template no-select" style="display: none;">
+        <div class="center">
+            <header><div><canvas id="exitButtonCanvasOfaddUserToThisPlaylistTemplate" width="25" height="25"></canvas></div></header>
+            <div>
+                <section>{{ __('masseges.when-you-add-user-to-playlist') }}</section>
+                <div><span>{{ __('input.email') }}</span><input type="text" id="inputUserEmailOfNewUserInThisPlaylist" class="default-input" placeholder="{{ __('input.email') }}" /></div>
+                <section id="alertOfAddUserToThisPlaylistTemplate">{{ __('masseges.enter-right-mail') }}</section>
+                <button id="inputSubmitEmailOfNewUserInThisPlaylist">{{ __('masseges.add') }}</button>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script type="text/javascript" lang="javascript">
         var DivOfThisPlaylist = document.getElementById('DivOfThisPlaylist'),
             exitButtonCanvasOfDivOfThisPlaylist = document.getElementById('exitButtonCanvasOfDivOfThisPlaylist'),
-            main = document.getElementById('main');
+            main = document.getElementById('main'),
+            addUserToThisPlaylistTemplate = document.getElementById('addUserToThisPlaylistTemplate');
         
         if(exitButtonCanvasOfDivOfThisPlaylist != null) {
             exitButtonCanvasOfDivOfThisPlaylist.width = 25;
@@ -51,9 +63,18 @@
             drawRemoveIconCanvas(exitButtonCanvasOfDivOfThisPlaylist,'#ffffff');
             exitButtonCanvasOfDivOfThisPlaylist.onclick = function () {
                 closeBobUpTemplate(DivOfThisPlaylist);
+                var divOfAddNewUserToThisPlaylist = document.getElementById('divOfAddNewUserToThisPlaylist');
+                if(divOfAddNewUserToThisPlaylist != null) if(DivOfThisPlaylist != null) if(DivOfThisPlaylist.children.length > 1)DivOfThisPlaylist.children[1].removeChild(divOfAddNewUserToThisPlaylist);
             }
         }
-        
+        if(exitButtonCanvasOfaddUserToThisPlaylistTemplate != null) {
+            exitButtonCanvasOfaddUserToThisPlaylistTemplate.width = 25;
+            exitButtonCanvasOfaddUserToThisPlaylistTemplate.height = 25;
+            drawRemoveIconCanvas(exitButtonCanvasOfaddUserToThisPlaylistTemplate,'#ffffff');
+            exitButtonCanvasOfaddUserToThisPlaylistTemplate.onclick = function () {
+                closeBobUpTemplate(addUserToThisPlaylistTemplate);
+            }
+        }
         function makePaginationLinks(paginator,type = 'u') {
             if(paginator.last_page == 1)return null;
             var userLinks = document.createElement('div');
@@ -108,7 +129,7 @@
             span.appendChild(a);
             return span;
         }
-        function ShowUsersOfThisPlaylist(path) {
+        function ShowUsersOfThisPlaylist(path, playlistId) {
             ajaxRequest('get',path,null,function(jsonResponse){
                 if(jsonResponse == null) {
                     showPopUpMassage('{{ __('masseges.general-error') }}');
@@ -119,10 +140,12 @@
                         if(DivOfThisPlaylist != null && jsonResponse.data != null) {
                             if(jsonResponse.data.hasOwnProperty('data')) {
                                 if(jsonResponse.data.data.length > 0) {
-                                    renderUsersOfThisPlaylist(jsonResponse.data);
+                                    renderUsersOfThisPlaylist(jsonResponse.data, playlistId);
                                     DivOfThisPlaylist.setAttribute('style','display:block;');
                                 } else {
+                                    renderUsersOfThisPlaylist(jsonResponse.data, playlistId);
                                     showPopUpMassage('{{ __('masseges.no-subscriptions-of-this-playlist') }}');
+                                    DivOfThisPlaylist.setAttribute('style','display:block;');
                                 }
                             } else {
                                 showPopUpMassage('{{ __('masseges.general-error') }}');
@@ -141,7 +164,7 @@
                 return;
             });
         }
-        function renderUsersOfThisPlaylist(data) {
+        function renderUsersOfThisPlaylist(data, playlistId) {
             var temp = document.getElementById('OfThisPlaylist');
             if(temp != null) {
                 if(DivOfThisPlaylist.children.length > 1)DivOfThisPlaylist.children[1].removeChild(temp);
@@ -199,7 +222,21 @@
                     if(userSubLinks != null)temp.appendChild(userSubLinks);
                 }
             }
-            if(DivOfThisPlaylist.children.length > 1)DivOfThisPlaylist.children[1].appendChild(temp);
+            if(DivOfThisPlaylist.children.length > 1) {
+                var divOfAddNewUserToThisPlaylist = document.getElementById('divOfAddNewUserToThisPlaylist');
+                if(divOfAddNewUserToThisPlaylist != null) DivOfThisPlaylist.children[1].removeChild(divOfAddNewUserToThisPlaylist);
+                divOfAddNewUserToThisPlaylist = document.createElement('div');
+                var buttonOfAddNewUserToThisPlaylist = document.createElement('button');
+                buttonOfAddNewUserToThisPlaylist.innerHTML = "{{ __('masseges.add-user-to-this-playlist') }}";
+                divOfAddNewUserToThisPlaylist.appendChild(buttonOfAddNewUserToThisPlaylist);
+                buttonOfAddNewUserToThisPlaylist.onclick = function () {
+                    addUserToThisPlaylistByEmail(playlistId);
+                };
+                divOfAddNewUserToThisPlaylist.setAttribute('class', 'no-select div-of-add-to-sub-button');
+                divOfAddNewUserToThisPlaylist.setAttribute('id', 'divOfAddNewUserToThisPlaylist');
+                DivOfThisPlaylist.children[1].appendChild(divOfAddNewUserToThisPlaylist);
+                DivOfThisPlaylist.children[1].appendChild(temp);
+            }
         }
         function RequestToggleUserPlaylistAccess(subscriptionId) {
             ajaxRequest('get','../admin/home/' + subscriptionId + '/toggleUserPlaylistAccess',null,function(jsonResponse) {
@@ -527,6 +564,88 @@
                 });
                 exitThis(popUpMassageDiv);
             },'{{ __('masseges.delete') }}');
+        }
+        function toggleSpecialList(playlistId) {
+            ajaxRequest('get', "{{ route('playlist.toggle.special') }}" + '/' + playlistId, null,function(jsonResponse) {
+                if(jsonResponse != null) {
+                    if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('data')){
+                        if(jsonResponse.status && jsonResponse.data != null) {
+                            if(jsonResponse.data.hasOwnProperty('id') && jsonResponse.data.hasOwnProperty('added')) {
+                                var id = jsonResponse.data.id,
+                                    added = jsonResponse.data.added;
+                                var button = document.getElementById('buttonToggleSpecialList' + id);
+                                if(button != null) {
+                                    if(added) button.innerHTML = '{{ __('masseges.remove-from-fav') }}&nbsp;&nbsp;&nbsp;<span class="fa" style="color: #e6c975 !important;">&#xf005;</span>';
+                                    else button.innerHTML = '{{ __('masseges.add-to-fav') }}&nbsp;&nbsp;&nbsp;<span class="fa">&#xf005;</span>';
+                                }
+                                return;
+                            }
+                        }
+                    }
+                }
+                showPopUpMassage('{{ __('masseges.general-error') }}');
+            });
+        }
+        function addUserToThisPlaylistByEmail(playlistId) {
+            var inputUserEmailOfNewUserInThisPlaylist = document.getElementById('inputUserEmailOfNewUserInThisPlaylist'),
+                inputSubmitEmailOfNewUserInThisPlaylist = document.getElementById('inputSubmitEmailOfNewUserInThisPlaylist'),
+                alertOfAddUserToThisPlaylistTemplate = document.getElementById('alertOfAddUserToThisPlaylistTemplate');
+
+            if(addUserToThisPlaylistTemplate == null || inputUserEmailOfNewUserInThisPlaylist == null 
+                || inputSubmitEmailOfNewUserInThisPlaylist == null || alertOfAddUserToThisPlaylistTemplate == null) {
+                showPopUpMassage('{{ __('masseges.general-error') }}');
+                return;
+            }
+            inputSubmitEmailOfNewUserInThisPlaylist.onclick = function () {
+                inputUserEmailOfNewUserInThisPlaylist.setAttribute('class', 'default-input');
+                alertOfAddUserToThisPlaylistTemplate.textContent = "{{ __('masseges.enter-right-mail') }}";
+                alertOfAddUserToThisPlaylistTemplate.setAttribute('style', '');
+                if(inputUserEmailOfNewUserInThisPlaylist.value.trim() == '') {
+                    inputUserEmailOfNewUserInThisPlaylist.setAttribute('class', 'default-input input-invalid');
+                    return;
+                }
+                if(inputUserEmailOfNewUserInThisPlaylist.value.length >= 255) {
+                    inputUserEmailOfNewUserInThisPlaylist.setAttribute('class', 'default-input invalid-input');
+                    alertOfAddUserToThisPlaylistTemplate.textContent = "{{ __('input.character-of-name-must-min-than-255') }}";
+                    alertOfAddUserToThisPlaylistTemplate.setAttribute('style', 'font-size: 18px;');
+                    return;
+                }
+                var formData = new FormData();
+                formData.append('mail', inputUserEmailOfNewUserInThisPlaylist.value.trim());
+                formData.append('playlist_id', playlistId);
+                formData.append('_token', "{{ csrf_token() }}");
+                ajaxRequest('post', "{{ route('playlist.add.new.subscription') }}", formData, function(jsonResponse) {
+                    if(jsonResponse == null) {
+                        alertOfAddUserToThisPlaylistTemplate.textContent = "{{ __('masseges.general-error') }}";
+                        alertOfAddUserToThisPlaylistTemplate.setAttribute('style', 'font-size: 18px;');
+                        return;
+                    }
+                    if(jsonResponse.hasOwnProperty('status')) {
+                        if(jsonResponse.status) {
+                            addUserToThisPlaylistTemplate.style = "display: none;";
+                            addUserToThisPlaylistTemplate.setAttribute('style', 'display: none;');
+                            if(exitButtonCanvasOfDivOfThisPlaylist != null) exitButtonCanvasOfDivOfThisPlaylist.click();
+                            showPopUpMassage("{{ __('masseges.add-new-subscription-ok') }}");
+                            return;
+                        }
+                    }
+                    if(jsonResponse.hasOwnProperty('msg')) {
+                        alertOfAddUserToThisPlaylistTemplate.textContent = jsonResponse.msg;
+                        alertOfAddUserToThisPlaylistTemplate.setAttribute('style', 'font-size: 18px;');
+                        return;
+                    }
+                    alertOfAddUserToThisPlaylistTemplate.textContent = "{{ __('masseges.general-error') }}";
+                    alertOfAddUserToThisPlaylistTemplate.setAttribute('style', 'font-size: 18px;');
+                });
+            };
+            inputUserEmailOfNewUserInThisPlaylist.value = '';
+            inputUserEmailOfNewUserInThisPlaylist.setAttribute('value', '');
+            inputUserEmailOfNewUserInThisPlaylist.setAttribute('class', 'default-input');
+            alertOfAddUserToThisPlaylistTemplate.textContent = "{{ __('masseges.enter-right-mail') }}";
+            alertOfAddUserToThisPlaylistTemplate.setAttribute('style', '');
+
+            addUserToThisPlaylistTemplate.style = "";
+            addUserToThisPlaylistTemplate.setAttribute('style', '');
         }
     </script>
 @endsection

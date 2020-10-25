@@ -136,6 +136,10 @@ body {
     display: inline-block;
     margin: 20px 10px;
 }
+.header .list-item > .admin-name-in-header {
+    width: 112.5px;
+    text-align: center;
+}
 .header .nav-button {
     display: inline-block;
     background-color: inherit;
