@@ -18,6 +18,9 @@ class CreateSingleVideoFormsTable extends Migration
             $table->foreignId('video_id')->constrained('videos');
             $table->foreignId('user_id')->constrained('users')->nullable();
             $table->foreignId('visiter_id')->constrained('visiters')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
             $table->boolean('send_mail')->default(false);
             $table->timestamps();
         });

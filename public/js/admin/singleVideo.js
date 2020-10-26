@@ -13,6 +13,8 @@ class SingleVideo extends HTMLElement {
     static langArrayFromServer;
     static tempBlobUrl;
     static massegeOfErrorInShowVideoAlert;
+    static userFormColumn;
+    static userFormColumnLang;
 
     static resetDataOfAddAndUpdateTemplate() {
         if(titleOneInputOfNewVideo != null && titleOneInputOfNewVideo != undefined) {
@@ -115,6 +117,128 @@ class SingleVideo extends HTMLElement {
         temp.setAttribute('id', 'contentOfUsersDataTemplate');
         return temp;
     }
+    static createAndReturnTableOfFormUsers() {
+        var table = document.getElementById('tableOfFormUsers');
+        if(table == null) {
+            table = document.createElement('table');
+            table.setAttribute('class' ,'table table-striped form-users-tabel');
+            table.setAttribute('id' ,'tableOfFormUsers');
+        }
+        return table;
+    }
+    static createAndReturnTableHeader() {
+        var thead = document.getElementById('tableHeaderOfFormUsers');
+        if(thead == null) {
+            thead = document.createElement('thead');
+            thead.setAttribute('class' ,'no-select');
+            thead.setAttribute('id' ,'tableHeaderOfFormUsers');
+            var tr = document.createElement('tr');
+            if(typeof(SingleVideo.userFormColumn) != "object") return null;
+            if(SingleVideo.userFormColumn == null) return null;
+            if(typeof(SingleVideo.userFormColumnLang) != "object") return null;
+            if(SingleVideo.userFormColumnLang == null) return null;
+            for(var i = 0; i < SingleVideo.userFormColumn.length; i++) {
+                var th = document.createElement('td');
+                th.textContent = SingleVideo.userFormColumnLang[SingleVideo.userFormColumn[i]];
+                tr.appendChild(th);
+            }
+            thead.appendChild(tr);
+        }
+        return thead;
+    }
+    static createAndReturnTableBody() {
+        var tbody = document.getElementById('tableBodyOfFormUsers');
+        if(tbody == null) {
+            tbody = document.createElement('tbody');
+            tbody.setAttribute('id' ,'tableBodyOfFormUsers');
+        }
+        return tbody;
+    }
+    static createAndReturnFormUserRecord(data) {
+        if(typeof(data) != "object") return null;
+        if(data == null) return null;
+        if(typeof(SingleVideo.userFormColumn) != "object") return null;
+        if(SingleVideo.userFormColumn == null) return null;
+        if(data.length < SingleVideo.userFormColumn.length) return null;
+        var tr = document.createElement('tr');
+        for(var i = 0; i < SingleVideo.userFormColumn.length; i++) {
+            var key = SingleVideo.userFormColumn[i];
+            if(data.hasOwnProperty(key)) {
+                var td = document.createElement('td');
+                td.textContent = data[key];
+                tr.appendChild(td);
+            }
+        }
+        return tr;
+    }
+    static createAndReturnPaginateLinksOfFormUser(data) {
+        if(typeof(makeGeneralPaginationLinks) != "function") return null;
+        return makeGeneralPaginationLinks(data, function (path) {
+            var contentDiv = document.getElementById("contentOfUsersDataTemplate");
+            if(contentDiv != null) {
+                if(contentDiv.children.length >= 2) {
+                    contentDiv.removeChild(contentDiv.children[1]);
+                }
+            }
+            var table = document.getElementById('tableOfFormUsers');
+            var tbody = document.getElementById('tableBodyOfFormUsers');
+            if(table == null) return;
+            if(tbody != null) table.removeChild(tbody);
+            tbody = SingleVideo.createAndReturnTableBody();
+            if(tbody != null) table.appendChild(tbody);
+            SingleVideo.requestDataFromServerAndFullTableBody(path, tbody, contentDiv)
+        });
+    }
+    static requestDataFromServerAndFullTableBody(path, tableBody, contentDiv) {
+        ajaxRequest('get', path,null ,function (jsonResponse) {
+            if(jsonResponse == null) {
+                if(typeof(showPopUpMassage) == "function") showPopUpMassage(SingleVideo.massegeOfGeneralError);
+                if(typeof(loadingDotElement) == "undefined") var loadingDotElement = document.getElementById('loadingDotElement');
+                if(loadingDotElement != null) {
+                    loadingDotElement.style = 'display: none;';
+                    loadingDotElement.setAttribute('style', 'display: none;');
+                }
+                return;
+            }
+            if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('data') && jsonResponse.hasOwnProperty('msg')) {
+                if(jsonResponse.status) {
+                    if(jsonResponse.data.hasOwnProperty('data')) {
+                        if(jsonResponse.data.data.length > 0) {
+                            for(var key in jsonResponse.data.data) {
+                                var formUserRecord = SingleVideo.createAndReturnFormUserRecord(jsonResponse.data.data[key]);
+                                if(formUserRecord != null) {
+                                    tableBody.appendChild(formUserRecord);
+                                }
+                            }
+                            SingleVideo.usersDataTemplate.appendChild(contentDiv);
+                            var PaginateLinks = SingleVideo.createAndReturnPaginateLinksOfFormUser(jsonResponse.data);
+                            if(PaginateLinks != null) contentDiv.appendChild(PaginateLinks);
+                            SingleVideo.usersDataTemplate.style = "";
+                            if(typeof(loadingDotElement) == "undefined") var loadingDotElement = document.getElementById('loadingDotElement');
+                            if(loadingDotElement != null) {
+                                loadingDotElement.style = 'display: none;';
+                                loadingDotElement.setAttribute('style', 'display: none;');
+                            }
+                            return;
+                        }
+                    }
+                    if(typeof(showPopUpMassage) == "function") showPopUpMassage(jsonResponse.msg);
+                    if(typeof(loadingDotElement) == "undefined") var loadingDotElement = document.getElementById('loadingDotElement');
+                    if(loadingDotElement != null) {
+                        loadingDotElement.style = 'display: none;';
+                        loadingDotElement.setAttribute('style', 'display: none;');
+                    }
+                    return;
+                }
+            }
+            if(typeof(loadingDotElement) == "undefined") var loadingDotElement = document.getElementById('loadingDotElement');
+            if(loadingDotElement != null) {
+                loadingDotElement.style = 'display: none;';
+                loadingDotElement.setAttribute('style', 'display: none;');
+            }
+            if(typeof(showPopUpMassage) == "function") showPopUpMassage(SingleVideo.massegeOfGeneralError);
+        }, true, false);
+    }
     constructor() {
         super();
         this._added = false;
@@ -211,15 +335,31 @@ class SingleVideo extends HTMLElement {
         if(SingleVideo.usersDataTemplate != null && SingleVideo.usersDataTemplate != undefined) {
             var temp = SingleVideo.clearUsersTemplateAndReturnContentDiv();
             this.renderUsersOfThisVideo(temp);
-            SingleVideo.usersDataTemplate.style = "";
             return;
         }
         if(typeof(showPopUpMassage) == "function") showPopUpMassage(SingleVideo.massegeOfGeneralError);
     }
     renderUsersOfThisVideo(contentDiv) {
-        /* request to get Data from Server : admin/single-videos/get-users/{id} */
-        /* append data to contentDiv */
-        SingleVideo.usersDataTemplate.appendChild(contentDiv);
+        var tableOfFormUsers = SingleVideo.createAndReturnTableOfFormUsers();
+        if(tableOfFormUsers == null) {
+            if(typeof(showPopUpMassage) == "function") showPopUpMassage(SingleVideo.massegeOfGeneralError);
+            return;
+        }
+        contentDiv.appendChild(tableOfFormUsers);
+        var tableHeader = SingleVideo.createAndReturnTableHeader();
+        if(tableHeader == null) {
+            if(typeof(showPopUpMassage) == "function") showPopUpMassage(SingleVideo.massegeOfGeneralError);
+            return;
+        }
+        tableOfFormUsers.appendChild(tableHeader);
+        var tableBody = SingleVideo.createAndReturnTableBody();
+        if(tableBody == null) {
+            if(typeof(showPopUpMassage) == "function") showPopUpMassage(SingleVideo.massegeOfGeneralError);
+            return;
+        }
+        tableOfFormUsers.appendChild(tableBody);
+        var path = window.location.origin + '/admin/single-videos/get-users/' + this.singleVideoId;
+        SingleVideo.requestDataFromServerAndFullTableBody(path, tableBody, contentDiv);
     }
     removeFromDocument() {
         if(SingleVideo.parentElement == null || SingleVideo.parentElement == undefined) SingleVideo.parentElement = window.document.getElementById("main");

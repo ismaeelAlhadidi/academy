@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authenticated;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\AjaxResponse;
+use App\Traits\FormatTime;
 use App\Models\Playlist;
 use App\Models\PlaylistOpinion;
 use App\Models\CoachOpinion;
@@ -17,7 +18,7 @@ use Storage;
 
 class UserController extends Controller
 {
-    use AjaxResponse;
+    use AjaxResponse,FormatTime;
     public function index($id = null) {
         if($id == null) { 
             $user = auth()->user();
@@ -167,6 +168,13 @@ class UserController extends Controller
         }
         if($firstSession == null) $sessions = SessionsOnline::where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(14);
         else $sessions = SessionsOnline::where('user_id', auth()->user()->id)->where('id', '!=', $firstSession->id)->orderBy('id', 'desc')->paginate(14);
+        if($firstSession != null) {
+            $firstSession->time = $this->convertToReadableTime($firstSession->time);
+        } 
+        $sessions->transform(function($session) {
+            $session->time = $this->convertToReadableTime($session->time);
+            return $session;
+        });
         return view('authenticated.mySessions',[ 'sessions' => $sessions, 'firstSession' => $firstSession ]);
     }
 }

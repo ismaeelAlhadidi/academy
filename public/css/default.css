@@ -846,6 +846,9 @@ table {
         transform: scale(.5);
     }
 }
+.opinions-outer-container {
+    padding: 20px;
+}
 @media (max-width: 280px) {
     .loading-dot-inner-container > div:nth-of-type(4) {
         display: none;
@@ -890,6 +893,9 @@ table {
         left: 15%;
         right: 15%;
         top: 10%;
+    }
+    .opinions-outer-container {
+        padding: 4em 4em 2em 4em;
     }
 }
 @media (min-width: 992px) {

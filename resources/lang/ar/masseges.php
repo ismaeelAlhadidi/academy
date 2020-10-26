@@ -178,4 +178,10 @@ return [
     'playlist-not-found' => 'لم يتم العثور على هذه الدورة الرجاء التحقق من قاعدة البيانات !',
     'this-user-subscription' => 'هذا المستخدم مشترك سابقا بالدورة !!',
     'add-new-subscription-ok' => 'تم اضافة المشترك بنجاح',
+    'user-in-website' => 'مشترك بالموقع',
+    'not-user-in-website' => 'غير مشترك',
+    'we-do-not-send-mail' => 'لم يستلم بريد الكتروني بعد',
+    'we-send-mail' => 'تم ارسال بريد الكتروني',
+    'reseve' => 'الاستلام',
+    'status' => 'حالة المشترك بالفورم',
 ];

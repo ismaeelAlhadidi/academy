@@ -9,6 +9,19 @@
 
 @section('style')
     <style type="text/css">
+        @media (max-width: 400px) {
+            .form-users-tabel {
+                font-size: 10px;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            .form-users-tabel th:nth-of-type(4) {
+                display: none;
+            }
+            .form-users-tabel td:nth-of-type(4) {
+                display: none;
+            }
+        }
         @media (max-width: 576px) {
             .main * {
                 font-size: 14px;
@@ -18,6 +31,15 @@
             }
             .main > header a {
                 width: 130px;
+            }
+            .form-users-tabel {
+                font-size: 12px;
+            }
+            .form-users-tabel th:nth-of-type(2) {
+                display: none;
+            }
+            .form-users-tabel td:nth-of-type(2) {
+                display: none;
             }
         }
     </style>
@@ -94,6 +116,24 @@
                     /* 09 */ '{{ __('masseges.ask-remove-single-video') }}',
                     /* 10 */ '{{ __('masseges.ok') }}',
                 ];
+            }
+            if(SingleVideo.hasOwnProperty('userFormColumn')) {
+                SingleVideo.userFormColumn = [
+                    'email',
+                    'name',
+                    'timeOfFullForm',
+                    'isUser',
+                    'send_mail',
+                ];
+            }
+            if(SingleVideo.hasOwnProperty('userFormColumnLang')) {
+                SingleVideo.userFormColumnLang = {
+                    'email': "{{ __('input.email') }}",
+                    'name': "{{ __('masseges.name') }}",
+                    'timeOfFullForm': "{{ __('masseges.register-time')}}",
+                    'isUser': "{{ __('masseges.status') }}",
+                    'send_mail': "{{ __('masseges.reseve') }}",
+                };
             }
         }
         window.customElements.define('single-video', SingleVideo);

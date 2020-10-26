@@ -463,6 +463,22 @@ body > aside {
 .notifcation {
     direction: ltr;
 }
+@media (max-width: 330px) {
+    .welcome-playlist {
+        width: 240px;
+        margin: 20px 5px;
+    }
+    .welcome-playlist h3 {
+        font-size: 22px;
+        width: 230px;
+    }
+    .welcome-playlist p {
+        width: 230px;
+    }
+    .welcome-playlist .playlist-price, .welcome-playlist .playlist-time {
+        font-size: 12px;
+    }
+}
 @media (min-width: 390px) {
     .welcome-playlist {
         width: 350px;

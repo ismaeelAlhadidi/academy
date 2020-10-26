@@ -46,7 +46,6 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{ __('masseges.name') }}</th>
                         <th>{{ __('masseges.session-name') }}</th>
                         <th>{{ __('masseges.session-time') }}</th>
                         <th></th>
@@ -56,7 +55,6 @@
                     @if($firstSession != null)
                         <tr class="first-session">
                             <td><img class="user-image-in-sessions-table lazyload" data-src="{{ asset($firstSession->sessionOffer->poster) }}" loading="lazy" /></td>
-                            <td><span class="text-feild-in-sessions-table">{{ $firstSession->user->first_name }}</span></td>
                             <td><span class="text-feild-in-sessions-table">{{ $firstSession->sessionOffer->name }}</span></td>
                             <td><span class="text-feild-in-sessions-table">{{ $firstSession->time}}</span></td>
                             <td>
@@ -74,7 +72,6 @@
                     @foreach($sessions as $session)
                         <tr>
                             <td><img class="user-image-in-sessions-table lazyload" data-src="{{ asset($session->sessionOffer->poster) }}" loading="lazy" /></td>
-                            <td><span class="text-feild-in-sessions-table">{{ $session->user->first_name }}</span></td>
                             <td><span class="text-feild-in-sessions-table">{{ $session->sessionOffer->name }}</span></td>
                             <td><span class="text-feild-in-sessions-table">{{ $session->time}}</span></td>
                             <td>

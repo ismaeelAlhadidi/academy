@@ -74,4 +74,8 @@ trait FormatTime {
         if($target >= $availability) return true;
         return false;
     }
+
+    function convertToReadableTime($time) {
+        return Date('F j, Y, g:i a',strtotime($time));
+    }
 }
