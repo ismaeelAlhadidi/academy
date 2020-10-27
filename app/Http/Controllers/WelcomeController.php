@@ -7,7 +7,10 @@ use App\Models\SpecialPlaylist;
 use App\Models\Playlist;
 use App\Models\PlaylistOpinion;
 use App\Models\CoachOpinion;
+use App\Models\Video;
+use App\Models\SingleVideoForm;
 use App\Traits\AjaxResponse;
+use Validator;
 
 class WelcomeController extends Controller
 {
@@ -95,5 +98,55 @@ class WelcomeController extends Controller
             return $data;
         });
         return $this->getResponse(true,'',$opinions);
+    }
+
+    public function getForm($key) {
+        $video = Video::where('form_key', $key)->first();
+        if(! $video) abort(404);
+        return view('forms.singleVideoForm')->with(['video' => $video]);
+    }
+    public function saveForm(Request $request, $key) {
+        $video = Video::where('form_key', $key)->first();
+        if(! $video) abort(404);
+        if($request->has('first_name')) $first_name = $request->input('first_name');
+        else if(auth('web')->check()) $first_name = auth()->user()->first_name;
+        else $first_name = '';
+        if($request->has('last_name')) $last_name = $request->input('last_name');
+        else if(auth('web')->check()) $last_name = auth()->user()->last_name;
+        else $last_name = '';
+        if($request->has('email')) $email = $request->input('email');
+        else if(auth('web')->check()) $email = auth()->user()->email;
+        else $email = '';
+        $checkIfEmailFound = SingleVideoForm::where('video_id', $video->id)->where('email', $email)->first();
+        if($checkIfEmailFound) return back()->withErrors(['email' => __('masseges.form-email-found')]);
+        $data = [
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'email' => $email,
+        ];
+        $data['video_id'] = $video->id;
+        if(auth('web')->check()) {
+            $data['user_id'] = auth()->user()->id;
+        } else {
+            $user = User::where('email', $email)->first();
+            if($user) $data['user_id'] = $user->id;
+        }
+        if(session()->has('visiter')) {
+            $data['visiter_id'] = session()->get('visiter');
+        }
+        $rules = [
+            'first_name' => 'required | string | min:0 | max:255',
+            'last_name' => 'required | string | min:0 | max:255',
+            'email' => 'email | required | min:0 | max:255',
+            'user_id' => 'numeric',
+            'visiter_id' => 'numeric',
+            'video_id' => 'numeric | required',
+        ];
+        $validator = Validator::make($data, $rules);
+        if($validator->fails()) return back()->withErrors($validator->errors());
+        if(SingleVideoForm::create($data)) {
+            return view('forms.thanksForm')->with(['massege' => __('masseges.thanks-for-register-in-single-video')]);
+        }
+        return back()->withErrors(['email' => __('masseges.general-error')]);
     }
 }

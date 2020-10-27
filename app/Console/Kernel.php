@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\CheckSingleVideoForm;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        CheckSingleVideoForm::class,
     ];
 
     /**
@@ -28,8 +29,8 @@ class Kernel extends ConsoleKernel
 
         /* $schedule->command('queue:work')->everyTenMinutes();
         $schedule->command('queue:restart')->everyFifteenMinutes(); */
-
-        $schedule->command('queue:work')->everyMinute();
+        $schedule->command('singlevideo:forms')->everyMinute()->appendOutputTo(storage_path('logs/singlevideocommand.log'));
+        $schedule->command('queue:work')->everyMinute()->appendOutputTo(storage_path('logs/jobs.log'));
         $schedule->command('queue:restart')->everyTwoMinutes();
 
     }

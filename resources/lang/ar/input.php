@@ -29,4 +29,5 @@ return [
     'time' => 'الوقت',
     'date' => 'التاريخ',
     'send' => 'ارسال',
+    'Register-in-public-form' => 'اشتراك',
 ];

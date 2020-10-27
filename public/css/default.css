@@ -849,6 +849,13 @@ table {
 .opinions-outer-container {
     padding: 20px;
 }
+.header-in-public-form {
+    color: #3499b8;
+}
+.note-in-public-form {
+    color: #a6abb0;
+    padding: 15px 0;
+}
 @media (max-width: 280px) {
     .loading-dot-inner-container > div:nth-of-type(4) {
         display: none;

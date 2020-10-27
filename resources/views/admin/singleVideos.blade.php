@@ -135,6 +135,7 @@
                     'send_mail': "{{ __('masseges.reseve') }}",
                 };
             }
+            if(SingleVideo.hasOwnProperty('formRoute')) SingleVideo.formRoute = "{{ route('public.form') }}";
         }
         window.customElements.define('single-video', SingleVideo);
 
@@ -244,7 +245,6 @@
             if(SingleVideo.hasOwnProperty('massegeOfLengthMoreThanMaxSize')) SingleVideo.massegeOfLengthMoreThanMaxSize = "{{ __('input.character-of-name-must-min-than-255') }}";
             if(SingleVideo.hasOwnProperty('massegeOfGeneralError')) SingleVideo.massegeOfGeneralError = "{{ __('masseges.general-error') }}";
             if(SingleVideo.hasOwnProperty('addAndUpdateFormElement')) SingleVideo.addAndUpdateFormElement = document.getElementById("addAndUpdateFormElement");
-            if(SingleVideo.hasOwnProperty('formRoute')) SingleVideo.formRoute = "";
             if(SingleVideo.hasOwnProperty('massegeOfErrorInShowVideoAlert')) SingleVideo.massegeOfErrorInShowVideoAlert = '{{ __('masseges.error-in-show-video') }}';
             if(SingleVideo.hasOwnProperty('usersDataTemplate')) SingleVideo.usersDataTemplate = document.getElementById("usersDataTemplate");
         }

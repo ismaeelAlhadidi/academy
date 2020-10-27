@@ -184,4 +184,9 @@ return [
     'we-send-mail' => 'تم ارسال بريد الكتروني',
     'reseve' => 'الاستلام',
     'status' => 'حالة المشترك بالفورم',
+    'video-is-free-and-when-published-we-well-send-it-in-email' => 'المحاضرة مجانية وعندما تنشر سوف تصلك على بريدك الالكتروني الذي تدخله بالاسفل',
+    'form-email-found' => 'هذا البريد مشترك مسبقا في هذه المحاضرة !',
+    'thanks-for-register-in-single-video' => 'شكرا لاشتراكك في المحاضرة',
+    'to-watch-more-go-to-our-website' => 'لمشاهدة المزيد من المحاضرات و الدورات يمكنك زيارة موقعنا الالكتروني',
+    'go-to-our-website' => 'الذهاب للموقع',
 ];

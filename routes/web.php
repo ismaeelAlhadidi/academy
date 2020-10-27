@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Video;
+use App\Models\SingleVideoForm;
+use App\Jobs\SendEmailToUsersOfPublicForm;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +71,14 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Authenticated'],function()
 Route::post('/pay-playlist', 'PaymentController@paywithpaypal')->name('paywithpaypal');
 Route::get('/pay-status', 'PaymentController@getPaymentStatus')->name('pay.status');
 
+Route::get('/public/form/{key?}', 'WelcomeController@getForm')->name('public.form');
+Route::post('/public/form/{key?}', 'WelcomeController@saveForm')->name('save.public.form');
+
 Auth::routes(["verify" => "true"]);
+
+Route::get('/test', function() {
+    
+});
 /* 
     Uses HTTPS
     Add `rel="noopener"` or `rel="noreferrer"` to any external links to improve performance and prevent security vulnerabilities 
