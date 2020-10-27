@@ -20,8 +20,10 @@ use App\Models\UsersIp;
 use App\Models\Playlist;
 use App\User;
 use App\Mail\SessionAdmission;
+use Validator;
 use Mail;
 use App\Jobs\SendMailJob;
+use App\Jobs\SendMailsAndNotificationToUsers;
 use App\Traits\AjaxResponse;
 
 class HomeController extends Controller
@@ -272,5 +274,35 @@ class HomeController extends Controller
         $visiters = Visiter::orderBy('id','desc')->paginate(10);
         if(! $visiters) return $this->getResponse(false,__('masseges.general-error'),null);
         return $this->getResponse(true,'',$visiters);
+    }
+    public function mailToAllPlaylistUsers(Request $request) {
+        if($request->has('sub_id')) {
+            $sub = Subscription::find($request->input('sub_id'));
+            if(! $sub) return $this->getResponse(false, '', []);
+            $playlistId = $sub->playlist_id;
+        } 
+        else if($request->has('playlist_id')) $playlistId = $request->input('playlist_id');
+        else return $this->getResponse(false, '', []);
+        $data = $request->only(['title', 'content']);
+        $rules = [
+            'title' => 'required | string | min:1 | max:255',
+            'content' => 'required | string | min:1 | max:5000',
+        ];
+        $validator = Validator::make($data,$rules);
+        if($validator->fails()) return $this->getResponse(false, '', []);
+
+        $allSub = Subscription::where('playlist_id', $playlistId)->get();
+        if(! $allSub) return $this->getResponse(false, '', []);
+        $allSub->transform(function ($sub) {
+            $data = [
+                'name' => $sub->user->first_name,
+                'email' => $sub->user->email,
+            ];
+            return $data;
+        }); 
+        foreach($allSub as $user) {
+            dispatch(new SendMailsAndNotificationToUsers($user['email'], $user['name'], $data['title'], $data['content']));
+        }
+        return $this->getResponse(true, __('masseges.send-to-playlist-users-start'), $allSub);
     }
 }

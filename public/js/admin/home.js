@@ -803,8 +803,24 @@ function renderUsersOfThisPlaylist(data,lang,generelErorrMsg) {
     }
     temp = document.createElement('div');
     temp.setAttribute('id','OfThisUser');
+    var sendEmailButtonSection = document.getElementById('sendEmailButtonSection');
+    if(sendEmailButtonSection != null) if(DivOfThisUser.children.length > 1)DivOfThisUser.children[1].removeChild(sendEmailButtonSection);
+    sendEmailButtonSection = document.createElement('section');
+    sendEmailButtonSection.setAttribute('id', 'sendEmailButtonSection');
+    sendEmailButtonSection.setAttribute('class', 'no-select div-of-add-to-sub-button');
+    var sendEmailButton = document.createElement('button');
+    sendEmailButton.textContent = LangSendMailToAllUsersOfThisPlaylist;
+    var setEventToButton = false;
+    sendEmailButtonSection.appendChild(sendEmailButton);
+    if(DivOfThisUser.children.length > 1)DivOfThisUser.children[1].appendChild(sendEmailButtonSection);
 
     for(userSub in data.data) {
+        if(! setEventToButton) {
+            sendEmailButton.onclick = function () {
+                if(data.data[userSub].hasOwnProperty('id')) openSendEmailsToAllUsersOfPlaylistTemplate(data.data[userSub].id, generelErorrMsg);
+            };
+            setEventToButton = true;
+        }
         var userSubDiv = document.createElement('div'),
             userSubDiv1 = document.createElement('div'),
             userSubDiv1Span1 = document.createElement('span'),
@@ -903,4 +919,85 @@ function renderVisiters(data) {
         }
     }
     if(DivOfThisUser.children.length > 1)DivOfThisUser.children[1].appendChild(temp);
+}
+function openSendEmailsToAllUsersOfPlaylistTemplate(sub_id, generelErorrMsg) {
+    var SubmitEmailContentToAllUsersOfTargetPlaylist = document.getElementById('SubmitEmailContentToAllUsersOfTargetPlaylist'),
+        inpuTitleOfEmail = document.getElementById('inpuTitleOfEmail'),
+        inputContentOfEmail = document.getElementById('inputContentOfEmail'),
+        alertOfSendEmailsToAllUsersOfPlaylistTemplate = document.getElementById('alertOfSendEmailsToAllUsersOfPlaylistTemplate');
+    if(SubmitEmailContentToAllUsersOfTargetPlaylist == null || SendEmailsToAllUsersOfPlaylistTemplate == null) {
+        showPopUpMassage(generelErorrMsg);
+        return;
+    }
+    SubmitEmailContentToAllUsersOfTargetPlaylist.onclick = function () {
+        RequestToSendEmailsToAllUsersInPlaylistBySubscriptionId(sub_id, generelErorrMsg);
+    };
+    if(inpuTitleOfEmail != null) {
+        inpuTitleOfEmail.setAttribute('class', 'default-input');
+        inpuTitleOfEmail.value = '';
+    }
+    if(inputContentOfEmail != null) {
+        inputContentOfEmail.setAttribute('class', 'default-input');
+        inputContentOfEmail.value = '';
+    }
+    if(alertOfSendEmailsToAllUsersOfPlaylistTemplate != null) {
+        alertOfSendEmailsToAllUsersOfPlaylistTemplate.textContent = '';
+    }
+    SendEmailsToAllUsersOfPlaylistTemplate.style = '';
+    SendEmailsToAllUsersOfPlaylistTemplate.setAttribute('style', '');
+}
+function RequestToSendEmailsToAllUsersInPlaylistBySubscriptionId(sub_id, generelErorrMsg) {
+    var SubmitEmailContentToAllUsersOfTargetPlaylist = document.getElementById('SubmitEmailContentToAllUsersOfTargetPlaylist'),
+        inpuTitleOfEmail = document.getElementById('inpuTitleOfEmail'),
+        inputContentOfEmail = document.getElementById('inputContentOfEmail'),
+        alertOfSendEmailsToAllUsersOfPlaylistTemplate = document.getElementById('alertOfSendEmailsToAllUsersOfPlaylistTemplate');
+    if(inpuTitleOfEmail == null || inputContentOfEmail == null) {
+        showPopUpMassage(generelErorrMsg);
+        return;
+    }
+
+    inpuTitleOfEmail.setAttribute('class', 'default-input');
+    inputContentOfEmail.setAttribute('class', 'default-input');
+    if(alertOfSendEmailsToAllUsersOfPlaylistTemplate != null) alertOfSendEmailsToAllUsersOfPlaylistTemplate.textContent = "";
+
+    if(inpuTitleOfEmail.value.trim() == '') {
+        inpuTitleOfEmail.setAttribute('class', 'default-input input-invalid');
+        return;
+    }
+    if(inpuTitleOfEmail.value.trim().length > 255) {
+        inpuTitleOfEmail.setAttribute('class', 'default-input input-invalid');
+        if(alertOfSendEmailsToAllUsersOfPlaylistTemplate != null) alertOfSendEmailsToAllUsersOfPlaylistTemplate.textContent = LangLengthTopOf255;
+        return;
+    }
+    if(inputContentOfEmail.value.trim() == '') {
+        inputContentOfEmail.setAttribute('class', 'default-input input-invalid');
+        return;
+    }
+    if(inputContentOfEmail.value.trim().length > 5000) {
+        inputContentOfEmail.setAttribute('class', 'default-input input-invalid');
+        if(alertOfSendEmailsToAllUsersOfPlaylistTemplate != null) alertOfSendEmailsToAllUsersOfPlaylistTemplate.textContent = LangLengthTopOfMax + ' 5000 ' + LangChar;
+        return;
+    }
+    var url = URLpostEmailData,
+        formData = new FormData();
+    formData.append('sub_id', sub_id);
+    formData.append('title', inpuTitleOfEmail.value.trim());
+    formData.append('content', inputContentOfEmail.value.trim());
+    formData.append('_token', TOKEN);
+    ajaxRequest("post", url, formData, function (jsonResponse) {
+        if(jsonResponse == null) {
+            if(alertOfSendEmailsToAllUsersOfPlaylistTemplate != null) alertOfSendEmailsToAllUsersOfPlaylistTemplate.textContent = generelErorrMsg;
+            return;
+        }
+        if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('msg')) {
+            if(jsonResponse.status) {
+                if(exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate != null) exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate.click();
+                if(SubmitEmailContentToAllUsersOfTargetPlaylist != null) SubmitEmailContentToAllUsersOfTargetPlaylist.onclick = function() {};
+                showPopUpMassage(jsonResponse.msg);
+                return;
+            }
+        }
+        if(alertOfSendEmailsToAllUsersOfPlaylistTemplate != null) alertOfSendEmailsToAllUsersOfPlaylistTemplate.textContent = generelErorrMsg;
+        return;
+    }, true, true) ;
 }

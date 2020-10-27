@@ -44,6 +44,18 @@
         <div>
         </div>
     </div>
+    <div id="SendEmailsToAllUsersOfPlaylistTemplate" class="pop-up-template template-send-mail-to-users-in-playlist no-select" style="display: none;">
+        <div class="center">
+            <header><div><canvas id="exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate" width="25" height="25"></canvas></div></header>
+            <div>
+                <section>{{ __('masseges.send-mail-to-all-users-of-this-playlist') }}</section>
+                <div><input type="text" id="inpuTitleOfEmail" class="default-input" placeholder="{{ __('masseges.mail-title') }}" /></div>
+                <div><textarea id="inputContentOfEmail" class="default-input" placeholder="{{ __('masseges.mail-content') }}"></textarea></div>
+                <section id="alertOfSendEmailsToAllUsersOfPlaylistTemplate"></section>
+                <button id="SubmitEmailContentToAllUsersOfTargetPlaylist">{{ __('masseges.send') }}</button>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -60,7 +72,16 @@
             DivOfThisUser = document.getElementById('DivOfThisUser'),
             exitButtonCanvasOfDivOfThisUser = document.getElementById('exitButtonCanvasOfDivOfThisUser'),
             buttonShowVisiter = document.getElementById('buttonShowVisiter'),
-            buttonShowProfit = document.getElementById('buttonShowProfit');
+            buttonShowProfit = document.getElementById('buttonShowProfit'),
+            SendEmailsToAllUsersOfPlaylistTemplate = document.getElementById('SendEmailsToAllUsersOfPlaylistTemplate'),
+            exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate = document.getElementById('exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate');
+            LangSendMailToAllUsersOfThisPlaylist = "{{ __('masseges.send-mail-to-all-users-of-this-playlist') }}",
+            LangLengthTopOf255 = "{{ __('input.character-of-name-must-min-than-255') }}",
+            LangLengthTopOfMax = "{{ __('input.character-of-name-must-min-than') }}",
+            LangChar = "{{ __('input.char') }}",
+            TOKEN = "{{ csrf_token() }}",
+            URLpostEmailData = "{{ route('mail.all.playlist.users') }}";
+
         if(visiterFlowChart != null) {
             visiterFlowChart.width = 550;
             visiterFlowChart.height = 350;
@@ -85,6 +106,14 @@
             drawRemoveIconCanvas(exitButtonCanvasOfDivOfThisUser,'#ffffff');
             exitButtonCanvasOfDivOfThisUser.onclick = function () {
                 closeBobUpTemplate(DivOfThisUser);
+            }
+        }
+        if(exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate != null) {
+            exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate.width = 25;
+            exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate.height = 25;
+            drawRemoveIconCanvas(exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate,'#ffffff');
+            exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate.onclick = function () {
+                closeBobUpTemplate(SendEmailsToAllUsersOfPlaylistTemplate);
             }
         }
         if(openVisitesAndProfitSection != null && openUsersSection != null && openSubscriptionsSection != null) {

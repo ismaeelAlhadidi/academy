@@ -189,4 +189,9 @@ return [
     'thanks-for-register-in-single-video' => 'شكرا لاشتراكك في المحاضرة',
     'to-watch-more-go-to-our-website' => 'لمشاهدة المزيد من المحاضرات و الدورات يمكنك زيارة موقعنا الالكتروني',
     'go-to-our-website' => 'الذهاب للموقع',
+    'send-mail-to-all-users-of-this-playlist' => 'ارسال بريد الكتروني لجميع مشتركين هذه الدورة',
+    'send' => 'ارسال',
+    'mail-title' => 'عنوان الرسالة',
+    'mail-content' => 'محتواى الرسالة',
+    'send-to-playlist-users-start' => 'بدأت عملية الارسال , قد تستغرق العملية يوم اذا كان عدد المشتركين كبير',
 ];

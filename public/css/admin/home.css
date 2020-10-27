@@ -203,18 +203,134 @@
     margin: 10px;
     padding: 10px;
 }
+.div-of-add-to-sub-button {
+    padding: 2px 0 2px 15px;
+    margin-top: 15px;
+    text-align: left;
+}
+.div-of-add-to-sub-button button {
+padding: 10px;
+background-color: #008eff;
+color: #fff;
+cursor: pointer;
+-webkit-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+-o-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+-ms-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+-moz-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+-webkit-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+-o-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+-ms-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+-moz-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+-webkit-border-radius: 5px;
+-o-border-radius: 5px;
+-moz-border-radius: 5px;
+-ms-border-radius: 5px;
+border-radius: 5px;
+}
+.div-of-add-to-sub-button button:hover {
+color: #ffacac;
+-webkit-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+-o-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+-ms-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+-moz-box-shadow: 0.5px 0.5px 5px red, -0.5px -0.5px 5px red;
+box-shadow: 0.5px 0.5px 5px #ffacac, -0.5px -0.5px 5px #ffacac;
+}
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.template-send-mail-to-users-in-playlist > div {
+    max-width: 90%;
+}
+.template-send-mail-to-users-in-playlist > div > header > div {
+    width: 25px;
+    height: 25px;
+}
+.template-send-mail-to-users-in-playlist > div > div {
+    padding: 20px;
+    text-align: left;
+    color: #398dd0;
+}
+.template-send-mail-to-users-in-playlist > div > div div {
+    margin: 10px 0 20px;
+    padding: 5px 10px;
+    text-align: right;
+}
+.template-send-mail-to-users-in-playlist > div > div section:first-of-type {
+    font-size: 14px;
+    padding: 5px;
+    text-align: right;
+}
+.template-send-mail-to-users-in-playlist > div > div section:last-of-type {
+    color: #f00;
+    font-size: 12px;
+    padding: 5px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+.template-send-mail-to-users-in-playlist > div > div div input,
+.template-send-mail-to-users-in-playlist > div > div div textarea {
+    max-width: 90%;
+    width: 190px;
+    display: inline-block;
+    padding: 10px;
+    margin: 10px 10px;
+}
+.template-send-mail-to-users-in-playlist > div > div button {
+    padding: 10px;
+    background-color: #0a304e;
+    color: #fff;
+    cursor: pointer;
+    -webkit-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -o-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -ms-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -moz-transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    transition: color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94), box-shadow 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -webkit-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -o-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -ms-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -moz-box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    box-shadow: 0.5px 0.5px 5px #b0c2d0, -0.5px -0.5px 5px #b0c2d0;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    max-width: 90%;
+    width: 130px;
+    font-size: 18px;
+}
+.template-send-mail-to-users-in-playlist > div > div div textarea {
+    resize: none;
+    min-height: 150px;
+    max-height: 150px;
+}
 @media (max-width: 399px) {
     .header-of-admin-home {
         font-size: 12px;
     }
 }
 @media (min-width: 576px) {
+    .template-send-mail-to-users-in-playlist > div > div div input,
+    .template-send-mail-to-users-in-playlist > div > div div textarea {
+        min-width: 250px;
+    }
     .main > div:not(.header-of-admin-home) > section, .user-div {
         margin: 25px 10%;
         width: 80%;
     }
 }
 @media (min-width: 768px) {
+    .template-send-mail-to-users-in-playlist > div > div div input,
+    .template-send-mail-to-users-in-playlist > div > div div textarea {
+        min-width: 300px;
+    }
     .main > div:not(.header-of-admin-home) > section, .user-div {
         margin: 25px 2.5%;
         width: 45%;
@@ -238,6 +354,10 @@
     }
 }
 @media (min-width: 992px) {
+    .template-send-mail-to-users-in-playlist > div > div div input,
+    .template-send-mail-to-users-in-playlist > div > div div textarea {
+        min-width: 350px;
+    }
     .chart-container {
         margin: 25px 2.5%;
         width: 45%;
@@ -250,6 +370,10 @@
     }
 }
 @media (min-width: 1200px) {
+    .template-send-mail-to-users-in-playlist > div > div div input,
+    .template-send-mail-to-users-in-playlist > div > div div textarea {
+        min-width: 400px;
+    }
     .main {
         margin: 20px 10% 25px;
         width: 80%;

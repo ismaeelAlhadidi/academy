@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Video;
-use App\Models\SingleVideoForm;
-use App\Jobs\SendEmailToUsersOfPublicForm;
+use App\Models\Subscription;
+use App\Jobs\SendMailsAndNotificationToUsers;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +77,21 @@ Route::post('/public/form/{key?}', 'WelcomeController@saveForm')->name('save.pub
 Auth::routes(["verify" => "true"]);
 
 Route::get('/test', function() {
-    
+    $data = ['title' => 'test title', 'content' => 'test content'];
+    $allSub = Subscription::where('playlist_id', 12)->get();
+    if(! $allSub) return true;
+    return true;
+    $allSub->transform(function ($sub) {
+        $data = [
+            'name' => $sub->user->first_name,
+            'email' => $sub->user->email,
+        ];
+        return $data;
+    });
+    foreach($allSub as $user) {
+        dispatch(new SendMailsAndNotificationToUsers($user['email'], $user['name'], $data['title'], $data['content']));
+    }
+    return $allSub;
 });
 /* 
     Uses HTTPS
