@@ -1001,3 +1001,54 @@ function RequestToSendEmailsToAllUsersInPlaylistBySubscriptionId(sub_id, generel
         return;
     }, true, true) ;
 }
+function ShowProfit() {
+    ajaxRequest('get', getProfitsURL, null, function(jsonResponse){
+        if(jsonResponse == null) {
+            showPopUpMassage(LangGenerelErorrMsg);
+            return;
+        }
+        if(jsonResponse.hasOwnProperty('status') && jsonResponse.hasOwnProperty('data')) {
+            if(jsonResponse.status) {
+                if(typeof(jsonResponse.data) == "object" && jsonResponse.data != null) {
+                    renderProfits(jsonResponse.data);
+                    return;
+                }
+            }
+        }
+        showPopUpMassage(LangGenerelErorrMsg);
+        return;
+    });
+}
+function renderProfits(data) {
+    var profitsTableBody = document.getElementById('profitsTableBody'),
+        profitsTable = document.getElementById('profitsTable');
+
+    if(profitsTemplate == null || profitsTable == null) {
+        showPopUpMassage(LangGenerelErorrMsg);
+        return;
+    }
+    if(profitsTableBody != null) {
+        profitsTable.removeChild(profitsTableBody);
+    }
+    profitsTableBody = document.createElement('tbody');
+    profitsTableBody.setAttribute('id', 'profitsTableBody');
+    for(let playlist in data) {
+        var tr = document.createElement('tr');
+        console.log(data[playlist]);
+        var tdTitle = document.createElement('td'),
+            tdPrice = document.createElement('td'),
+            tdProfit = document.createElement('td');
+
+        if(data[playlist].hasOwnProperty('title')) tdTitle.textContent = data[playlist].title;
+        if(data[playlist].hasOwnProperty('price')) tdPrice.textContent = data[playlist].price;
+        if(data[playlist].hasOwnProperty('profits')) tdProfit.textContent = data[playlist].profits;
+
+        tr.appendChild(tdTitle);
+        tr.appendChild(tdPrice);
+        tr.appendChild(tdProfit);
+        profitsTableBody.appendChild(tr);
+    }
+    profitsTable.appendChild(profitsTableBody);
+    profitsTemplate.style = '';
+    profitsTemplate.setAttribute('style', '');
+}

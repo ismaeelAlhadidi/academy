@@ -42,6 +42,7 @@ Route::group(['namespace' => 'Admin'],function() {
             Route::get('/{playlist_id}/getUsersOfThisPlaylist','HomeController@getUsersOfThisPlaylist');
             Route::get('/getVisiters','HomeController@getVisiters');
             Route::post('/mail/playlist-users','HomeController@mailToAllPlaylistUsers')->name('mail.all.playlist.users');
+            Route::get('/profits','HomeController@getProfits')->name('profits');
         });
         Route::group(['prefix' => 'playlist'],function () {
             Route::get('/{playlist_id}/getOpinionOfThisPlaylist','PlaylistController@getOpinionOfThisPlaylist');

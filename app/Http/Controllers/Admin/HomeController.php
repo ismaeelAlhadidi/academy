@@ -59,11 +59,28 @@ class HomeController extends Controller
             $visiterRoutes = VisiterRoute::where('updated_at' ,'<=', $bigTime)
                 ->where('updated_at' ,'>', $smalltime)->pluck('count');
             $lastTwoWeekVisites[$i-1] = 0;
-            if(! $visiterRoutes)continue;
+            if(! $visiterRoutes) continue;
             foreach($visiterRoutes as $visiterRoute)$lastTwoWeekVisites[$i-1] += $visiterRoute;
         }
-        
-        $profitLastTwoWeek = array(2,7,1,11,5,2,4,9);
+        $lastTwoWeekVisites = array_reverse($lastTwoWeekVisites);
+
+        $profitLastTwoWeek = array();
+        for($i = 1; $i < 15; $i++) {
+            $bigTime = date('Y-m-d H:i:s',time() - (($i-1)*$day));
+            $smalltime = date('Y-m-d H:i:s',time() - ($i*$day));
+            $subs = Subscription::where('payment_id', '!=', 'null')->where('updated_at' ,'<=', $bigTime)
+                ->where('created_at' ,'>', $smalltime)->get();
+            $profitLastTwoWeek[$i-1] = 0;
+            if(! $subs) continue;
+            foreach($subs as $sub) $profitLastTwoWeek[$i-1] += $sub->playlist->price;
+        }
+        $todayProfitCount = $profitLastTwoWeek[0];
+        $profitLastTwoWeek = array_reverse($profitLastTwoWeek);
+        $subs = Subscription::where('payment_id', '!=', 'null')->get();
+
+        $allProfitCount = 0;
+        if($subs) foreach($subs as $sub) $allProfitCount += $sub->playlist->price;
+
         $users = User::paginate(5);
         return view('admin.home', [
             'allVisiterCount' => $allVisiterCount,
@@ -74,6 +91,8 @@ class HomeController extends Controller
             'todayViewsCount' => $todayViewsCount,
             'lastTwoWeekVisites' => $lastTwoWeekVisites,
             'profitLastTwoWeek' => $profitLastTwoWeek,
+            'todayProfitCount' => $todayProfitCount,
+            'allProfitCount' => $allProfitCount,
             'users' => $users,
         ]);
     }
@@ -304,5 +323,23 @@ class HomeController extends Controller
             dispatch(new SendMailsAndNotificationToUsers($user['email'], $user['name'], $data['title'], $data['content']));
         }
         return $this->getResponse(true, __('masseges.send-to-playlist-users-start'), $allSub);
+    }
+    public function getProfits() {
+        $playlists = Playlist::where('price' ,'>' , 0)->get();
+        if(! $playlists) return $this->getResponse(false, '', []);
+        $playlists = $playlists->transform(function($playlist) {
+            $data = [
+                'price' => $playlist->price,
+                'profits' => $playlist->subscriptions->filter(function($value) {
+                        return $value->payment_id != null;
+                    })->count() * $playlist->price,
+                'title' => $playlist->title,
+            ];
+            if($data['profits'] > 0) return $data;
+            return null;
+        })->filter(function($value){
+            return $value != null;
+        });
+        return $this->getResponse(true, '', $playlists);
     }
 }

@@ -32,8 +32,8 @@
 
         <section class="arabic">
             <header class="no-select">{{ __('headers.profit') }}</header>
-            <div><span class="no-select">{{ __('masseges.profit-count-today') }}</span><span  class="no-select">{{ $todayVisitesCount }}</span></div>
-            <div><span class="no-select">{{ __('masseges.all-profit-count') }}</span><span  class="no-select">{{ $allVisiterCount }}</span></div>
+            <div><span class="no-select">{{ __('masseges.profit-count-today') }}</span><span  class="no-select">{{ $todayProfitCount }}</span></div>
+            <div><span class="no-select">{{ __('masseges.all-profit-count') }}</span><span  class="no-select">{{ $allProfitCount }}</span></div>
             <div class="no-select"><a id="buttonShowProfit">{{ __('masseges.show-profit') }}</a></div>
         </section>
     </div>
@@ -42,6 +42,20 @@
     <div id="DivOfThisUser" class="pop-up-template subscriptions-of-user" style="display:none;">
         <header><div><canvas id="exitButtonCanvasOfDivOfThisUser" width="25" height="25"></canvas></div></header>
         <div>
+        </div>
+    </div>
+    <div id="profitsTemplate" class="pop-up-template subscriptions-of-user" style="display:none;">
+        <header><div><canvas id="exitButtonCanvasOfProfitsTemplate" width="25" height="25"></canvas></div></header>
+        <div>
+            <table id="profitsTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>{{ __('masseges.playlist-title') }}</td>
+                        <td>{{ __('masseges.playlist-price') }}</td>
+                        <td>{{ __('masseges.profits') }}</td>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
     <div id="SendEmailsToAllUsersOfPlaylistTemplate" class="pop-up-template template-send-mail-to-users-in-playlist no-select" style="display: none;">
@@ -80,7 +94,11 @@
             LangLengthTopOfMax = "{{ __('input.character-of-name-must-min-than') }}",
             LangChar = "{{ __('input.char') }}",
             TOKEN = "{{ csrf_token() }}",
-            URLpostEmailData = "{{ route('mail.all.playlist.users') }}";
+            URLpostEmailData = "{{ route('mail.all.playlist.users') }}",
+            LangGenerelErorrMsg = "{{ __('masseges.general-error') }}",
+            getProfitsURL = "{{ route('profits') }}",
+            profitsTemplate = document.getElementById('profitsTemplate'),
+            exitButtonCanvasOfProfitsTemplate = document.getElementById('exitButtonCanvasOfProfitsTemplate');
 
         if(visiterFlowChart != null) {
             visiterFlowChart.width = 550;
@@ -114,6 +132,14 @@
             drawRemoveIconCanvas(exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate,'#ffffff');
             exitButtonCanvasOfSendEmailsToAllUsersOfPlaylistTemplate.onclick = function () {
                 closeBobUpTemplate(SendEmailsToAllUsersOfPlaylistTemplate);
+            }
+        }
+        if(exitButtonCanvasOfProfitsTemplate != null) {
+            exitButtonCanvasOfProfitsTemplate.width = 25;
+            exitButtonCanvasOfProfitsTemplate.height = 25;
+            drawRemoveIconCanvas(exitButtonCanvasOfProfitsTemplate,'#ffffff');
+            exitButtonCanvasOfProfitsTemplate.onclick = function () {
+                closeBobUpTemplate(profitsTemplate);
             }
         }
         if(openVisitesAndProfitSection != null && openUsersSection != null && openSubscriptionsSection != null) {
@@ -161,9 +187,6 @@
                 showPopUpMassage('{{ __('masseges.general-error') }}');
                 return;
             });
-        }
-        function ShowProfit() {
-            
         }
         function openVisitesAndProfit() {
             if(visitesAndProfit != null && users != null && subscriptions != null) {

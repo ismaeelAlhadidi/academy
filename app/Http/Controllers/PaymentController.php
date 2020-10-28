@@ -43,7 +43,8 @@ class PaymentController extends Controller
         if(! $playlist) {
             return abort('404');
         }
-
+        $sub = Subscription::where('user_id', auth()->user()->id)->where('playlist_id', $playlist->id)->first();
+        if($sub) return Redirect::route('playlist.show', $playlist->id);
         $price = $playlist->price;
         $itemName = $playlist->title;
         if($playlist->price == 0) {
