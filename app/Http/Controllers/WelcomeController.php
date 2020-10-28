@@ -9,6 +9,7 @@ use App\Models\PlaylistOpinion;
 use App\Models\CoachOpinion;
 use App\Models\Video;
 use App\Models\SingleVideoForm;
+use App\Models\AppInfo;
 use App\Traits\AjaxResponse;
 use Validator;
 
@@ -82,7 +83,13 @@ class WelcomeController extends Controller
             $playlists = $playlists->merge($normalPlaylists);
         }
         $coachOpinions = CoachOpinion::where('allow', 1)->offset(0)->limit(10)->orderBy('id', 'desc')->get();
-        return view('welcome', ['playlists' => $playlists, 'coachOpinions' => $coachOpinions]);
+        $appInfos = AppInfo::get();
+        $data = array();
+        foreach($appInfos as $record) {
+            $data[$record->key] = $record->value;
+        }
+        $appInfos = $data;
+        return view('welcome', ['playlists' => $playlists, 'coachOpinions' => $coachOpinions, 'appInfos' => $appInfos]);
     }
 
     public function getOpinionsOfPlaylist($id) {

@@ -7,16 +7,6 @@
 @endsection
 
 @section('content')
-<!--
-    {{ $allVisiterCount }} <br/>
-    {{ $allVisitesCount }} <br/>
-    {{ $todayVisitesCount }} <br/>
-    {{ $usersCount }} <br/>
-    {{ $allViewsCount }} <br/>
-    {{ $todayViewsCount }} <br/>
-    <hr />
-    time is  ::: {{ date('Y-m-d H:i:s',time()) }} <br /> -->
-    
     <div class="header-of-admin-home arabic"><section id="openVisitesAndProfitSection" class="header-of-admin-home-selected-section"><span class="no-select">{{ __('masseges.visites-and-profit') }}</span></section><section id="openUsersSection"><span class="no-select">{{ __('masseges.all-users') }}</span></section><section id="openSubscriptionsSection"><span class="no-select">{{ __('masseges.all-subscription-count') }}</span></section></div>
 
     <div id="visitesAndProfit">

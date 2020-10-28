@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Video;
 use App\Models\Subscription;
 use App\Jobs\SendMailsAndNotificationToUsers;
+use App\Streaming\VideoStream;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,21 +78,12 @@ Route::post('/public/form/{key?}', 'WelcomeController@saveForm')->name('save.pub
 Auth::routes(["verify" => "true"]);
 
 Route::get('/test', function() {
-    $data = ['title' => 'test title', 'content' => 'test content'];
-    $allSub = Subscription::where('playlist_id', 12)->get();
-    if(! $allSub) return true;
-    return true;
-    $allSub->transform(function ($sub) {
-        $data = [
-            'name' => $sub->user->first_name,
-            'email' => $sub->user->email,
-        ];
-        return $data;
-    });
-    foreach($allSub as $user) {
-        dispatch(new SendMailsAndNotificationToUsers($user['email'], $user['name'], $data['title'], $data['content']));
-    }
-    return $allSub;
+    return view('test');
+});
+Route::get('/test/video', function() {
+    $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . 'playlist1\jv6wRv5f933213afb576-19201419-1603482131.mp4';
+    $video = new VideoStream(storage_path('app' . $path), 'local');
+    return response()->stream($video->start());
 });
 /* 
     Uses HTTPS

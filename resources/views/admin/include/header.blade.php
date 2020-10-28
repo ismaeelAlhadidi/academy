@@ -16,7 +16,7 @@
                 <a class="list-item list-overflow-item" href="{{ route('admin.session-offer') }}"><li>{{ __('headers.admin-navbar-session-offers') }}</li></a>
                 <a class="list-item list-overflow-item" href="{{ route('admin.sessions') }}"><li>{{ __('headers.admin-navbar-sessions') }}</li></a>
                 <a class="list-item list-overflow-item" href="{{ route('admin.single-videos') }}"><li>{{ __('headers.admin-single-videos') }}</li></a>
-                <a class="list-item list-overflow-item"><li>{{ __('headers.admin-navbar-app-settings') }}</li></a>
+                <a class="list-item list-overflow-item" href="{{ route('admin.app.settings') }}"><li>{{ __('headers.admin-navbar-app-settings') }}</li></a>
                 <a class="list-item list-overflow-item" href="{{ route('admin.logout') }}"><li>{{ __('auth.logout') }}</li></a>
             </ul>
     </aside></header><div class="fix-header-space-in-workflow"></div>

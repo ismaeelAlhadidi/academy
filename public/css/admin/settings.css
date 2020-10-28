@@ -1,0 +1,185 @@
+.welcome-about-coach-image {
+    width: 90%;
+    margin: 5px 5% 20px;
+}
+.welcome-about-coach-image img {
+    -webkit-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -o-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -ms-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 32px 0 0 0 transparent, 0 -32px 0 0 transparent, 0 32px 0 0 transparent, 32px 32px 0 0 transparent, 32px -32px 0 0 transparent, 0 0 32px 0 rgba(0, 0, 0, 0.15);
+    border: 1.5px solid #3499b8;
+}
+.welcome-about-coach-image img, .welcome-about-coach-image > div, .welcome-about-coach-image > div div {
+    width: 200px;
+    height: 200px;
+    -webkit-border-radius: 100%;
+    -o-border-radius: 100%;
+    -ms-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    display: inline-block;
+}
+.welcome-about-coach-image > div {
+    position: relative;
+    cursor: pointer;
+}
+.welcome-about-coach-image > div div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: transparent;
+    background-color: transparent;
+    -moz-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: background-color .25s ease-in-out, color .25s ease-in-out;
+}
+.welcome-about-coach-image > div div > span {
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 45%;
+    text-align: center;
+}
+.welcome-about-coach-image > div:hover div {
+    color: #fff;
+    background-color: #3499b8bf;
+}
+.welcome-about-coach-image > div:hover footer {
+    display: none;
+}
+.welcome-about-coach-image footer {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #3499b8;
+}
+.welcome-about-coach-data {
+    width: 90%;
+    margin: 5px 5%;
+}
+.welcome-about-coach-data div {
+    margin: 10px 0;
+}
+.welcome-about-coach-data div span {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    color: #3499b8;
+    padding: 7.5px 0px;
+}
+.welcome-about-coach-data input[type="text"], .welcome-about-coach-data textarea {
+    padding: 7.5px;
+    color: #000;
+    border: 1px solid #3499b8;
+    -webkit-border-radius: .25rem;
+    -o-border-radius: .25rem;
+    -moz-border-radius: .25rem;
+    -ms-border-radius: .25rem;
+    border-radius: .25rem;
+    -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -o-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -moz-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -ms-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    background-color: #f9fcff;
+    width: 300px;
+    max-width: 90%;
+    margin: 5px;
+}
+.welcome-about-coach-data input[type="text"]:focus, .welcome-about-coach-data textarea:focus {
+    -webkit-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -o-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -ms-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    -moz-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+    box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;
+}
+.welcome-about-coach-data textarea {
+    resize: none;
+    height: 200px;
+}
+.welcome-about-coach-data footer div {
+    background-color: #3499b8;
+    margin: 10px 0;
+    padding: 0;
+    display: inline-block;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    border-color: rgba(255, 255, 255, 0.35);
+    border: solid 2px #ffffff;
+}
+.welcome-about-coach-data button, .welcome-about-coach-data a {
+    cursor: pointer;
+    color: #fff !important;
+    -moz-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -ms-transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    transition: border-color .25s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+    -webkit-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    border-radius: 0.5em;
+    display: inline-block;
+    line-height: 2em;
+    text-align: center;
+    padding: 0em 1.3em;
+    font-size: 1.25em;
+    background-color: transparent;
+}
+.welcome-about-coach-data div:hover button, .welcome-about-coach-data div:hover a {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+.welcome-about-coach-data footer {
+    margin: 20px 0 10px;
+    text-align: center;
+}
+@media (max-width: 360px) {
+    .welcome-about-coach-data footer div {
+        display: block;
+    }
+}
+@media (min-width: 576px) {
+    .welcome-about-coach-image img, .welcome-about-coach-image > div, .welcome-about-coach-image > div div {
+        width: 250px;
+        height: 250px;
+    }
+}
+@media (min-width: 768px) {
+    .welcome-about-coach-image {
+        width: 42.5%;
+        margin: 15px 2.5% 20px;
+        display: inline-block;
+    }
+    .welcome-about-coach-data {
+        width: 42.5%;
+        margin: 25px 2.5% 5px;
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+@media (min-width: 992px) {
+    .welcome-about-coach-image img, .welcome-about-coach-image > div, .welcome-about-coach-image > div div {
+        width: 300px;
+        height: 300px;
+    }
+}
+@media (min-width:1200px) {
+    .welcome-about-coach-image {
+        margin: 15px 0 20px 5%;
+        text-align: left;
+    }
+    .welcome-about-coach-data {
+        margin: 25px 5% 5px 0;
+        text-align: right;
+    }
+}

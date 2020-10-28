@@ -20,6 +20,8 @@ Route::group(['namespace' => 'Admin'],function() {
         Route::group(['prefix' => 'single-videos'],function() {
             Route::get('/','SingleVideoController@index')->name('admin.single-videos');
         });
+        Route::get('/app-setting','AppController@index')->name('admin.app.settings');
+        Route::post('/app-setting','AppController@store')->name('admin.app.settings');
     });
 
     /****************************  AJAX Requests ****************************/

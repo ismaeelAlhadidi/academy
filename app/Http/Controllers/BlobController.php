@@ -12,6 +12,7 @@ use App\Events\ShowBlob;
 use App\Traits\AjaxResponse;
 use App\Traits\FormatTime;
 use Auth;
+use FFMpeg;
 
 class BlobController extends Controller
 {
@@ -26,7 +27,7 @@ class BlobController extends Controller
             return abort('404');
         }
         $this->saveView($blob->id);
-        return response()->file(storage_path('app' . $path));
+        //return response()->file(storage_path('app' . $path));
         $url = storage_path('app' . $path);
         $headers = [
             'Content-Type'        => $blob->blobable->mimi_type,
@@ -90,11 +91,11 @@ class BlobController extends Controller
             $video = $blob->blobable->src;
             $driver = $blob->blobable->driver;
             $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . $video;
-            $tempVideoData = $this->getVideoAttributes(storage_path('app' . $path), 'ffmpeg');
-            $mimiCodecs = $tempVideoData['codec'];
-            //$mimiCodecs = exec("ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 {" . storage_path('app' . $path) . "}");
+            $media = FFMpeg::fromDisk($driver)->open($path);
+            //return dd($media()->getStreams());
+            $codec = $media()->getStreams()->first()->get('codec_name');
             return $this->getResponse(true, '', [
-                'mimi' => $blob->blobable->mimi_type .'; codecs="' . $mimiCodecs . '"',
+                'mimi' => $blob->blobable->mimi_type .'; codecs="' . $codec . '"',
                 'title' => $blob->blobable->title, 
                 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')
             ]);
@@ -111,43 +112,5 @@ class BlobController extends Controller
                 event(new ShowBlob($visiter_id,$user_id,$blob_id));
             }
         }
-    }
-
-    private function getVideoAttributes($video, $ffmpeg) {
-        $command = $ffmpeg . ' -i ' . $video . ' -vstats 2>&1';
-        $output = shell_exec($command);
-    
-        $regex_sizes = "/Video: ([^,]*), ([^,]*), ([0-9]{1,4})x([0-9]{1,4})/"; // or : $regex_sizes = "/Video: ([^\r\n]*), ([^,]*), ([0-9]{1,4})x([0-9]{1,4})/";
-        $codec = null;
-        $width = null;
-        $height = null;
-        $hours = null;
-        $mins = null;
-        $secs = null;
-        $ms = null;
-        $ffprobe = FFMpeg\FFProbe::create();
-        return $ffprobe;
-        if (preg_match($regex_sizes, $output, $regs)) {
-            $codec = $regs [1] ? $regs [1] : null;
-            $width = $regs [3] ? $regs [3] : null;
-            $height = $regs [4] ? $regs [4] : null;
-        }
-    
-        $regex_duration = "/Duration: ([0-9]{1,2}):([0-9]{1,2}):([0-9]{1,2}).([0-9]{1,2})/";
-        if (preg_match($regex_duration, $output, $regs)) {
-            $hours = $regs [1] ? $regs [1] : null;
-            $mins = $regs [2] ? $regs [2] : null;
-            $secs = $regs [3] ? $regs [3] : null;
-            $ms = $regs [4] ? $regs [4] : null;
-        }
-    
-        return array('codec' => $codec,
-            'width' => $width,
-            'height' => $height,
-            'hours' => $hours,
-            'mins' => $mins,
-            'secs' => $secs,
-            'ms' => $ms
-        );
     }
 }

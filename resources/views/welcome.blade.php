@@ -12,8 +12,8 @@
         @include('include.header')
         <section id="topSection" class="top-section section-borders no-select">
             <div>
-                <h1>Title</h1>
-                <p>this statment can fixed it or change it</p>
+                <h1>{{ config('app.name') }}</h1>
+                <p>{{ ( ( isset($appInfos['first_statment']) ? $appInfos['first_statment'] : '') ) }}</p>
                 <a href="{{ route('register') }}"> {{ __('title.Register') }} </a><a href="{{ route('login') }}"> {{ __('title.adminLogin') }} </a>
             </div>
         </section>
@@ -33,7 +33,7 @@
             </section>
             <div class="clear-float"></div>
             <section class="about-coach section-borders no-select">
-                <div class="no-select"><img data-src="{{ asset('images/static/user-default.jpg') }}" class="lazyload welcome-coach-image" loading="lazy" /></div><p><span>Title</span> this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it this data can fixed it or change it</p>
+                <div class="no-select"><img data-src="{{ (( isset($appInfos['about_coach_image']) ? asset($appInfos['about_coach_image']) : '')) }}" class="lazyload welcome-coach-image" loading="lazy" /></div><p><span>{{ ( isset($appInfos['about_cach_title']) ? $appInfos['about_cach_title'] : '') }}</span>{{ ( isset($appInfos['about_cach_desc']) ? asset($appInfos['about_cach_desc']) : '' ) }}</p>
             </section>
             @if($coachOpinions->count() > 0)
             <section class="coach-opinions section-borders no-select">
