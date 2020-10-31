@@ -1,0 +1,151 @@
+.main {
+    padding: 0;
+    margin-top: 25px;
+    font-size: 14px;
+}
+.container {
+    font-size: inherit;
+}
+.main .container > header {
+    width: 100%;
+    text-align: right;
+    direction: rtl;
+    margin: 0;
+    background-color: #3a78a9;
+    color: #ffe59b;
+    position: relative;
+    font-size: inherit;
+}
+.main .container > header > h3 {
+    margin: 7.5px;
+    padding: 7.5px;
+    font-size: inherit;
+}
+.main .container > header > button {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    padding: 10px 0px;
+    width: 125px;
+    text-align: center;
+    -webkit-border-radius: 10px;
+    -o-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #9fd7ff;
+    color: #0a304e;
+    cursor: pointer;
+    font-size: 12px;
+}
+.main .container > header > button:hover {
+    background-color: rgba(0,0,0,0.1);
+    -webkit-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -o-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -ms-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -moz-transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    transition: background-color 1s cubic-bezier(0.25, 0.1, 0.36, 0.94);
+    -webkit-box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
+    -o-box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
+    -ms-box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
+    -moz-box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
+    box-shadow: 0.5px 0.5px 5px #edf9ff, -0.5px -0.5px 5px #edf9ff;
+    color: #ffffff;
+}
+.main .container > .table {
+    font-size: inherit;
+}
+.main .container > .table th:nth-of-type(2),
+.main .container > .table td:nth-of-type(2) {
+    display: none;
+}
+.default-button {
+    width: 70px;
+    padding: 5px 0;
+    margin: 2px 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #3a78a9;
+    border: solid 3px #ffffff;
+}
+.default-button:hover {
+    cursor: pointer;
+    border: solid 3px rgb(210 215 218 / 0.6);
+}
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.add-admin-template > div > header > div {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    position: relative;
+}
+.add-admin-template > div {
+    max-width: 90%;
+}
+.add-admin-template > div div {
+    padding: 10px;
+}
+.add-admin-template > div div span,
+.add-admin-template > div div input {
+    margin: 5px 10px;
+    max-width: 90%;
+    width: 150px;
+}
+.add-admin-template > div div span {
+    display: none;
+}
+.add-admin-template > div footer {
+    text-align: left;
+    padding: 10px;
+    margin: 5px;
+}
+.add-admin-template > div footer button {
+    font-size: 16px;
+}
+.add-admin-template > div > div section {
+    color: red;
+}
+@media(min-width: 576px) {
+    .main {
+        font-size: unset;
+    }
+    .main .container > .table tr > th:nth-of-type(2),
+    .main .container > .table tr > td:nth-of-type(2) {
+        display: table-cell;
+    }
+    .main .container > header > button {
+        width: 165px;
+        font-size: unset;
+    }
+    .table td, .table th {
+        padding: .75rem .5rem;
+    }
+    .add-admin-template > div div span {
+        display: inline-block;
+    }
+}
+@media(min-width: 768px) {
+    .table td, .table th {
+        padding: .75rem .75rem;
+    }
+    .table button {
+        width: 80px;
+    }
+    .add-admin-template > div div span,
+    .add-admin-template > div div input {
+        margin: 5px 10px;
+        max-width: 90%;
+        width: 250px;
+    }
+}

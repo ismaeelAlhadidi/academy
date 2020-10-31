@@ -1,7 +1,7 @@
 <header class="header arabic no-select"><nav>
         <div class="nav-button"><canvas id="navButton"></canvas></div>
-        <a class="header-profile-image"><img src="{{ isset(auth('admin')->user()->image) ? asset(auth('admin')->user()->image) : asset('images/static/adminLogin.png') }}"/></a>
-        <ul><a class="list-item"><li class="admin-name-in-header">{{ (strlen(auth('admin')->user()->username) <= 17) ? auth('admin')->user()->username : substr(auth('admin')->user()->username, 0, 14) . '...' }}</li></a>
+        <a class="header-profile-image" href="{{ route('admin.profile') }}"><img src="{{ isset(auth('admin')->user()->image) ? asset(auth('admin')->user()->image) : asset('images/static/adminLogin.png') }}"/></a>
+        <ul><a class="list-item" href="{{ route('admin.profile') }}"><li class="admin-name-in-header">{{ (strlen(auth('admin')->user()->username) <= 17) ? auth('admin')->user()->username : substr(auth('admin')->user()->username, 0, 14) . '...' }}</li></a>
         <a class="list-item notifcations-button" id="notifcationButton" ><li><span class="fa">&#xf0f3;</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span id="countOfNewNotifcations" class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a></ul>
     </nav><div class="search" style="display: none;">
         <form id="searchForm" action="" method="get">

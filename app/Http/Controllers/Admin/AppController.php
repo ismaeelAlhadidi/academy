@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AppInfo;
+use App\Models\Admin;
+use App\Traits\AjaxResponse;
 use Storage;
-
+use Validator;
+use Hash;
 class AppController extends Controller
 {
+    use AjaxResponse;
     public function index() {
         $appInfos = AppInfo::get();
         $data = array();
@@ -50,5 +54,51 @@ class AppController extends Controller
         AppInfo::truncate();
         if(AppInfo::insert($data)) return back()->with('msg', __('masseges.save-data-ok'));
         return back()->with('msg', __('masseges.general-error'));
+    }
+    public function profile() {
+        $admins = Admin::all();
+        return view('admin.profile', ['admins' => $admins]);
+    }
+    public function addAdmin(Request $request) {
+        $data = [
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
+        $rules = [
+            'username' => 'required | string | unique:admins,username| min:1 | max:255',
+            'email' => 'required | string | email | unique:admins,email| min:1 | max:255',
+            'password' => 'string | min:8',
+        ];
+        $validator = Validator::make($data, $rules);
+        if($validator->fails()) return $this->getResponse(false, '', []);
+        $data['password'] = Hash::make($data['password']);
+        $admin = Admin::create($data); 
+        return $this->getResponse(true, '', $admin);
+    }
+    public function updateAdmin(Request $request) {
+        $admin = Admin::where('email', $request->input('old_email'))->first();
+        $data = [
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
+        $rules = [
+            'username' => 'required | string | min:1 | max:255',
+            'email' => 'required | string | email | min:1 | max:255',
+            'password' => 'string | min:8',
+        ];
+        $validator = Validator::make($data, $rules);
+        if($validator->fails()) return $this->getResponse(false, '', []);
+        $data['password'] = Hash::make($data['password']);
+        $admin->update($data); 
+        return $this->getResponse(true, '', $admin);
+    }
+    public function deleteAdmin($id) {
+        $admin = Admin::find($id);
+        if(! $admin) return $this->getResponse(false, '', []);
+        $data = ['id' => $admin->id];
+        $admin->delete();
+        return $this->getResponse(true, '', $data);
     }
 }

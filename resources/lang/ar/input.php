@@ -32,4 +32,5 @@ return [
     'Register-in-public-form' => 'اشتراك',
     'character-of-name-must-min-than' => 'يجب ان يكون النص اقل من ',
     'char' => 'حرف',
+    'username' => 'اسم المستخدم',
 ];

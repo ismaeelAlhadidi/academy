@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Admin'],function() {
         });
         Route::get('/app-setting','AppController@index')->name('admin.app.settings');
         Route::post('/app-setting','AppController@store')->name('admin.app.settings');
+        Route::get('/profile', 'AppController@profile')->name('admin.profile');
     });
 
     /****************************  AJAX Requests ****************************/
@@ -81,6 +82,15 @@ Route::group(['namespace' => 'Admin'],function() {
             Route::post('/add','PlaylistController@storeVideoInLocal')->name('admin.single-videos.add');
             Route::get('/get-users/{id}','SingleVideoController@getUsersData');
         });
+        Route::post('/ajax/add-admin', 'AppController@addAdmin')->name('admin.add');
+        Route::post('/ajax/update-admin', 'AppController@updateAdmin')->name('admin.update');
+        Route::get('/ajax/delete-admin/{id?}', 'AppController@deleteAdmin')->name('admin.delete');
+
+        /*
+        AddAdminUrl = "{{ route('') }}",
+            UpdateAdminUrl = "{{ route('admin.update') }}",
+            DeleteAdminUrl = "{{ route('admin.delete') }}";
+        */
     });
     /****************************  ######### ****************************/
 
