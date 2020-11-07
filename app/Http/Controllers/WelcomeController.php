@@ -156,4 +156,10 @@ class WelcomeController extends Controller
         }
         return back()->withErrors(['email' => __('masseges.general-error')]);
     }
+    public function getPrivacy() {
+        return view('privacy');
+    }
+    public function getTerms() {
+        return view('terms');
+    }
 }

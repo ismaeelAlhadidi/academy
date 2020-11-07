@@ -75,6 +75,8 @@ Route::get('/pay-status', 'PaymentController@getPaymentStatus')->name('pay.statu
 
 Route::get('/public/form/{key?}', 'WelcomeController@getForm')->name('public.form');
 Route::post('/public/form/{key?}', 'WelcomeController@saveForm')->name('save.public.form');
+Route::get('/privacy', 'WelcomeController@getPrivacy')->name('privacy');
+Route::get('/terms', 'WelcomeController@getTerms')->name('terms');
 
 Auth::routes(["verify" => "true"]);
 

@@ -879,6 +879,11 @@ table {
     color: #a6abb0;
     padding: 15px 0;
 }
+.document {
+    margin: 50px;
+    padding: 30px 10px;
+    font-size: 18px;
+}
 @media (max-width: 280px) {
     .loading-dot-inner-container > div:nth-of-type(4) {
         display: none;
