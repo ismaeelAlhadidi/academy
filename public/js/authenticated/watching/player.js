@@ -158,12 +158,6 @@ class Player {
                 };
             }
             this.setVisibltyEventsOfProgressPar();
-            window.onkeypress = function (e) {
-                if(e.code == "Space") {
-                    if(posterOfOpendVideo != null) posterOfOpendVideo.click();
-                    e.preventDefault();
-                }
-            };
         }
         if(settingButton != null) {
             settingButton.onclick = function () {
@@ -246,15 +240,6 @@ class Player {
                 var bufferedEnd = tempThis.videoElement.buffered.end(tempThis.videoElement.buffered.length - 1),
                     width = Math.floor(bufferedEnd / tempThis.videoElement.duration * 100 );
                 progressBufferd.setAttribute('style', 'width: ' + width + '%;');
-            };
-            tempThis.videoElement.onseeked = function() {
-                console.log('seeked');
-            };
-            tempThis.videoElement.onseeking = function() {
-                console.log('seeking');
-            };
-            tempThis.videoElement.onstalled = function() {
-                console.log('stalled');
             };
         }
         if(imageOfOpendVideo != null) imageOfOpendVideo.src = tempThis.poster;

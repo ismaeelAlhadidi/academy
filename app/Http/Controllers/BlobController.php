@@ -58,8 +58,10 @@ class BlobController extends Controller
         if (! Storage::disk($driver)->exists($path)) {
             return abort('404');
         }
-        $playlistId = $blob->playlists->first()->id;
-        session(['opendPlaylist' => $playlistId]);
+        if(! session()->has('opendPlaylist')) {
+            $playlistId = $blob->playlists->first()->id;
+            session(['opendPlaylist' => $playlistId]);
+        }
         $this->saveView($blob->id);
         return response()->file(storage_path('app' . $path));
     }
@@ -111,6 +113,7 @@ class BlobController extends Controller
                 'title' => $blob->blobable->title, 
                 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : ''),
             ]);
+            session(['opendPlaylist' => $playlistId]);
         }
         return $this->getResponse(false, 'videoTime', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
     }

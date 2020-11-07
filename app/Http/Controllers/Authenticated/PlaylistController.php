@@ -31,7 +31,7 @@ class PlaylistController extends Controller
                 $firstComment = $replay->comment;
             }
         }
-        $comments = Comment::where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $playlist->id)->orderBy('id', 'desc')->paginate($commentsCountOnOneScroll);
+        $comments = Comment::where('playlist_id', $playlist->id)->where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $playlist->id)->orderBy('id', 'desc')->paginate($commentsCountOnOneScroll);
         if($firstComment != null) {
             $replays = $firstComment->replays->filter(function($value) {
                 return ($value->allow);
@@ -210,7 +210,7 @@ class PlaylistController extends Controller
                 $firstComment = $replay->comment;
             }
         }
-        $comments = Comment::where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $id)->orderBy('id', 'desc')->paginate($this->commentsCountOnOneScroll);
+        $comments = Comment::where('playlist_id', $id)->where('allow', 1)->orWhere('user_id', auth()->user()->id)->where('playlist_id', $id)->orderBy('id', 'desc')->paginate($this->commentsCountOnOneScroll);
         if(! $comments) return $this->getResponse(false, '', null);
         if($firstComment != null) {
             $replays = $firstComment->replays->filter(function($value) {
