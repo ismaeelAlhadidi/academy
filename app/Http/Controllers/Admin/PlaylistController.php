@@ -358,6 +358,15 @@ class PlaylistController extends Controller
                 return $this->getResponse(false, __('masseges.general-error'), null);
             }
         } else {
+            if($request->has('playlist_id')) {
+                $tempPlaylist = Playlist::find($request->playlist_id);
+                if($tempPlaylist) {
+                    $isFirstVideoInPlaylist = $tempPlaylist->blobs->count() == 0;
+                    if($isFirstVideoInPlaylist) {
+                        $video->update(['available' => 1]);
+                    }
+                }
+            }
             $blob = Blob::create($data);
             if(! $blob) {
                 if(isset($data['poster_src'])) $this->deleteFile($path . $name, 'local');

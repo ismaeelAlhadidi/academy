@@ -1,2 +1,12 @@
 User-agent: *
-Disallow:
+Disallow: /ajax/
+Disallow: /admin/
+Disallow: /blob/
+Disallow: /object/
+Disallow: /js/
+Disallow: /css/
+Disallow: /images/
+Disallow: /storage/
+Disallow: /public/form/
+Disallow: /pay-playlist
+Disallow: /pay-status

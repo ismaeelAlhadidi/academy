@@ -44,7 +44,6 @@ body > header nav li:hover {
 }
 body > header .logo {
     float: left;
-    padding: 15px;
 }
 .default-input:focus {
     -webkit-box-shadow: 0.5px 0.5px 5px #3499b8, -0.5px -0.5px 5px #3499b8;

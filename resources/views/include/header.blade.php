@@ -9,7 +9,7 @@
                     <a class="notifcations-button" id="notifcationButton" ><li class="icon"><span class="material-icons">notifications</span>@if(session()->has('newNotifcations')) @if(session()->get('newNotifcations') > 0)<span id="countOfNewNotifcations" class="count-of-new-notifcations">{{ session()->get('newNotifcations') }}</span>@endif @endif</li></a>
                 @endguest
             </ul>
-        </nav><div class="logo">logo</div></header>@auth<aside id="menuOfNavList" style="display: none;"><ul class="list-overflow">
+        </nav><div class="logo"><img src="{{ asset('images/static/audio-default.jpg') }}"/></div></header>@auth<aside id="menuOfNavList" style="display: none;"><ul class="list-overflow">
             <a class="list-item list-overflow-item" href="{{ route('home') }}"><li>{{ __('headers.admin-navbar-home') }}</li></a>
             <a class="list-item list-overflow-item" href="{{ route('user.profile') }}"><li>{{ __('headers.navbar-my-account') }}</li></a>
             <a class="list-item list-overflow-item" href="{{ route('home') }}"><li>{{ __('headers.admin-navbar-playlists') }}</li></a>

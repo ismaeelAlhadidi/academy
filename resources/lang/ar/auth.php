@@ -28,7 +28,7 @@ return [
     'i-am-admition-on' => 'اوافق على',
     'privacy' => 'سياسات الخصوصية',
     'and' => 'و',
-    'security' => 'سياسات الامن',
+    'term' => 'قوانين الموقع',
     'Register' => 'تسجيل',
     'Please confirm your password before continuing' => 'الرجاء تأكيد رمز المرور قبل الاستمرار.',
     'Verify Your Email Address' => 'تفعيل البريد الالكتروني',

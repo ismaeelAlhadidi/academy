@@ -834,6 +834,17 @@ table {
     width: 144.5px;
     text-align: center;
 }
+.logo {
+    height: inherit;
+    padding: 0px;
+}
+.logo img {
+    width: 70px;
+    height: inherit;
+}
+.logo {
+    padding: 0px 15px;
+}
 @keyframes loading-dot-animation-frame {
     0%,
     50% {
@@ -880,6 +891,9 @@ table {
     .loading-dot-inner-container > div:last-of-type {
         display: none;
     }
+    .logo {
+        padding: 0px 5px;
+    }
 }
 @media (min-width: 576px) {
     .default-pop-up-ok-massege > div {
@@ -888,7 +902,13 @@ table {
     }
     .notifcation-on-aside-template > header {
 		right: 253px;
-	}
+    }
+    .logo img {
+        width: 100px;
+    }
+    .logo {
+        padding: 0px 30px;
+    }
 }
 @media (min-width: 768px) {
     .chart {

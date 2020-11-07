@@ -94,7 +94,7 @@
                         <input type="checkbox" name="privacy" id="privacy" {{ old('privacy') ? 'checked' : '' }}>
 
                         <label id="privacyLabel" for="privacy">
-                            {{ __('auth.i-am-admition-on') }} <a>{{ __('auth.privacy') }}</a> {{ __('auth.and') }} <a>{{ __('auth.security') }}</a>
+                            {{ __('auth.i-am-admition-on') }} <a>{{ __('auth.privacy') }}</a> {{ __('auth.and') }} <a>{{ __('auth.term') }}</a>
                         </label>
                     </div>
                    @endguest
