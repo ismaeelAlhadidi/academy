@@ -14,5 +14,5 @@ return [
 
     'enable_logging' => true,
 
-    'set_command_and_error_output_on_exception' => false,
+    'set_command_and_error_output_on_exception' => true,
 ];

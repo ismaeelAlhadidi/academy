@@ -5,6 +5,7 @@ use App\Models\Video;
 use App\Models\Subscription;
 use App\Jobs\SendMailsAndNotificationToUsers;
 use App\Streaming\VideoStream;
+//use FFMpeg;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +27,13 @@ Route::get('/blob/audio/{audio}',function($audio) {
     $temp = new App\Http\Controllers\BlobController();
     return $temp->getAudio($audio);
 });
-Route::group(['prefix' => 'blob', 'middleware' => 'access'], function() {
-    Route::post('/video/{video}','BlobController@getVideo');
-    Route::post('/audio/{audio}','BlobController@getAudio');
+Route::group(['prefix' => 'object', 'middleware' => 'access'], function() {
+    Route::get('/video/{video}','BlobController@getWatch');
+    Route::get('/audio/{audio}','BlobController@getAudio');
     Route::get('/book/{book}','BlobController@getBook');
 });
 
-Route::get('/', 'WelcomeController@index')->middleware('guest');
+Route::get('/', 'WelcomeController@index')->name('welcome')->middleware('guest');
 Route::get('/getOpinionsOfPlaylist/{id}', 'WelcomeController@getOpinionsOfPlaylist');
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -77,14 +78,21 @@ Route::post('/public/form/{key?}', 'WelcomeController@saveForm')->name('save.pub
 
 Auth::routes(["verify" => "true"]);
 
-Route::get('/test', function() {
-    return view('test');
-});
+Route::get('/test', 'BlobController@testHls');
 Route::get('/test/video', function() {
-    $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . 'playlist1\jv6wRv5f933213afb576-19201419-1603482131.mp4';
-    $video = new VideoStream(storage_path('app' . $path), 'local');
-    return response()->stream($video->start());
+    $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . 'playlist1\T0ut5i5f5068b8287d75-19494637-1599105208.m3u8';
+    //$video = new VideoStream(storage_path('app' . $path), 'local');
+    //return response()->stream($video->start());
+    return response()->file(storage_path('app' . $path));
 });
+Route::get('/test/{file}', function($file) {
+    $tempArray = explode('_', $file);
+    if(! session()->has($tempArray[0])) abort('404');
+    $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . session()->get($tempArray[0]) . DIRECTORY_SEPARATOR . $file;
+    if (! Storage::disk('local')->exists($path)) return abort('404');
+    return response()->file(storage_path('app' . $path));
+});
+
 /* 
     Uses HTTPS
     Add `rel="noopener"` or `rel="noreferrer"` to any external links to improve performance and prevent security vulnerabilities 

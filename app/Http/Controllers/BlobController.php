@@ -13,37 +13,56 @@ use App\Traits\AjaxResponse;
 use App\Traits\FormatTime;
 use Auth;
 use FFMpeg;
+use FFMpeg\Format\Video\X264;
+use App\jobs\convertMediaToHls;
+use Str;
+use Cookie;
 
 class BlobController extends Controller
 {
     use AjaxResponse,FormatTime;
     public function getVideo($video) {
-        $blob = Blob::where('public_route',$video)->first();
+        $blob = Blob::where('public_route', $video)->first();
         if(! $blob) return abort('404');
         $video = $blob->blobable->src;
         $driver = $blob->blobable->driver;
         $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . $video;
-        if (!Storage::disk($driver)->exists($path)) {
+        if (! Storage::disk($driver)->exists($path)) {
             return abort('404');
         }
-        $this->saveView($blob->id);
-        //return response()->file(storage_path('app' . $path));
-        $url = storage_path('app' . $path);
-        $headers = [
-            'Content-Type'        => $blob->blobable->mimi_type,
-            'Content-Length'      => Storage::disk($driver)->size($path),
-            'Content-Disposition' => 'attachment; filename="' . $url . '.ts"'
-        ];
-        return response()->stream(function() use ($url) {
-            try {
-                $stream = fopen($url, 'r');
-                fpassthru($stream);
-            } catch(Exception $e) {
-                Log::error($e);
-            }
-        }, 200, $headers);
+        return response()->file(storage_path('app' . $path));
     }
-
+    public function getWatch($video) {
+        $blob = Blob::where('public_route', $video)->first();
+        if(! $blob) {
+            $tempArray = explode('_', $video);
+            if(! session()->has('opendPlaylist')) abort('404');
+            $playlistId = session()->get('opendPlaylist');
+            $directory = 'playlist' . $playlistId;   
+            /*
+            $hls_src = $directory . '\\' . $tempArray[0] . '.m3u8';
+            $file = Video::where('hls_src', $hls_src)->first();
+            if(! $file) return abort('404');
+            if(! $file->available) {
+                if(! session()->has('playlistOpendToWatch' . $playlistId)) abort('404');
+                return dd(request()->cookie());
+                if(session()->get('playlistOpendToWatch' . $playlistId) != Cookie::get('wt')) abort('403');
+            }
+            */
+            return $this->getStream($directory . DIRECTORY_SEPARATOR . $video);
+        }
+        $video = $blob->blobable->hls_src;
+        $driver = $blob->blobable->driver;
+        if(! $video) return abort('404');
+        $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . $video;
+        if (! Storage::disk($driver)->exists($path)) {
+            return abort('404');
+        }
+        $playlistId = $blob->playlists->first()->id;
+        session(['opendPlaylist' => $playlistId]);
+        $this->saveView($blob->id);
+        return response()->file(storage_path('app' . $path));
+    }
     public function getAudio($audio) {
         $blob = Blob::where('public_route',$audio)->first();
         if(! $blob) return abort('404'); 
@@ -88,21 +107,17 @@ class BlobController extends Controller
         $availabilityTime = $blob->blobable->availability_time;
 
         if($this->blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime)) {
-            $video = $blob->blobable->src;
-            $driver = $blob->blobable->driver;
-            $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . $video;
-            $media = FFMpeg::fromDisk($driver)->open($path);
-            //return dd($media()->getStreams());
-            $codec = $media()->getStreams()->first()->get('codec_name');
             return $this->getResponse(true, '', [
-                'mimi' => $blob->blobable->mimi_type .'; codecs="' . $codec . '"',
                 'title' => $blob->blobable->title, 
-                'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')
+                'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : ''),
             ]);
         }
         return $this->getResponse(false, 'videoTime', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
     }
-
+    private function getStream($video) {
+        $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . $video;
+        return response()->file(storage_path('app' . $path));
+    }
     private function saveView($blob_id) {
         if(Auth::guard('web')->check()){
             $key = 'view' . $blob_id;
@@ -112,5 +127,66 @@ class BlobController extends Controller
                 event(new ShowBlob($visiter_id,$user_id,$blob_id));
             }
         }
+    }
+    
+    public function testHls() {
+        /*
+        $blob = Blob::find(2);
+        $video = $blob->blobable->src;
+        $driver = $blob->blobable->driver;
+        $path = 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . $video;
+        */
+        // making hls 
+        /*
+        $lowBitrate = (new X264)->setKiloBitrate(250)->setAudioCodec("libmp3lame");
+        $midBitrate = (new X264)->setKiloBitrate(500)->setAudioCodec("libmp3lame");
+        $highBitrate = (new X264)->setKiloBitrate(1000)->setAudioCodec("libmp3lame");
+        $pathAsArray = explode('.', $video);
+        array_pop($pathAsArray);
+        $newPath = 'private' . DIRECTORY_SEPARATOR . 'hls' . DIRECTORY_SEPARATOR . implode($pathAsArray) . '.m3u8';
+        FFMpeg::fromDisk($driver)
+            ->open($path)
+            ->exportForHLS()
+            ->toDisk($driver)
+            ->addFormat($lowBitrate)
+            ->addFormat($midBitrate)
+            ->addFormat($highBitrate)
+            ->save($newPath);
+        FFMpeg::cleanupTemporaryFiles();
+        */
+        
+        /*$driver = 'local';
+        $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . 'playlist1\T0ut5i5f5068b8287d75-19494637-1599105208_2_1000_00000.ts';
+        $media = FFMpeg::fromDisk($driver)->open($path);
+        $codec = $media()->getStreams()->first()->get('codec_name');
+        FFMpeg::cleanupTemporaryFiles();
+        return $codec;*/
+
+        /* if(access is ok) */
+        /* 1 => session */ 
+        /* 2 => cokies */
+        /*
+        $video = Video::find(44);
+        $path = 'private' . DIRECTORY_SEPARATOR . 'video'. DIRECTORY_SEPARATOR . $video->src;
+        $pathAsArray = explode('.', $video->src);
+        array_pop($pathAsArray);
+        $newPath = 'private' . DIRECTORY_SEPARATOR . 'hls' . DIRECTORY_SEPARATOR . implode($pathAsArray) . '.m3u8';
+        */
+        /*dispatch(new convertMediaToHls($video, $path, $video->driver, $newPath));*/
+        /*
+        $lowBitrate = (new X264)->setKiloBitrate(250)->setAudioCodec("libmp3lame");
+        $midBitrate = (new X264)->setKiloBitrate(500)->setAudioCodec("libmp3lame");
+        $highBitrate = (new X264)->setKiloBitrate(1000)->setAudioCodec("libmp3lame");
+        FFMpeg::fromDisk($video->driver)
+            ->open($path)
+            ->exportForHLS()
+            ->toDisk($video->driver)
+            ->addFormat($lowBitrate)
+            ->addFormat($midBitrate)
+            ->addFormat($highBitrate)
+            ->save($newPath);
+        FFMpeg::cleanupTemporaryFiles();
+        $video->update(['hls_src' => $newPath]);
+        return 'start job';*/
     }
 }

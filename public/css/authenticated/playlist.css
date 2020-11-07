@@ -534,11 +534,11 @@ body, html {
     display: inline-block;
     position: relative;
     margin: 0 5px;
-    width: 95px;
+    width: 75px;
     font-size: 12px;
 }
 .video-controller footer .video-progress-bar-container .controls-text section {
-    width: 95px;
+    width: 75px;
 }
 .center {
     margin: 0;
@@ -618,7 +618,7 @@ body, html {
     top: 0;
     height: inherit;
     width: 0%;
-    background-color: rgb(255,255,255,0.5);
+    background-color: rgb(255,255,255,0.3);
     z-index: -1;
 }
 .video-waiting-loader {
@@ -635,6 +635,78 @@ body, html {
 }
 .first-comment .target-replay {
     outline: #3499b8 solid 2px;
+}
+.controls-left-button {
+    width: 35px !important;
+    margin: 0px !important;
+}
+.setting-of-opend-video {
+    width: 180px;
+    position: absolute;
+    bottom: 54px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    -moz-box-shadow: 0 0.05em 0.15em 0 #ffffff, 0 0.05em 0.15em 0 #ffffff;
+    -webkit-box-shadow: 0 0.05em 0.15em 0 #ffffff, 0 0.05em 0.15em 0 #ffffff;
+    -ms-box-shadow: 0 0.05em 0.15em 0 #ffffff, 0 0.05em 0.15em 0 #ffffff;
+    box-shadow: 0 0.05em 0.15em 0 #ffffff, 0 0.05em 0.15em 0 #ffffff;
+    z-index: 7;
+    display: none;
+}
+.setting-of-opend-video > div {
+    width: 100%;
+    color: inherit;
+    padding: 0 10px;
+    text-align: left;
+    cursor: pointer;
+    height: 40px;
+    direction: ltr;
+}
+.setting-of-opend-video > div:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.setting-of-opend-video > div:first-of-type {
+    cursor: unset;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+.setting-of-opend-video > div:first-of-type:hover {
+    background-color: unset;
+}
+.setting-of-opend-video > div:last-of-type {
+    margin-bottom: 6px;
+}
+.setting-of-opend-video > div > span {
+    display: inline-block;
+    height: inherit;
+    position: relative;
+}
+.setting-of-opend-video > div > span:first-of-type {
+    width: 40px;
+}
+.setting-of-opend-video > div > span:last-of-type {
+    width: 80px;
+}
+.setting-of-opend-video > div > span:first-of-type span {
+    display: none;
+    width: 100%;
+    height: inherit;
+}
+.setting-of-opend-video > div > div {
+    position: relative;
+    height: inherit;
+    width: 100%;
+}
+@media (max-width: 270px) {
+    .video-controller footer .video-progress-bar-container .controls-text {
+        width: 55px;
+        font-size: 10px;
+        margin: 0px;
+    }
+    .video-controller footer .video-progress-bar-container .controls-text section {
+        width: 55px;
+    }
 }
 @media (min-width: 380px) {
     .comment > div:first-of-type {

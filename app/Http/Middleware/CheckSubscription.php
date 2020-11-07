@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Models\Blob;
 use App\Models\Subscription;
+use App\Models\Video;
 use Auth;
 use App\Traits\FormatTime;
 
@@ -34,7 +35,18 @@ class CheckSubscription
         $temp = explode('/', $url);
         if(count($temp) <= 0) return false;
         $public_route = $temp[count($temp)-1];
-        return Blob::where('public_route' ,$public_route)->first();
+        $blob = Blob::where('public_route' ,$public_route)->first();
+        if(! $blob) {
+            if(! session()->has('opendPlaylist')) return $blob;
+            $tempArray = explode('_', $public_route);
+            $playlistId = session()->get('opendPlaylist');
+            $directory = 'playlist' . $playlistId;
+            $hls_src = $directory . '\\' . $tempArray[0] . '.m3u8';
+            $file = Video::where('hls_src', $hls_src)->first();
+            if(! $file) return $blob;
+            return $file->blob;
+        }
+        return $blob;
     }
     
     private function notValid($blob, $id) {

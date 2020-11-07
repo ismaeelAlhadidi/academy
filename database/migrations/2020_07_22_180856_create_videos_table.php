@@ -24,6 +24,7 @@ class CreateVideosTable extends Migration
             $table->datetime('availability_time')->nullable();
             $table->string('poster_src')->default('/images/static/video-default.jpg');
             $table->string('form_key')->nullable();
+            $table->string('hls_src')->nullable();
             $table->timestamps();
         });
     }

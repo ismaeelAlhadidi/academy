@@ -71,12 +71,12 @@ function ajaxUploadVideo(method,url,formElement,onResponse = null,uploadProgress
     request.upload.ontimeout = timeOutHandler;
     request.send(formElement);
 }
-function ajaxGetVideoRequest(url, onResponse, TOKEN) {
+function ajaxGetVideoRequest(url, onResponse, TOKEN, responseType = 'arraybuffer') {
     var request = new XMLHttpRequest();
     var formData = new FormData();
     formData.append('_token', TOKEN);
-    request.open('post', url);
-    request.responseType = 'arraybuffer';
+    request.open('get', url);
+    request.responseType = responseType;
     request.onload = function () {
         onResponse(request.response);
     };

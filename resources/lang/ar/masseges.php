@@ -207,4 +207,5 @@ return [
     'ask-to-delete-admin' => 'هل انت متأكد انك تريد حذف هذا المسؤول ؟',
     'password-deferent' => 'يجب ان تدخل نفس رمزين المرور !',
     'password-more-than-8' => 'الرجاء اختيار رمز مرور اكثر من 8 رموز',
+    'All rights reserved' => 'كل الحقوق محفوظة',
 ];

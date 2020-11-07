@@ -27,7 +27,7 @@
                     <footer id="opendVideoConrols" style="display: none;">
                         <div id="divForMakeEventPlayPauseOnFooter" class="background-of-footer"></div>
                         <div id="videoProgressBarContainer" class="video-progress-bar-container">
-                            <div id="videoProgressBar" class="video-progress-bar"><section id="progressRedPar"></section><div id="progressHoverPar" class="video-progress-hover-bar"></div><div id="progressPointer" class="video-progress-bar-pointer"></div></div>
+                            <div id="videoProgressBar" class="video-progress-bar"><section id="progressRedPar"></section><div id="progressHoverPar" class="video-progress-hover-bar"></div><div id="progressPointer" class="video-progress-bar-pointer"></div><div id="progressBufferd"  class="video-progress-hover-bar"></div></div>
                             <div class="video-progress-bar-left-buttons">
                                 <span class="controls-button play-pause-button">
                                     <svg id="smallPlayPauseSVGButton" xmlns="http://www.w3.org/2000/svg" class="center" height="35" width="100%"><path fill="#ffffffcc" d="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z"></path></svg>
@@ -38,13 +38,23 @@
                                 </span>
                             </div>
                             <div class="video-progress-bar-right-buttons">
-                                <span class="controls-button">
+                                <span class="controls-button controls-left-button">
+                                    <svg id="settingButton" fill="#ffffffcc" width="35" height="35"><path transform="matrix( 1.1, 0, 0, 1.1, 3, -0.5)" d="m 23.94,18.78 c .03,-0.25 .05,-0.51 .05,-0.78 0,-0.27 -0.02,-0.52 -0.05,-0.78 l 1.68,-1.32 c .15,-0.12 .19,-0.33 .09,-0.51 l -1.6,-2.76 c -0.09,-0.17 -0.31,-0.24 -0.48,-0.17 l -1.99,.8 c -0.41,-0.32 -0.86,-0.58 -1.35,-0.78 l -0.30,-2.12 c -0.02,-0.19 -0.19,-0.33 -0.39,-0.33 l -3.2,0 c -0.2,0 -0.36,.14 -0.39,.33 l -0.30,2.12 c -0.48,.2 -0.93,.47 -1.35,.78 l -1.99,-0.8 c -0.18,-0.07 -0.39,0 -0.48,.17 l -1.6,2.76 c -0.10,.17 -0.05,.39 .09,.51 l 1.68,1.32 c -0.03,.25 -0.05,.52 -0.05,.78 0,.26 .02,.52 .05,.78 l -1.68,1.32 c -0.15,.12 -0.19,.33 -0.09,.51 l 1.6,2.76 c .09,.17 .31,.24 .48,.17 l 1.99,-0.8 c .41,.32 .86,.58 1.35,.78 l .30,2.12 c .02,.19 .19,.33 .39,.33 l 3.2,0 c .2,0 .36,-0.14 .39,-0.33 l .30,-2.12 c .48,-0.2 .93,-0.47 1.35,-0.78 l 1.99,.8 c .18,.07 .39,0 .48,-0.17 l 1.6,-2.76 c .09,-0.17 .05,-0.39 -0.09,-0.51 l -1.68,-1.32 0,0 z m -5.94,2.01 c -1.54,0 -2.8,-1.25 -2.8,-2.8 0,-1.54 1.25,-2.8 2.8,-2.8 1.54,0 2.8,1.25 2.8,2.8 0,1.54 -1.25,2.8 -2.8,2.8 l 0,0 z" fill="#ffffffcc"></path></svg>
+                                </span>
+                                <span class="controls-button controls-left-button">
                                     <svg id="opendVideoFullScrrenButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="center" fill="#ffffffcc" width="35" height="35"><path d="M0 0h24v24H0V0z" fill="none"/><path transform="matrix( 0.8, 0, 0, 0.8, 2.5, 2.5)" d="M6 14c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1H7v-2c0-.55-.45-1-1-1zm0-4c.55 0 1-.45 1-1V7h2c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1zm11 7h-2c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1v-3c0-.55-.45-1-1-1s-1 .45-1 1v2zM14 6c0 .55.45 1 1 1h2v2c0 .55.45 1 1 1s1-.45 1-1V6c0-.55-.45-1-1-1h-3c-.55 0-1 .45-1 1z"/></svg>
                                     <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" class="center" fill="#ffffffcc" width="35" height="35"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 16h2v2c0 .55.45 1 1 1s1-.45 1-1v-3c0-.55-.45-1-1-1H6c-.55 0-1 .45-1 1s.45 1 1 1zm2-8H6c-.55 0-1 .45-1 1s.45 1 1 1h3c.55 0 1-.45 1-1V6c0-.55-.45-1-1-1s-1 .45-1 1v2zm7 11c.55 0 1-.45 1-1v-2h2c.55 0 1-.45 1-1s-.45-1-1-1h-3c-.55 0-1 .45-1 1v3c0 .55.45 1 1 1zm1-11V6c0-.55-.45-1-1-1s-1 .45-1 1v3c0 .55.45 1 1 1h3c.55 0 1-.45 1-1s-.45-1-1-1h-2z"/></svg>
                                 </span>
                             </div>
                         </div>
                     </footer>
+                    <section id="settingOfOpendVideo" class="setting-of-opend-video">
+                        <div><div><span class="center">quality</span></div></div>
+                        <div class="change-quality" data-value="-1"><span><span class="center"><canvas class="selected-quality-canvas" width="40" height="40"></canvas></span></span><span><span class="center">auto</span></span></div>
+                        <div class="change-quality" data-value="0"><span><span class="center"><canvas class="selected-quality-canvas" width="40" height="40"></canvas></span></span><span><span class="center">250p</span></span></div>
+                        <div class="change-quality" data-value="1"><span><span class="center"><canvas class="selected-quality-canvas" width="40" height="40"></canvas></span></span><span><span class="center">500p</span></span></div>
+                        <div class="change-quality" data-value="2"><span><span class="center"><canvas class="selected-quality-canvas" width="40" height="40"></canvas></span></span><span><span class="center">1000p</span></span></div>
+                    </section>
                 </div>
             </div>
         </div>
@@ -224,6 +234,7 @@
 
 @section('scripts')
     <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\playlist.js') }}"></script>
+    <script type="text/javascript" lang="javascript" src="{{ asset('js\hls.js') }}"></script>
     <script type="text/javascript" lang="javascript" src="{{ asset('js\authenticated\watching\player.js') }}"></script>
     <script type="text/javascript" lang="javascript">
         ( function loadingImage() {

@@ -5,14 +5,15 @@ class Player {
         this._videoElement = videoElement;
         this._poster = posterSrc;
         this._type = type;
-        this._url = window.location.origin + '/blob/' + this._type + '/' + publicKey;
+        this._url = window.location.origin + '/object/' + this._type + '/' + publicKey;
         this._blobId = blobId;
         this._playlistId = playlistId;
-        this._blobUrl = null;
         this._isFullScreen = false;
         this._permision = false;
         this._mimeType = '';
+        this._currentHls = null;
         this.setEventsOfProgress();
+        this.drawCanvasElements();
         this.checkPermision(window.location.origin + '/ajax/' + playlistId + '/blob/check-permision/' + blobId);
     }
     setTitleAndDescription(data) {
@@ -34,7 +35,10 @@ class Player {
             tempSmallPlayPauseSVGButton = document.getElementById('smallPlayPauseSVGButton'),
             progressPointer = document.getElementById('progressPointer'),
             progressHoverPar = document.getElementById('progressHoverPar'),
-            progressRedPar = document.getElementById('progressRedPar');
+            progressRedPar = document.getElementById('progressRedPar'),
+            settingOfOpendVideo = document.getElementById('settingOfOpendVideo'),
+            settingButton = document.getElementById('settingButton'),
+            posterOfOpendVideo = document.getElementById('posterOfOpendVideo');
         
         var progressMovingHandler = function progressMovingHandler() {
             if(progressRedPar != null && tempThis.videoElement != null) {
@@ -154,28 +158,77 @@ class Player {
                 };
             }
             this.setVisibltyEventsOfProgressPar();
+            window.onkeypress = function (e) {
+                if(e.code == "Space") {
+                    if(posterOfOpendVideo != null) posterOfOpendVideo.click();
+                    e.preventDefault();
+                }
+            };
         }
+        if(settingButton != null) {
+            settingButton.onclick = function () {
+                if(settingOfOpendVideo == null) return;
+                if(settingOfOpendVideo.style.display == "none") {
+                    settingOfOpendVideo.setAttribute('style', 'display: block;');
+                } else {
+                    settingOfOpendVideo.setAttribute('style', 'display: none;');
+                }
+            };
+        }
+    }
+    drawCanvasElements() {
+        var selectedQualiteCanvas = document.getElementsByClassName('selected-quality-canvas');
+        for(var i = 0; i < selectedQualiteCanvas.length; i++) drawCorrectSign(selectedQualiteCanvas[i], '#ffffffcc', false);
     }
     preparationWatch() {
         var tempThis = this;
         var imageOfOpendVideo = document.getElementById('imageOfOpendVideo');
-        var mimeCodec = this.mimeType;
-        var mediaSource = new MediaSource();
+        var progressBufferd = document.getElementById('progressBufferd');
+        var changeQualityButtons = document.getElementsByClassName('change-quality'),
+            settingButton = document.getElementById('settingButton');        
         if(tempThis.videoElement != null) {
-            if('MediaSource' in window && MediaSource.isTypeSupported(mimeCodec)) {
-                tempThis.blobUrl = window.URL.createObjectURL(mediaSource);
-                tempThis.videoElement.src = tempThis.blobUrl;
-                mediaSource.onsourceopen = function () {
-                    var sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
-                    ajaxGetVideoRequest(tempThis.url, function (response) {
-                        sourceBuffer.addEventListener('updateend', function (_) {
-                            if(mediaSource.readyState == "opend")mediaSource.endOfStream();
-                        });
-                        sourceBuffer.appendBuffer(response);
-                    }, TOKEN);
-                };
+            if(settingButton != null) settingButton.setAttribute('style', '');
+            if(this.type == "video") {
+                if(Hls.isSupported()) {
+                    tempThis.currentHls = new Hls();
+                    tempThis.currentHls.loadSource(tempThis.url);
+                    tempThis.currentHls.attachMedia(tempThis.videoElement);
+                    tempThis.currentHls.loadLevel = -1;
+                    tempThis.currentHls.nextLevel = -1;
+                    if(changeQualityButtons[0].children.length > 1) {
+                        if(changeQualityButtons[0].children[0].children.length > 0) {
+                            changeQualityButtons[0].children[0].children[0].setAttribute('style', 'display: inline-block;');
+                        }
+                    }
+                    for(var i = 0; i < changeQualityButtons.length; i++) {
+                        changeQualityButtons[i].onclick = function() {
+                            tempThis.currentHls.loadLevel = this.dataset.value;
+                            tempThis.currentHls.nextLevel = this.dataset.value;
+                            for(var j = 0; j < changeQualityButtons.length; j++)  {
+                                var isSelectedQuality = ( this.dataset.value == -1 ) ? changeQualityButtons[j].dataset.value == -1 : tempThis.currentHls.loadLevel == changeQualityButtons[j].dataset.value;
+                                if(isSelectedQuality) {
+                                    if(changeQualityButtons[j].children.length > 1) {
+                                        if(changeQualityButtons[j].children[0].children.length > 0) {
+                                            changeQualityButtons[j].children[0].children[0].setAttribute('style', 'display: inline-block;');
+                                        }
+                                    }
+                                } else {
+                                    if(changeQualityButtons[j].children.length > 1) {
+                                        if(changeQualityButtons[j].children[0].children.length > 0) {
+                                            changeQualityButtons[j].children[0].children[0].setAttribute('style', '');
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                    }
+                } else if (tempThis.videoElement.canPlayType('application/vnd.apple.mpegurl')) {
+                    tempThis.videoElement.src = tempThis.url;
+                }
             } else {
-                console.error('Unsupported MIME type or codec: ', mimeCodec);
+                tempThis.videoElement.src = tempThis.url;
+                tempThis.videoElement.load();
+                if(settingButton != null) settingButton.setAttribute('style', 'display: none;');
             }
             tempThis.videoElement.onwaiting = function() {
                 if(centerWaitingInPlayer != null) {
@@ -183,15 +236,25 @@ class Player {
                     centerWaitingInPlayer.setAttribute('style', '');
                 }
             };
-            tempThis.videoElement.onprogress = function() {
-                var seekableEnd = tempThis.videoElement.seekable.end(tempThis.videoElement.seekable.length - 1);
-                console.log(timeHMSFormat(seekableEnd));
-            };
             tempThis.videoElement.onplaying = function() {
                 if(centerWaitingInPlayer != null) {
                     centerWaitingInPlayer.style = "display: none;";
                     centerWaitingInPlayer.setAttribute('style', 'display: none;');
                 }
+            };
+            tempThis.videoElement.onprogress = function() {
+                var bufferedEnd = tempThis.videoElement.buffered.end(tempThis.videoElement.buffered.length - 1),
+                    width = Math.floor(bufferedEnd / tempThis.videoElement.duration * 100 );
+                progressBufferd.setAttribute('style', 'width: ' + width + '%;');
+            };
+            tempThis.videoElement.onseeked = function() {
+                console.log('seeked');
+            };
+            tempThis.videoElement.onseeking = function() {
+                console.log('seeking');
+            };
+            tempThis.videoElement.onstalled = function() {
+                console.log('stalled');
             };
         }
         if(imageOfOpendVideo != null) imageOfOpendVideo.src = tempThis.poster;
@@ -200,7 +263,7 @@ class Player {
         this.clear();
         this.poster = posterSrc;
         this.type = type;
-        this.url = window.location.origin + '/blob/' + this.type + '/' + publicKey;
+        this.url = window.location.origin + '/object/' + this.type + '/' + publicKey;
         this.blobId = blobId;
         this.checkPermision(window.location.origin + '/ajax/' + this.playlistId + '/blob/check-permision/' + blobId);
         var imageOfOpendVideo = document.getElementById('imageOfOpendVideo'),
@@ -238,9 +301,10 @@ class Player {
                         if(jsonResponse.hasOwnProperty('data')) {
                             if(jsonResponse.data.hasOwnProperty('mimi')) {
                                 tempThis.mimeType = jsonResponse.data.mimi;
-                                ok = true;
+                                if(jsonResponse.data.hasOwnProperty('size')) tempThis.size = jsonResponse.data.size;
                             }
                         }
+                        ok = true;
                     } else if(jsonResponse.hasOwnProperty('msg')) {
                         if(jsonResponse.msg == 'needSub') status = 1;
                         else if(jsonResponse.msg == 'videoTime') status = 2;
@@ -308,10 +372,6 @@ class Player {
         if ('srcObject' in this.videoElement) {
             this.videoElement.srcObject = null;
         }
-        if(this.blobUrl != null) URL.revokeObjectURL(this.blobUrl);
-        if(this.currentFile != null) URL.revokeObjectURL(this.currentFile);
-        this.currentFile = null;
-        this.blobUrl = null;
     }
     start() {
         var imageOfOpendVideo = document.getElementById('imageOfOpendVideo'),
@@ -401,11 +461,17 @@ class Player {
     toggleFullScreen() {
         if(opendVideo == null) return;
         var opendVideoFullScrrenButton = document.getElementById('opendVideoFullScrrenButton');
+        var settingButton = document.getElementById('settingButton');
         if(opendVideo.getAttribute('class') == 'opened-video') {
             opendVideo.setAttribute('class', 'opened-video video-full-screen');
             if(opendVideoFullScrrenButton) {
                 if(opendVideoFullScrrenButton.children.length > 1) {
                     opendVideoFullScrrenButton.children[1].setAttribute('d', svgPaths.exitFullScreen);
+                }
+            }
+            if(settingButton) {
+                if(settingButton.children.length > 0) {
+                    settingButton.children[0].setAttribute('transform', 'matrix( 1.1, 0, 0, 1.1, -1, -6.1)');
                 }
             }
             document.body.style = "overflow: hidden !important;";
@@ -425,6 +491,11 @@ class Player {
             if(opendVideoFullScrrenButton) {
                 if(opendVideoFullScrrenButton.children.length > 1) {
                     opendVideoFullScrrenButton.children[1].setAttribute('d', svgPaths.fullScreen);
+                }
+            }
+            if(settingButton) {
+                if(settingButton.children.length > 0) {
+                    settingButton.children[0].setAttribute('transform', 'matrix( 1.1, 0, 0, 1.1, 3, -0.5)');
                 }
             }
             document.body.style = "";
@@ -525,14 +596,12 @@ class Player {
     set isFullScreen(value) { this._isFullScreen = value; }
     get blobId() { return this._blobId; }
     set blobId(value) { this._blobId = value; }
-    get blobUrl() { return this._blobUrl; }
-    set blobUrl(value) { this._blobUrl = value; }
     get playlistId() { return this._playlistId; }
     set playlistId(value) { this._playlistId = value; }
     get videoElement() { return this._videoElement; }
     set videoElement(value) { this._videoElement = value; }
-    get currentFile() { return this._currentFile; }
-    set currentFile(value) { this._currentFile = value; }
+    get currentHls() { return this._currentHls; }
+    set currentHls(value) { this._currentHls = value; }
     get poster() { return this._poster; }
     set poster(value) { this._poster = value; }
     get url() { return this._url; }

@@ -24,6 +24,7 @@ class CreateAudioTable extends Migration
             $table->datetime('availability_time')->nullable();
             $table->text('description')->nullable();
             $table->string('poster_src')->default('/images/static/audio-default.jpg');
+            $table->string('hls_src')->nullable();
             $table->timestamps();
         });
     }

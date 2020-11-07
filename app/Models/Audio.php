@@ -11,7 +11,7 @@ class Audio extends Model
     protected $table = 'audio';
     protected $fillable = [
         'pre_title', 'title',  'availability_time', 'src', 'driver', 'mimi_type', 'poster_src',
-        'available', 'description','created_at','updated_at'
+        'available', 'description', 'hls_src','created_at','updated_at'
     ];
     protected $hidden = ['driver', 'src'];
     public $timestamps = true;

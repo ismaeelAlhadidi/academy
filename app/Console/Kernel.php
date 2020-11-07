@@ -26,13 +26,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-
         /* $schedule->command('queue:work')->everyTenMinutes();
         $schedule->command('queue:restart')->everyFifteenMinutes(); */
-        $schedule->command('singlevideo:forms')->everyMinute()->appendOutputTo(storage_path('logs/singlevideocommand.log'));
+        $schedule->command('singlevideo:forms')->daily()->appendOutputTo(storage_path('logs/singlevideocommand.log'));
         $schedule->command('queue:work')->everyMinute()->appendOutputTo(storage_path('logs/jobs.log'));
         $schedule->command('queue:restart')->everyTwoMinutes();
-
     }
 
     /**

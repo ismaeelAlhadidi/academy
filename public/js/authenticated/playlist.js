@@ -422,7 +422,7 @@ function openThisBook(publicKey, permision) {
         showPopUpMassage(lang.needSubscriptionMassege, null, null, 'ok', defaultStyleOfPopUpMassegeInWeb);
         return;
     }
-    var url = window.location.origin + '/blob/book/' + publicKey;
+    var url = window.location.origin + '/object/book/' + publicKey;
     var link = document.createElement('a');
     link.href = url;
     link.target = "_blank";

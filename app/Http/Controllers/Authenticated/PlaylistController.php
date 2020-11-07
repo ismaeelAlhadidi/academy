@@ -10,7 +10,10 @@ use App\Models\Playlist;
 use App\Models\Comment;
 use App\Models\Replay;
 use App\Models\Subscription;
-
+/*
+use Cookie;
+use Str;
+*/
 class PlaylistController extends Controller
 {
     use AjaxResponse,FormatTime;
@@ -177,6 +180,14 @@ class PlaylistController extends Controller
             }
             if(count($audiosTypes) == 0 && count($audios['noneType']) == 0) $audios = array();
         }
+        /*
+        if($isSubscription) {
+            $wt = $this->generateWatchToken();
+            session(['playlistOpendToWatch' . $id => $wt]);
+            // setcookie('name', 'value', $minutes, $path, $domain, $secure, $httpOnly);
+            Cookie::queue(Cookie::make('wt', $wt, time() + 3*60, "/playlist/$id", asset('/'), true, true));
+        }
+        */
         return view('authenticated.playlist', [
             'playlist' => $playlist,
             'comments' => $comments,
@@ -257,4 +268,9 @@ class PlaylistController extends Controller
         });
         return $this->getResponse(true, '', $comments);
     }
+    /*
+    private function generateWatchToken() {
+        return Str::random(6) . '-' . str_replace('.', '-', time() . '') . '-' . Str::random(4) . str_replace('.', '-',  uniqid(Str::random(6) . '-',true) . '');
+    }
+    */
 }

@@ -11,7 +11,7 @@ class Video extends Model
     protected $table = 'videos';
     protected $fillable = [
         'pre_title', 'title', 'availability_time', 'src', 'driver', 'mimi_type',
-        'available', 'poster_src', 'form_key','created_at','updated_at'
+        'available', 'poster_src', 'form_key', 'hls_src', 'created_at','updated_at'
     ];
     protected $hidden = ['driver', 'src'];
     public $timestamps = true;

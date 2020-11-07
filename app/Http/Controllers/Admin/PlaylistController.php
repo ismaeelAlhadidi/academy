@@ -19,6 +19,7 @@ use App\Traits\AjaxResponse;
 use Illuminate\Support\Str;
 use Storage;
 use Validator;
+use App\jobs\convertMediaToHls;
 
 class PlaylistController extends Controller
 {
@@ -386,6 +387,7 @@ class PlaylistController extends Controller
             ];
             return $this->getResponse(true, __('masseges.add-ok'), ['video' => $videoData]);
         }
+        $this->dispatchConvertToHlsJob($video);
         return $this->getResponse(true, __('masseges.add-ok'), ['id' => $video->id]);
     }
 
@@ -423,7 +425,6 @@ class PlaylistController extends Controller
                 'mimetypes:application/pdf, application/x-pdf,application/acrobat, applications/vnd.pdf, text/pdf, text/x-pdf'
                 : 'mimetypes:application/octet-stream,audio/webm,audio/weba,audio/mpeg,mpga,mp3,wav,m4a'), /* edit audio types */
             'playlist_id' => 'integer',
-            'description' => 'string',
         ];
         $validator = Validator::make($data,$ruels);
         if($validator->fails()) {
@@ -518,6 +519,7 @@ class PlaylistController extends Controller
                 $blob->playlists()->attach($request->playlist_id);
             }
         }
+        if($type == "audio") $this->dispatchConvertToHlsJob($file, "audio");
         return $this->getResponse(true, __('masseges.add-ok'), ['id' => $file->id]);
     }
     public function saveEdit(Request $request) {
@@ -764,5 +766,12 @@ class PlaylistController extends Controller
 
     private function generateFormKey() {
         return str_replace('.', '-', uniqid(Str::random(4), false) . '');
+    }
+    private function dispatchConvertToHlsJob($media, $type = "video") {
+        $path = 'private' . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $media->src;
+        $pathAsArray = explode('.', $media->src);
+        array_pop($pathAsArray);
+        $newPath = implode($pathAsArray) . '.m3u8';
+        dispatch(new convertMediaToHls($media, $path, $media->driver, $newPath));
     }
 }
