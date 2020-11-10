@@ -2,6 +2,7 @@
     <video id="myVideo" controls width="500" height="500">
     </video>
 </div>
+<div><form method="post" enctype="multipart/form-data">@csrf<input type="file" name="image"/><input type="submit"/></form></div>
 <script src="{{ asset('js/hls.js') }}"></script>
 <script>
     var video = document.getElementById('myVideo');

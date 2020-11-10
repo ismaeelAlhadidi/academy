@@ -80,12 +80,18 @@ Route::get('/terms', 'WelcomeController@getTerms')->name('terms');
 
 Auth::routes(["verify" => "true"]);
 
+/* test */
 Route::get('/test', 'BlobController@testHls');
 Route::get('/test/video', function() {
-    $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . 'playlist1\T0ut5i5f5068b8287d75-19494637-1599105208.m3u8';
+    //$path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . 'playlist1\T0ut5i5f5068b8287d75-19494637-1599105208.m3u8';
     //$video = new VideoStream(storage_path('app' . $path), 'local');
     //return response()->stream($video->start());
-    return response()->file(storage_path('app' . $path));
+    //return response()->file(storage_path('app' . $path));
+    return view('test');
+});
+Route::post('/test/video', function(Request $request) {
+    //request()->file('image')->store('public');
+    return 'stored';
 });
 Route::get('/test/{file}', function($file) {
     $tempArray = explode('_', $file);
