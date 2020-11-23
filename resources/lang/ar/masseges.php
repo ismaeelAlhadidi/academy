@@ -208,4 +208,6 @@ return [
     'password-deferent' => 'يجب ان تدخل نفس رمزين المرور !',
     'password-more-than-8' => 'الرجاء اختيار رمز مرور اكثر من 8 رموز',
     'All rights reserved' => 'كل الحقوق محفوظة',
+    'no-sessions-available-now' => 'لا يوجد جلسات متاحة حاليا',
+    'playlist-not-avillable-now' => 'هذه الدورة غير متاحة بعد',
 ];

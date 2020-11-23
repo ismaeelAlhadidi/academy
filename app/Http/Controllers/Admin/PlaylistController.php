@@ -267,7 +267,6 @@ class PlaylistController extends Controller
             'title' => ( $updating ? '' : 'required|' ) . 'string|max:255|min:1',
             'availability_time' => 'date',
             'poster_src' => 'file|max:2000|mimetypes:image/jpeg,image/png,image/gif,image/bmp,image/svg',
-            'type_id' => 'integer',
             'video' => 'required|file|mimetypes:video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi',
             'playlist_id' => 'integer',
         ];

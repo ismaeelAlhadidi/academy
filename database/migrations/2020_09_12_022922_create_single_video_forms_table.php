@@ -16,8 +16,8 @@ class CreateSingleVideoFormsTable extends Migration
         Schema::create('single_video_forms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('video_id')->constrained('videos');
-            $table->foreignId('user_id')->constrained('users')->nullable();
-            $table->foreignId('visiter_id')->constrained('visiters')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->default('null');
+            $table->foreignId('visiter_id')->nullable()->constrained('visiters')->default('null');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();

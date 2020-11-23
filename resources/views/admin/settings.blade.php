@@ -21,7 +21,7 @@
                 <section class="welcome-about-coach-data">
                     <div><input name="first_statment" type="text" placeholder="{{ __('masseges.first-statment') }}" value="{{ ( ( isset($appInfos['first_statment']) ? $appInfos['first_statment'] : '') ) }}" /></div>
                     <div><input name="about_cach_title" type="text" placeholder="{{ __('masseges.title-of-site-descrption') }}" value="{{ ( ( isset($appInfos['about_cach_title']) ? $appInfos['about_cach_title'] : '') ) }}" /></div>
-                    <div><textarea name="about_cach_desc" placeholder="{{ __('masseges.site-descrption') }}">{{ ( isset($appInfos['about_cach_desc']) ? asset($appInfos['about_cach_desc']) : '' ) }}</textarea></div>
+                    <div><textarea name="about_cach_desc" placeholder="{{ __('masseges.site-descrption') }}">{{ ( isset($appInfos['about_cach_desc']) ? $appInfos['about_cach_desc'] : '' ) }}</textarea></div>
                     <footer><div><button type="submit">{{ __('masseges.save') }}</button></div></footer>
                 </section>
             </div>

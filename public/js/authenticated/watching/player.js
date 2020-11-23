@@ -184,9 +184,17 @@ class Player {
             if(settingButton != null) settingButton.setAttribute('style', '');
             if(this.type == "video") {
                 if(Hls.isSupported()) {
+                    var firstWatch = true;
+                    if(tempThis.currentHls != null) firstWatch = false;
                     tempThis.currentHls = new Hls();
                     tempThis.currentHls.loadSource(tempThis.url);
                     tempThis.currentHls.attachMedia(tempThis.videoElement);
+                    if(! firstWatch) {
+                        tempThis.currentHls.on(Hls.Events.MANIFEST_PARSED, function() {
+                            tempThis.start();
+                            tempThis.videoElement.play();
+                        });
+                    }
                     tempThis.currentHls.loadLevel = -1;
                     tempThis.currentHls.nextLevel = -1;
                     if(changeQualityButtons[0].children.length > 1) {
@@ -220,9 +228,15 @@ class Player {
                     tempThis.videoElement.src = tempThis.url;
                 }
             } else {
+                var firstWatch = true;
+                if(tempThis.currentHls != null) firstWatch = false;
                 tempThis.videoElement.src = tempThis.url;
                 tempThis.videoElement.load();
                 if(settingButton != null) settingButton.setAttribute('style', 'display: none;');
+                if(! firstWatch) {
+                    tempThis.start();
+                    tempThis.videoElement.play();
+                }
             }
             tempThis.videoElement.onwaiting = function() {
                 if(centerWaitingInPlayer != null) {
@@ -278,6 +292,7 @@ class Player {
             0 => error
             1 => user not Subscription in this playlist
             2 => video not avillable now
+            3 => this playlist not avillable yet 
         */
         ajaxRequest('get', url, null, function(jsonResponse) {
             if(jsonResponse != null) {
@@ -293,6 +308,7 @@ class Player {
                     } else if(jsonResponse.hasOwnProperty('msg')) {
                         if(jsonResponse.msg == 'needSub') status = 1;
                         else if(jsonResponse.msg == 'videoTime') status = 2;
+                        else if(jsonResponse.msg == 'playlistNotAvailable') status = 3;
                     }
                 }
                 if(jsonResponse.hasOwnProperty('data')) {
@@ -307,7 +323,9 @@ class Player {
             } else {
                 if(status == 1) tempThis.askToSubscription();
                 else if(status == 2) {
-                    tempThis.showNotAvillableMassageOnPlayer();
+                    tempThis.showNotAvillableMassageOnPlayer('video');
+                } else if(status == 3) {
+                    tempThis.showNotAvillableMassageOnPlayer('playlist');
                 } else {
                     showPopUpMassage(lang.errorInPlayVideo, null, null, 'ok', defaultStyleOfPopUpMassegeInWeb);
                 }
@@ -327,14 +345,15 @@ class Player {
         }
         if(tempCenterSubButton != null) tempCenterSubButton.style = '';
     }
-    showNotAvillableMassageOnPlayer() {
+    showNotAvillableMassageOnPlayer(type) {
         var tempCenterMainButton = document.getElementById('centerMainButtonInPlayer'),
             tempCenterMassege = document.getElementById('centerMassegeInPlayer'),
-            tempCenterSubButton = docuemnt.getElementById('centerSubButtonInPlayer');
+            tempCenterSubButton = document.getElementById('centerSubButtonInPlayer');
     
         if(tempCenterMainButton != null ) tempCenterMainButton.style = 'display: none;';
         if(tempCenterMassege != null) {
-            tempCenterMassege.textContent = lang.notAvillableMassage;
+            if(type == 'playlist') tempCenterMassege.textContent = lang.playlistNotAvillableMassage;
+            else tempCenterMassege.textContent = lang.notAvillableMassage;
             tempCenterMassege.style = 'background-color: rgba(0,0,0,0.8); padding: 10px;';
         }
         if(tempCenterSubButton != null) tempCenterSubButton.style = 'display: none;';

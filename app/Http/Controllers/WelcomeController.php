@@ -11,6 +11,7 @@ use App\Models\Video;
 use App\Models\SingleVideoForm;
 use App\Models\AppInfo;
 use App\Traits\AjaxResponse;
+use App\User;
 use Validator;
 
 class WelcomeController extends Controller

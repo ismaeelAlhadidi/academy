@@ -118,7 +118,7 @@ class PlaylistController extends Controller
             $videoTypes = array();
             foreach($tempVideos as $tempVideo) {
 
-                $tempVideo->time = $this->setAvailabilityTimeOfBlob($tempVideo->blobable->availability_time, $subscriptionTime, $playlistTime);
+                $tempVideo->time = ($tempVideo->blobable->available ) ? __('masseges.available') : $this->setAvailabilityTimeOfBlob($tempVideo->blobable->availability_time, $subscriptionTime, $playlistTime);
 
                 if($tempVideo->type_id == null) {
                     array_push($videos['noneType'], $tempVideo);
@@ -142,7 +142,7 @@ class PlaylistController extends Controller
             $booksTypes = array();
             foreach($tempBooks as $tempBook) {
 
-                $tempBook->time = $this->setAvailabilityTimeOfBlob($tempBook->blobable->availability_time, $subscriptionTime, $playlistTime);
+                $tempBook->time = ($tempBook->blobable->available ) ? __('masseges.available') : $this->setAvailabilityTimeOfBlob($tempBook->blobable->availability_time, $subscriptionTime, $playlistTime);
 
                 if($tempBook->type_id == null) {
                     array_push($books['noneType'], $tempBook);
@@ -166,7 +166,7 @@ class PlaylistController extends Controller
             $audiosTypes = array();
             foreach($tempAudios as $tempAudio) {
 
-                $tempAudio->time = $this->setAvailabilityTimeOfBlob($tempAudio->blobable->availability_time, $subscriptionTime, $playlistTime);
+                $tempAudio->time = ($tempAudio->blobable->available ) ? __('masseges.available') : $this->setAvailabilityTimeOfBlob($tempAudio->blobable->availability_time, $subscriptionTime, $playlistTime);
 
                 if($tempAudio->type_id == null) {
                     array_push($audios['noneType'], $tempAudio);

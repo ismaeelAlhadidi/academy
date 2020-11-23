@@ -97,23 +97,32 @@ class BlobController extends Controller
         $playlist = Playlist::find($playlistId);
         if(! $playlist) return abort('404');
 
-        $subscription = Subscription::where('playlist_id', $playlistId)->where('user_id', auth()->user()->id)->first();
+        $subscription = Subscription::where('playlist_id', $playlistId)->where('user_id', auth()->user()->id)->where('access', 1)->first();
 
-        if(! $subscription) return $this->getResponse(false, 'needSub', ['title' => $blob->blobable->pre_title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
+        if(! $blob->blobable->available && ! $subscription) return $this->getResponse(false, 'needSub', ['title' => $blob->blobable->pre_title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
 
-        $subscriptionTime = $subscription->created_at;
-
+        if($subscription) $subscriptionTime = $subscription->created_at;
+        else $subscriptionTime = null;
+        
         if($playlist->availability_time != null) $playlistTime = $playlist->availability_time;
         else $playlistTime = $playlist->created_at;
 
         $availabilityTime = $blob->blobable->availability_time;
-
-        if($this->blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime)) {
+        if(! $blob->blobable->available) {
+            if(! $playlist->available) {
+                if($playlist->availability_time == null) {
+                    return $this->getResponse(false, 'playlistNotAvailable', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
+                } else if(strtotime($playlistTime) > time()) {
+                    return $this->getResponse(false, 'playlistNotAvailable', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
+                }
+            }
+        }
+        if($blob->blobable->available || $this->blobIsAvailable($availabilityTime, $subscriptionTime, $playlistTime)) {
+            session(['opendPlaylist' => $playlistId]);
             return $this->getResponse(true, '', [
                 'title' => $blob->blobable->title, 
                 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : ''),
             ]);
-            session(['opendPlaylist' => $playlistId]);
         }
         return $this->getResponse(false, 'videoTime', ['title' => $blob->blobable->title, 'desc' => ( ($blob->blobable_type != 'App\Models\Video') ? $blob->blobable->description : '')]);
     }

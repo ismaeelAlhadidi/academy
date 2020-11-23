@@ -89,9 +89,40 @@ Route::get('/test/video', function() {
     //return response()->file(storage_path('app' . $path));
     return view('test');
 });
-Route::post('/test/video', function(Request $request) {
-    //request()->file('image')->store('public');
-    return 'stored';
+Route::get('/test/video', function(Request $request) {
+    $temp = explode('\\', 'playlist2\\w25VjM5fb9a3e53a0ab6-72635907-1606001637.m3u8');
+    if(count($temp) < 2) return;
+    $driver = 'local';
+    $src = $temp[1];
+    $directory = $temp[0]; 
+    $path = DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'hls'. DIRECTORY_SEPARATOR . $directory . DIRECTORY_SEPARATOR;
+    $file = $path . $src;
+    if (! Storage::disk($driver)->exists($file)) return;
+    $fileHandler = fopen(storage_path('app' . $file), 'r');
+    $fileContent = fread($fileHandler, Storage::disk($driver)->size($file));
+    fclose($fileHandler);
+    $fileContent = str_replace(["\n", "\r\n", "\R"], "\n", $fileContent);
+    $arrayOfUrls = explode("\n", $fileContent);
+    foreach($arrayOfUrls as $url) {
+        if(substr($url, 0, 1) == "#") continue;
+        $tempFile = $path . $url;
+        if (! Storage::disk($driver)->exists($tempFile)) continue;
+        $M3U8Handler = fopen(storage_path('app' . $tempFile), 'r');
+        $M3U8Content = fread($M3U8Handler, Storage::disk($driver)->size($tempFile));
+        fclose($M3U8Handler);
+        $M3U8Content = str_replace(["\n", "\r\n", "\R"], "\n", $M3U8Content);
+        $arrayOfM3U8Files = explode("\n", $M3U8Content);
+        foreach($arrayOfM3U8Files as $tsFile) {
+            if(substr($tsFile, 0, 1) == "#") continue;
+            if(str_replace(" ", "", $tsFile) != "") {
+                $tempTs = $path . $tsFile;
+                Storage::disk($driver)->delete($tempTs);
+            }
+        }
+        Storage::disk($driver)->delete($tempFile);
+    }
+    Storage::disk($driver)->delete($file);
+    return 'deleted';
 });
 Route::get('/test/{file}', function($file) {
     $tempArray = explode('_', $file);

@@ -41,7 +41,7 @@
 
 @section('content')
     <div class="container no-select">
-    @if($sessions->count() > 0)
+    @if($sessions->count() > 0 || $firstSession != null)
             <table class="table table-striped">
                 <thead>
                     <tr>

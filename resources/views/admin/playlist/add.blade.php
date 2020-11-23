@@ -569,7 +569,8 @@
             exitButtonCanvasOfWatchingDiv.height = 25;
             drawRemoveIconCanvas(exitButtonCanvasOfWatchingDiv,'#ffffff');
             exitButtonCanvasOfWatchingDiv.onclick = function () {
-                URL.revokeObjectURL(tempBlobUrl)
+                URL.revokeObjectURL(tempBlobUrl);
+                watchingVideoElement.src = '';
                 closeBobUpTemplate(watchingDiv);
             };
         }

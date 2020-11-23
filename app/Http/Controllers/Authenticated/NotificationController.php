@@ -15,8 +15,8 @@ class NotificationController extends Controller
     use AjaxResponse, FormatTime;
 
     public function setReaded($type, $id) {
-        $notification = UserNotifaction::where('type', $type)->where('n_id', $id)->first();
-        if($notification) $notification->update(['readed' => 1]);
+        $notifications = UserNotifaction::where('type', $type)->where('n_id', $id)->get();
+        if($notifications) foreach($notifications as $notification) $notification->update(['readed' => 1]);
     }
     public function getReplay($id) {
         $replay = Replay::find($id);
@@ -34,7 +34,6 @@ class NotificationController extends Controller
     public function getOffer($id) {
         $session = SessionsOnline::find($id);
         if(! $session) return $this->getResponse(false, '', []);
-        //('admission') && jsonResponse.data.hasOwnProperty('sessionsUrl')
         return $this->getResponse(true, '', [
             'offerId' => $session->sessionOffer->id,
             'offerName' => $session->sessionOffer->name,

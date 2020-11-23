@@ -46,6 +46,7 @@ trait FormatTime {
 
         $periods = array("second", "minute", "hour", "day", "week", "month", "year");
         $lengths = array("60","60","24","7","4.35","12");
+        if($target < 0) $target *= -1;
         for($i = 0; $target >= $lengths[$i] && $i < count($lengths)-1; $i++) $target /= $lengths[$i];
         $target = round($target);
         $target = ($target == 1) ? ( __('time.one-' . $periods[$i]) ) :

@@ -33,7 +33,7 @@
             </section>
             <div class="clear-float"></div>
             <section class="about-coach section-borders no-select">
-                <div class="no-select"><img data-src="{{ (( isset($appInfos['about_coach_image']) ? asset($appInfos['about_coach_image']) : '')) }}" class="lazyload welcome-coach-image" loading="lazy" /></div><p><span>{{ ( isset($appInfos['about_cach_title']) ? $appInfos['about_cach_title'] : '') }}</span>{{ ( isset($appInfos['about_cach_desc']) ? asset($appInfos['about_cach_desc']) : '' ) }}</p>
+                <div class="no-select"><img data-src="{{ (( isset($appInfos['about_coach_image']) ? asset($appInfos['about_coach_image']) : '')) }}" class="lazyload welcome-coach-image" loading="lazy" /></div><p><span>{{ ( isset($appInfos['about_cach_title']) ? $appInfos['about_cach_title'] : '') }}</span>{{ ( isset($appInfos['about_cach_desc']) ? $appInfos['about_cach_desc'] : '' ) }}</p>
             </section>
             @if($coachOpinions->count() > 0)
             <section class="coach-opinions section-borders no-select">

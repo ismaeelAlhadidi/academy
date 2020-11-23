@@ -17,7 +17,7 @@ class CreateObjectsTable extends Migration
             $table->bigIncrements('id');
             $table->morphs('blobable');
             $table->string('public_route')->unique();
-            $table->foreignId('type_id')->constrained('types')->nullable();
+            $table->foreignId('type_id')->nullable()->constrained('types')->default('null');
         });
     }
 

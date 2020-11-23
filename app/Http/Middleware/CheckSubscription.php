@@ -24,9 +24,9 @@ class CheckSubscription
         if(! Auth::guard('admin')->check()) {
             if(! Auth::guard('web')->check()) return abort('404');
             if(! $blob = $this->getBlob($request->url())) return abort('404');
-            if($blob->blobable->avalibile) return $next($request);
+            if($blob->blobable->available) return $next($request);
             if(! $id = Auth::guard('web')->user()->id) return abort('404');
-            if($this->notValid($blob, $id)) return abort('404');
+            if($this->notValid($blob, $id)) return abort('403');
         }
         return $next($request);
     }

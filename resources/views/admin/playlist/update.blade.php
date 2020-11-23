@@ -612,6 +612,7 @@
             drawRemoveIconCanvas(exitButtonCanvasOfWatchingDiv,'#ffffff');
             exitButtonCanvasOfWatchingDiv.onclick = function () {
                 URL.revokeObjectURL(tempBlobUrl);
+                watchingVideoElement.src = '';
                 closeBobUpTemplate(watchingDiv);
             };
         }

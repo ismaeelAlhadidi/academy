@@ -17,7 +17,7 @@ class CreateSubscriptionsTable extends Migration
             $table->bigIncrements('id');
             $table->foreignId('playlist_id')->constrained('playlists');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('payment_id')->constrained('payments')->nullable();
+            $table->foreignId('payment_id')->nullable()->constrained('payments')->default('null');
             $table->boolean('access')->default(true);
             $table->timestamps();
         });

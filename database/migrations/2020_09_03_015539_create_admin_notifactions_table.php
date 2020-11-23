@@ -16,7 +16,7 @@ class CreateAdminNotifactionsTable extends Migration
         Schema::create('admin_notifactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
-            $table->bigIncrements('n_id');
+            $table->bigInteger('n_id');
             $table->boolean('readed')->default(false);
             $table->timestamps();
         });

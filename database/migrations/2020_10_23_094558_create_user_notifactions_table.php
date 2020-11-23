@@ -16,7 +16,7 @@ class CreateUserNotifactionsTable extends Migration
         Schema::create('user_notifactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
-            $table->bigIncrements('n_id');
+            $table->bigInteger('n_id');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->boolean('readed')->default(false);
             $table->timestamps();

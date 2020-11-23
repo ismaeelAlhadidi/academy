@@ -262,14 +262,15 @@
                 'newReplay': '{{ __('masseges.new-replay') }}',
                 'comment': '{{ __('masseges.one-comment') }}',
                 'twoComment': '{{ __('masseges.two-comment') }}',
-                'comments': '{{ __('masseges.no-comments') }}',
+                'comments': '{{ __('masseges.comments') }}',
                 'replays': '{{  __('masseges.replays') }}',
                 'now': '{{ __('time.now') }}',
                 'postReplay': '{{ __('masseges.post-replay') }}' + " ..." ,
                 'addReplay': '{{ __('masseges.add-replay') . ' ' }}',
                 'errorInPlayVideo': '{{ __('masseges.error-in-start-file') }}',
                 'needSubscriptionMassege': '{{ __('masseges.need-subscription-to-show-blobs') }}',
-                'notAvillableMassage': '{{ __('masseges.file-not-avillable-now') }}'
+                'notAvillableMassage': '{{ __('masseges.file-not-avillable-now') }}',
+                'playlistNotAvillableMassage': '{{ __('masseges.playlist-not-avillable-now') }}'
             },
             thisUser = {
                 'image': '{{ asset(auth()->user()->image) }}',

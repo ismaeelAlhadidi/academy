@@ -255,6 +255,26 @@ function createCommentDiv(data, notNew = false, isReplay = false) {
         if(isReplay) comment.setAttribute('class', 'comment replay new-comment');
         else comment.setAttribute('class', 'comment new-comment');
     }
+    window.setTimeout(function () {
+        var tempPosterOfOpendVideo = document.getElementById('posterOfOpendVideo');
+        var spaceHandlerOnWatch = function spaceHandlerOnWatch(e) {
+            if(e.code == "Space") {
+                if(tempPosterOfOpendVideo != null) tempPosterOfOpendVideo.click();
+                e.preventDefault();
+            }
+        };
+        var spaceHandlerOnWrite = function spaceHandlerOnWrite(e) { };
+        var newTextArea = document.getElementById('inputContentOfReplay' + commentId);
+        if(newTextArea != null) {
+            newTextArea.onfocus = function () {
+                window.onkeypress = spaceHandlerOnWrite;
+            };
+            newTextArea.onblur = function () {
+                window.onkeypress = spaceHandlerOnWatch;
+            };
+        }
+        console.log(newTextArea);
+    }, 0);
     return comment;
 }
 function setNewCountOfComment() {
