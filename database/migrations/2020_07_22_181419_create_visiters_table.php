@@ -17,7 +17,7 @@ class CreateVisitersTable extends Migration
             $table->bigIncrements('id');
             $table->ipAddress('ip_address');
             $table->macAddress('mac_address')->nullable();
-            $table->string('device_data')->nullable();
+            $table->string('device_data', 510)->nullable();
         });
     }
 
